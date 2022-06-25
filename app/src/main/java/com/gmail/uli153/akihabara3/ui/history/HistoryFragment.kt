@@ -9,9 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Transaction
 import com.gmail.uli153.akihabara3.data.models.TransactionType
@@ -29,7 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 interface HistoryListener {
-    fun onRollbackTransaction(trasaction: Transaction)
+    fun onRollbackTransaction(transaction: Transaction)
 }
 
 class HistoryFragment : AkbFragment(), HistoryListener {
@@ -40,10 +38,8 @@ class HistoryFragment : AkbFragment(), HistoryListener {
 
     protected val productsViewModel: ProductsViewModel by activityViewModels()
 
-    private val transactions: MutableList<Transaction> = mutableListOf()
-
     private val adapter by lazy {
-        Adapter(transactions, requireContext(), this)
+        Adapter(requireContext(), this)
     }
 
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.getDefault())
@@ -65,11 +61,10 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         binding.recyclerviewTransactions.adapter = adapter
 
         productsViewModel.transactions.observe(viewLifecycleOwner) {
-            transactions.clear()
-            if (it is DataWrapper.Success<List<Transaction>>) {
-                transactions.addAll(it.data)
-            }
-            adapter.notifyDataSetChanged()
+            val data = if (it is DataWrapper.Success<List<Transaction>>) {
+                it.data
+            } else emptyList()
+            adapter.submitList(data)
         }
     }
 
@@ -78,8 +73,14 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         _binding = null
     }
 
-    override fun onRollbackTransaction(trasaction: Transaction) {
-        //todo
+    override fun onRollbackTransaction(transaction: Transaction) {
+        showConfirmDialog(message = getString(R.string.want_to_remove_transaction), cancel = { _, _ ->
+            adapter.currentList.indexOfFirst { it.id == transaction.id }.takeIf { it >= 0 }?.let {
+                adapter.notifyItemChanged(it)
+            }
+        }, accept = { _, _ ->
+            productsViewModel.deleteTransaction(transaction)
+        })
     }
 
     private inner class TransactionVH(view: View, listener: HistoryListener): RecyclerView.ViewHolder(view) {
@@ -112,10 +113,9 @@ class HistoryFragment : AkbFragment(), HistoryListener {
     }
 
     private inner class Adapter(
-        private val items: List<Transaction>,
         private val context: Context,
         private val listener: HistoryListener
-    ): RecyclerView.Adapter<TransactionVH>() {
+    ): ListAdapter<Transaction, TransactionVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionVH {
             val view = LayoutInflater.from(context).inflate(R.layout.row_transaction, parent, false)
@@ -123,11 +123,17 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         }
 
         override fun onBindViewHolder(holder: TransactionVH, position: Int) {
-            holder.set(items[position])
+            holder.set(getItem(position))
+        }
+    }
+
+    private class DiffCallback: DiffUtil.ItemCallback<Transaction>() {
+        override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun getItemCount(): Int {
-            return items.size
+        override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
+            return oldItem == newItem
         }
     }
 }
