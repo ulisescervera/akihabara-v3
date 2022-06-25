@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/destination_products">
+
+    <fragment
+        android:id="@+id/destination_products"
+        android:name="com.gmail.uli153.akihabara3.ui.products.ProductsFragment"
+        android:label="@string/title_products"
+        tools:layout="@layout/fragment_products">
+
+        <action
+            android:id="@+id/action_edit_product"
+            app:destination="@+id/destination_edit_product">
+            <argument
+                android:name="product_id"
+                app:argType="long" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/destination_settings"
+        android:name="com.gmail.uli153.akihabara3.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/destination_history"
+        android:name="com.gmail.uli153.akihabara3.ui.history.HistoryFragment"
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/destination_edit_product"
+        android:name="com.gmail.uli153.akihabara3.ui.products.ProductEditFragment"
+        android:label="@string/edit_product"
+        tools:layout="@layout/fragment_product_base_form">
+
+        <argument
+            android:name="product_id"
+            app:argType="long" />
+    </fragment>
+
+</navigation>

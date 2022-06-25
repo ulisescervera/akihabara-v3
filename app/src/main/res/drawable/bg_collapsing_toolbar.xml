@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="@dimen/row_horizontal_margin"
+        android:right="@dimen/row_horizontal_margin">
+
+        <shape>
+            <corners
+                android:radius="@dimen/row_corners" />
+            <solid android:color="@color/md_red_500" />
+        </shape>
+    </item>
+</layer-list>

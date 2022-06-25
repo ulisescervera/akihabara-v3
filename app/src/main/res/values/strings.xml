@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Akihabara3</string>
+    <string name="title_products">Productos</string>
+    <string name="title_settings">Ajustes</string>
+    <string name="title_history">Historial</string>
+    <string name="edit_product">Editar producto</string>
+
+    <string name="drinks">Bebidas</string>
+    <string name="foods">Comidas</string>
+    <string name="added_balance">Saldo añadido</string>
+    <string name="snackbar_undo_message">Has comprado %s por %s€</string>
+    <string name="undo">Deshacer</string>
+    <string name="name">Nombre</string>
+    <string name="price">Precio</string>
+    <string name="category">Categoría</string>
+    <string name="current_balance">Balance actual</string>
+    <string name="save">Guardar</string>
+    <string name="attention">Atención</string>
+    <string name="save_product_changes_message">¿Deseas guardar los cambios?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+</resources>
