@@ -46,11 +46,10 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.destination_products, R.id.destination_history -> {
-                    val px12 = 12.toPx
                     binding.fab.isGone = false
-                    binding.bottomAppBar.fabCradleMargin = px12
-                    binding.bottomAppBar.fabCradleRoundedCornerRadius = px12
-                    binding.bottomAppBar.cradleVerticalOffset = 10.toPx
+                    binding.bottomAppBar.fabCradleMargin = 6.toPx
+                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 12.toPx
+                    binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
                 else -> {
                     binding.fab.isGone = true

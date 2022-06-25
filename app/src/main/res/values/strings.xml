@@ -19,4 +19,8 @@
     <string name="save_product_changes_message">¿Deseas guardar los cambios?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="want_to_remove_transaction">¿Desea eliminar esta operación? No podrás deshacerlo</string>
 </resources>
