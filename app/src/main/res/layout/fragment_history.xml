@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:layoutAnimation="@anim/layout_animation"
         android:overScrollMode="never"
         android:paddingTop="16dp"
         android:paddingBottom="@dimen/bottom_nav_bar_height"

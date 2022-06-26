@@ -6,15 +6,25 @@
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_bottom_sheet.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_circle_button.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_drag_line.xml" value="0.109" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_edittext.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_selected_tab.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_swipe.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_tablayout.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_unselected_tab.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_remove.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_undo.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/separator_balance.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/separator_product.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/bottom_sheet_balance.xml" value="0.33" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_history.xml" value="0.26336041043180847" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_product_base_form.xml" value="0.303125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_products.xml" value="0.25" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_products_base.xml" value="0.303125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_settings.xml" value="0.26336041043180847" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/row_product.xml" value="0.303125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/row_transaction.xml" value="0.26336041043180847" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/snack_bar_undo.xml" value="0.26336041043180847" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/spinner_row.xml" value="0.303125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara3/app/src/main/res/drawable/bg_button_buy.xml" value="0.2035" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara3/app/src/main/res/drawable/bg_button_edit.xml" value="0.2035" />

@@ -1,25 +1,44 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Akihabara3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/green</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+
+        <item name="colorPrimary">@color/md_yellow_700</item>
+        <item name="colorSecondary">@color/md_pink_700</item>
+
+<!--        <item name="colorPrimaryVariant">@color/green</item>-->
+<!--        <item name="colorSecondaryVariant">@color/md_red_500</item>-->
+
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/md_pink_200</item>
-        <item name="colorSecondaryVariant">@color/md_red_500</item>
-        <item name="colorOnSecondary">@color/md_blue_100</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnBackground">@color/md_grey_900</item>
+        <item name="colorOnSurface">@color/md_grey_900</item>
 
-
-        <!-- Customize your theme here. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/bg_default</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:textColor">@color/text</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">15sp</item>
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
         <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
         <item name="android:editTextStyle">@style/AkbEditText</item>
         <item name="buttonStyle">@style/AkbButton</item>
+        <item name="actionBarTheme">@style/AkbActionBar</item>
+    </style>
+
+    <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
+        <item name="android:background">@color/white</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
+
+    <style name="AkbTabLayout" parent="Widget.Design.TabLayout">
+<!--        <item name="tabBackground">@drawable/tabs_selector</item>--> <!-- todo -->
+        <item name="android:background">@drawable/bg_tablayout</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabTextColor">@color/md_yellow_700</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabMode">fixed</item>
     </style>
 
     <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
@@ -29,16 +48,16 @@
     </style>
 
     <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
-        <item name="android:textColor">@color/md_blue_900</item>
+        <item name="android:textColor">@color/md_grey_900</item>
     </style>
 
     <style name="ThemeOverlay.App.Snackbar" parent="">
-        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurface">@color/white</item>
     </style>
 
     <style name="AkbEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/bg_edittext</item>
-        <item name="android:textColor">@color/text</item>
+<!--        <item name="android:textColor">@color/text</item>-->
         <item name="android:textColorHint">@color/text_soft</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingStart">@dimen/edit_horizontal_padding</item>
@@ -46,13 +65,13 @@
     </style>
 
     <style name="AkbButton" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">@color/white</item>
+<!--        <item name="android:textColor">@color/white</item>-->
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="AkbDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <item name="colorAccent">@color/main_color</item>
-        <item name="android:textColorPrimary">@color/text</item>
+        <item name="colorAccent">?attr/colorSecondary</item>
+<!--        <item name="android:textColorPrimary">@color/text</item>-->
     </style>
 
     <style name="AkbBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
@@ -62,6 +81,5 @@
     <style name="AkbBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
 
 </resources>

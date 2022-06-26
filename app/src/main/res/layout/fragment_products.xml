@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:background="@color/bg_default">
+    android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        app:layout_anchor="@+id/tabs_bar"
+        app:layout_anchorGravity="top"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/tabs_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:background="@color/bg_default"
+        android:background="@color/transparent"
         android:elevation="0dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -26,6 +29,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|enterAlways">
 
@@ -74,24 +78,19 @@
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
+                    style="@style/AkbTabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/tab_height"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/row_horizontal_margin"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="@dimen/row_horizontal_margin"
-                    android:background="@drawable/bg_tablayout"
                     app:layout_collapseMode="pin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view_balance"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:tabGravity="fill"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabMode="fixed"
-                    app:tabSelectedTextColor="@color/white"
-                    app:tabTextColor="@color/text">
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="match_parent"

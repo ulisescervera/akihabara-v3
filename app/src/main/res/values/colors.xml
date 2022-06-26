@@ -28,6 +28,7 @@
     <color name="bg_remove">@color/red</color>
 
     <color name="bg_surface">#F9FAFB</color>
+    <color name="transparent">#00000000</color>
 
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
