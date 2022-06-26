@@ -15,4 +15,6 @@
     <dimen name="button_height_half">24dp</dimen>
     <dimen name="edit_horizontal_padding">16dp</dimen>
     <dimen name="bottom_nav_bar_height">56dp</dimen>
+
+    <dimen name="ui_margin_medium">10dp</dimen>
 </resources>

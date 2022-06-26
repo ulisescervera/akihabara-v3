@@ -23,42 +23,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-class ProductEditFragment: ProductFormBaseFragment() {
+class EditProductFragment: ProductFormBaseFragment() {
 
-    private val args: ProductEditFragmentArgs by navArgs()
+    private val args: EditProductFragmentArgs by navArgs()
 
     private lateinit var product: Product
-
-    private val name: String get() {
-        return binding.editName.text.toString()
-    }
-
-    private val isValidName: Boolean get() {
-        return name.isNotBlank()
-    }
-
-    private val price: BigDecimal? get() {
-        return AkbNumberParser.LocaleParser.parseToBigDecimal(binding.editPrice.text.toString())
-    }
-
-    private val isValidPrice: Boolean get() {
-        val price = this.price ?: return false
-        return price >= BigDecimal(0)
-    }
-
-    private val isFavorite: Boolean get() {
-        return binding.btnFavorite.isLiked
-    }
-
-    private val textWatcher = object: TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-        override fun afterTextChanged(p0: Editable?) {
-            updateButton()
-        }
-    }
 
     private val likeListener: OnLikeListener = object : OnLikeListener {
         override fun liked(likeButton: LikeButton?) {
@@ -86,15 +55,16 @@ class ProductEditFragment: ProductFormBaseFragment() {
         binding.btnFavorite.isLiked = product.favorite
         binding.btnFavorite.setOnLikeListener(likeListener)
         binding.editName.setText(product.name)
-        binding.editName.addTextChangedListener(textWatcher)
-        binding.editPrice.addTextChangedListener(textWatcher)
         binding.editPrice.setText(AkbNumberParser.LocaleParser.format(product.price))
+        categories.indexOf(product.type).takeIf { it >= 0 }?.let {
+            binding.spinnerType.setSelection(it)
+        }
         binding.button.setSafeClickListener {
             saveProduct()
         }
     }
 
-    private fun updateButton() {
+    override fun updateButton() {
         val isValid = isValidName && isValidPrice
         val changed = name != product.name || isFavorite != product.favorite || price?.compareTo(product.price) != 0
         val enable = isValid && changed

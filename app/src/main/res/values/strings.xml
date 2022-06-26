@@ -23,4 +23,11 @@
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="want_to_remove_transaction">¿Desea eliminar esta operación? No podrás deshacerlo</string>
+
+    <string name="edit_balance">Modificar saldo</string>
+    <string name="add_product">Añadir producto</string>
+    <string name="set_valid_name">Introduce un nombre para el producto</string>
+    <string name="set_valid_price">Introduce un precio para el producto</string>
+    <string name="choose_category">Elige una categoría para el producto</string>
+    <string name="confirm">Confirmar</string>
 </resources>

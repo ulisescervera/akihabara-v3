@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.nambimobile.widgets.efab.ExpandableFabLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/lottie_dice_rolling" />
+                app:lottie_rawRes="@raw/lottie_green_dice_roll" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -59,9 +59,11 @@
         android:layout_gravity="bottom"
         app:contentInsetStart="0dp"
         app:elevation="10dp"
+        app:fabAlignmentMode="center"
         app:fabCradleMargin="6dp"
         app:fabCradleRoundedCornerRadius="12dp"
-        app:fabCradleVerticalOffset="0dp">
+        app:fabCradleVerticalOffset="0dp"
+        tools:ignore="BottomAppBar">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
@@ -69,19 +71,48 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:background="@android:color/transparent"
             app:elevation="10dp"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <com.nambimobile.widgets.efab.Overlay
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:overlay_alpha="0.3"
+        app:overlay_color="#FFFFFF"
+        app:overlay_orientation="landscape" />
+
+    <com.nambimobile.widgets.efab.ExpandableFab
+        android:id="@+id/fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_favorite"
+        app:efab_orientation="landscape"
         app:layout_anchor="@id/bottom_app_bar" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.nambimobile.widgets.efab.FabOption
+        android:id="@+id/btn_edit_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_orientation="landscape"
+        app:label_text="@string/edit_balance" />
+
+    <com.nambimobile.widgets.efab.FabOption
+        android:id="@+id/btn_add_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_orientation="landscape"
+        app:label_text="@string/add_product" />
+
+    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/fav"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:contentDescription="@string/app_name"-->
+    <!--            android:src="@drawable/ic_favorite"-->
+    <!--            app:layout_anchor="@id/bottom_app_bar" />-->
+
+
+</com.nambimobile.widgets.efab.ExpandableFabLayout>

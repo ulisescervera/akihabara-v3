@@ -17,6 +17,7 @@ import com.gmail.uli153.akihabara3.databinding.FragmentHistoryBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentSettingsBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
+import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import kotlinx.android.synthetic.main.row_product.view.*
@@ -57,7 +58,6 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         }
         binding.recyclerviewTransactions.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.recyclerviewTransactions.addItemDecoration(separator)
-//        touchHelper.attachToRecyclerView(binding.recyclerviewProducts)
         binding.recyclerviewTransactions.adapter = adapter
 
         productsViewModel.transactions.observe(viewLifecycleOwner) {
@@ -108,7 +108,8 @@ class HistoryFragment : AkbFragment(), HistoryListener {
                 transaction.title
             }
 
-            itemView.label_amount.text = numberFormatter.format(transaction.amount)
+            val amount = if (transaction.type == TransactionType.BUY) -transaction.amount else transaction.amount
+            itemView.label_amount.text = AkbNumberParser.LocaleParser.parseToEur(amount)
         }
     }
 

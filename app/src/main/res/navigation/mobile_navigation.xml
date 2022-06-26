@@ -18,6 +18,11 @@
                 android:name="product_id"
                 app:argType="long" />
         </action>
+
+        <action
+            android:id="@+id/action_add_product"
+            app:destination="@+id/destination_add_product" />
+
     </fragment>
 
     <fragment
@@ -34,7 +39,7 @@
 
     <fragment
         android:id="@+id/destination_edit_product"
-        android:name="com.gmail.uli153.akihabara3.ui.products.ProductEditFragment"
+        android:name="com.gmail.uli153.akihabara3.ui.products.EditProductFragment"
         android:label="@string/edit_product"
         tools:layout="@layout/fragment_product_base_form">
 
@@ -42,5 +47,11 @@
             android:name="product_id"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/destination_add_product"
+        android:name="com.gmail.uli153.akihabara3.ui.products.AddProductFragment"
+        android:label="@string/edit_product"
+        tools:layout="@layout/fragment_product_base_form" />
 
 </navigation>

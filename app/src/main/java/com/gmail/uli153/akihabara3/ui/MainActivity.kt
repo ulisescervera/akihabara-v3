@@ -12,7 +12,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
+import com.gmail.uli153.akihabara3.ui.bottomsheet.BalanceBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
+import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.toPx
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -46,18 +48,26 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.destination_products, R.id.destination_history -> {
-                    binding.fab.isGone = false
+                    binding.fav.show()
                     binding.bottomAppBar.fabCradleMargin = 6.toPx
                     binding.bottomAppBar.fabCradleRoundedCornerRadius = 12.toPx
                     binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
                 else -> {
-                    binding.fab.isGone = true
+                    binding.fav.hide()
                     binding.bottomAppBar.fabCradleMargin = 0f
                     binding.bottomAppBar.fabCradleRoundedCornerRadius = 0f
                     binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
             }
+        }
+
+        binding.btnAddProduct.setSafeClickListener {
+            navController.navigate(R.id.destination_add_product)
+        }
+
+        binding.btnEditBalance.setSafeClickListener {
+            BalanceBottomSheet.show(supportFragmentManager)
         }
     }
 }

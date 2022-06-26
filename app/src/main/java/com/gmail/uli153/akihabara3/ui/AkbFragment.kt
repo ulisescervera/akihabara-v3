@@ -18,6 +18,10 @@ open class AkbFragment: Fragment() {
         navController.navigate(dirs)
     }
 
+    protected fun navigateUp() {
+        navController.navigateUp()
+    }
+
     protected fun showConfirmDialog(
         title: String = getString(R.string.attention),
         message: String,
@@ -28,6 +32,19 @@ open class AkbFragment: Fragment() {
             .setTitle(title)
             .setMessage(message)
             .setNegativeButton(getString(R.string.cancel), cancel)
+            .setPositiveButton(getString(R.string.accept), accept)
+            .create()
+            .show()
+    }
+
+    protected fun showDialog(
+        title: String = getString(R.string.attention),
+        message: String,
+        accept: DialogInterface.OnClickListener? = null
+    ) {
+        AlertDialog.Builder(requireContext(), R.style.AkbDialog)
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton(getString(R.string.accept), accept)
             .create()
             .show()
