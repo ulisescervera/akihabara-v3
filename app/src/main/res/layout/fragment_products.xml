@@ -29,12 +29,14 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:background="@color/transparent"
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:clipChildren="false"
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,6 +85,8 @@
                     android:layout_height="@dimen/tab_height"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/row_horizontal_margin"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="@dimen/row_horizontal_margin"
                     app:layout_collapseMode="pin"

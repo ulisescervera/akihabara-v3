@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Akihabara3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:colorBackground">@color/white</item>
+        <item name="background">@color/white</item>
+        <item name="itemBackground">@color/white</item>
         <item name="colorSurface">@color/white</item>
 
         <item name="colorPrimary">@color/md_yellow_700</item>
@@ -15,9 +17,14 @@
         <item name="colorOnBackground">@color/md_grey_900</item>
         <item name="colorOnSurface">@color/md_grey_900</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="defaultText">@color/md_grey_900</item>
+        <item name="heavyText">@color/black</item>
+        <item name="softText">@color/md_grey_400</item>
+        <item name="greenText">@color/md_green_900</item>
+
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?attr/defaultText</item>
         <item name="android:textSize">15sp</item>
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
         <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
@@ -28,7 +35,6 @@
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
         <item name="android:background">@color/white</item>
-        <item name="backgroundColor">@color/white</item>
     </style>
 
     <style name="AkbTabLayout" parent="Widget.Design.TabLayout">
@@ -58,7 +64,7 @@
     <style name="AkbEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/bg_edittext</item>
 <!--        <item name="android:textColor">@color/text</item>-->
-        <item name="android:textColorHint">@color/text_soft</item>
+        <item name="android:textColorHint">?attr/softText</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingStart">@dimen/edit_horizontal_padding</item>
         <item name="android:paddingEnd">@dimen/edit_horizontal_padding</item>

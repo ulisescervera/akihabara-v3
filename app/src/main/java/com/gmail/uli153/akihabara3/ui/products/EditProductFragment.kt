@@ -17,6 +17,7 @@ import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.like.LikeButton
 import com.like.OnLikeListener
+import kotlinx.android.synthetic.main.fragment_product_base_form.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -66,7 +67,10 @@ class EditProductFragment: ProductFormBaseFragment() {
 
     override fun updateButton() {
         val isValid = isValidName && isValidPrice
-        val changed = name != product.name || isFavorite != product.favorite || price?.compareTo(product.price) != 0
+        val changed = type != product.type
+                || name != product.name
+                || isFavorite != product.favorite
+                || price?.compareTo(product.price) != 0
         val enable = isValid && changed
         binding.button.style = if (enable) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
     }
@@ -74,7 +78,7 @@ class EditProductFragment: ProductFormBaseFragment() {
     private fun saveProduct() {
         val price = this.price ?: return
 
-        val product = product.copy(name = name, price = price, favorite = isFavorite)
+        val product = product.copy(type = type, name = name, price = price, favorite = isFavorite)
         val saveListener = DialogInterface.OnClickListener { dialogInterface, i ->
             productsViewModel.viewModelScope.launch(Dispatchers.Main) {
                 navController.navigateUp()

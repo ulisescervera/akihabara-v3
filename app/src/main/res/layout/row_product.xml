@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface">
 
         <com.daimajia.swipe.SwipeLayout
             android:id="@+id/swipe"
@@ -140,7 +141,7 @@
                     android:maxLines="1"
                     android:minEms="4"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/text_heavy"
+                    android:textColor="?attr/heavyText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

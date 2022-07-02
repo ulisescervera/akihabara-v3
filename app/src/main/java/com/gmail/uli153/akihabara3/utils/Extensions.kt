@@ -1,10 +1,13 @@
 package com.gmail.uli153.akihabara3.utils
 
+import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
 import android.util.TypedValue
 import android.view.View
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -34,4 +37,14 @@ val Number.toPx: Float get() {
         this.toFloat(),
         Resources.getSystem().displayMetrics
     )
+}
+
+@ColorInt
+fun Context.getColorFromAttr(
+    @AttrRes attrColor: Int,
+    typedValue: TypedValue = TypedValue(),
+    resolveRefs: Boolean = true
+): Int {
+    theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+    return typedValue.data
 }

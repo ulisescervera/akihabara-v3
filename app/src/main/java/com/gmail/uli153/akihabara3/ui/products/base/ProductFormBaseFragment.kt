@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,6 +17,7 @@ import com.gmail.uli153.akihabara3.databinding.FragmentProductBaseFormBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
+import kotlinx.android.synthetic.main.fragment_product_base_form.*
 import java.math.BigDecimal
 
 abstract class ProductFormBaseFragment: AkbFragment() {
@@ -24,6 +26,10 @@ abstract class ProductFormBaseFragment: AkbFragment() {
 
     protected lateinit var binding: FragmentProductBaseFormBinding
     protected val productsViewModel: ProductsViewModel by activityViewModels()
+
+    protected val type: ProductType get() {
+        return categories[spinner_type.selectedItemPosition]
+    }
 
     protected val name: String get() {
         return binding.editName.text.toString()
@@ -58,6 +64,16 @@ abstract class ProductFormBaseFragment: AkbFragment() {
         }
     }
 
+    private val spinnerListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+            updateButton()
+        }
+
+        override fun onNothingSelected(p0: AdapterView<*>?) {
+            updateButton()
+        }
+    }
+
     private val adapter by lazy {
         ArrayAdapter(requireContext(), R.layout.spinner_row, R.id.label, categories.map { getString(it.nameResId) })
     }
@@ -72,6 +88,7 @@ abstract class ProductFormBaseFragment: AkbFragment() {
         binding.editName.addTextChangedListener(textWatcher)
         binding.editPrice.addTextChangedListener(textWatcher)
         binding.spinnerType.adapter = adapter
+        binding.spinnerType.onItemSelectedListener = spinnerListener
     }
 
 }

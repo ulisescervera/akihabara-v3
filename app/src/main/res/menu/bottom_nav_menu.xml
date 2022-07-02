@@ -8,16 +8,12 @@
 
     <item
         android:id="@+id/bottom_menu_placeholder"
+        android:enabled="false"
         android:title="" />
 
     <item
         android:id="@+id/destination_history"
         android:icon="@drawable/ic_menu_history"
         android:title="@string/title_history" />
-
-<!--    <item-->
-<!--        android:id="@+id/destination_settings"-->
-<!--        android:icon="@drawable/ic_dashboard_black_24dp"-->
-<!--        android:title="@string/title_settings" />-->
 
 </menu>

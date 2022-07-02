@@ -70,7 +70,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@color/teal_200" />
+                    tools:background="@color/md_teal_200" />
 
                 <TextView
                     android:id="@+id/label_name"
@@ -93,7 +93,7 @@
                     android:maxLines="1"
                     android:minEms="4"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/text_soft"
+                    android:textColor="?attr/softText"
                     app:layout_constraintStart_toEndOf="@+id/image"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="18/11/2022 18:47" />
@@ -105,7 +105,7 @@
                     android:maxLines="1"
                     android:minEms="4"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/text_heavy"
+                    android:textColor="?heavyText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/label_date"
                     app:layout_constraintTop_toTopOf="parent"

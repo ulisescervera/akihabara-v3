@@ -14,20 +14,11 @@
     <color name="blue">#3ABEF0</color>
     <color name="red">@color/md_red_300</color>
 
-    <color name="bg_row">@color/bg_surface</color>
-    <color name="bg_tab">@color/md_grey_200</color>
-    <color name="bg_default">@color/white</color>
-    <color name="text">@color/md_grey_800</color>
-    <color name="text_soft">@color/md_grey_500</color>
-    <color name="text_heavy">@color/md_grey_900</color>
-    <color name="text_contrast">@color/md_grey_100</color>
-    <color name="text_contrast_soft">@color/md_grey_400</color>
     <color name="bg_buy">@color/md_green_300</color>
     <color name="bg_favorite">@color/md_yellow_400</color>
     <color name="bg_edit">@color/red</color>
     <color name="bg_remove">@color/red</color>
 
-    <color name="bg_surface">#F9FAFB</color>
     <color name="transparent">#00000000</color>
 
     <!--reds-->

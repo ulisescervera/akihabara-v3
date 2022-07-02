@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="defaultText" format="reference|color" />
+    <attr name="heavyText" format="reference|color" />
+    <attr name="softText" format="reference|color" />
+    <attr name="greenText" format="reference|color" />
+</resources>

@@ -13,6 +13,7 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
+import com.gmail.uli153.akihabara3.utils.getColorFromAttr
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_products.*
@@ -46,7 +47,10 @@ class ProductsFragment: AkbFragment() {
         }.attach()
 
         productsViewModel.balance.observe(viewLifecycleOwner) {
-            val color = ContextCompat.getColor(requireContext(), if (it >= BigDecimal(0)) R.color.green else R.color.red)
+            val color = if (it >= BigDecimal(0))
+                requireContext().getColorFromAttr(R.attr.greenText)
+            else
+                ContextCompat.getColor(requireContext(), R.color.red)
             label_balance_value.text = AkbNumberParser.LocaleParser.parseToEur(it)
             label_balance_value.setTextColor(color)
         }

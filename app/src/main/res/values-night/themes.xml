@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Akihabara3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:colorBackground">@color/md_black_1000</item>
-        <item name="colorSurface">@color/md_black_1000</item>
+        <item name="android:colorBackground">@color/md_grey_900</item>
+        <item name="background">@color/md_grey_900</item>
+        <item name="itemBackground">@color/md_grey_900</item>
+        <item name="colorSurface">@color/md_grey_800</item>
 
         <item name="colorPrimary">@color/md_yellow_200</item>
         <item name="colorSecondary">@color/md_pink_200</item>
@@ -15,27 +17,33 @@
         <item name="colorOnBackground">@color/md_grey_50</item>
         <item name="colorOnSurface">@color/md_grey_50</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">@color/md_black_1000</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="defaultText">@color/md_grey_50</item>
+        <item name="heavyText">@color/white</item>
+        <item name="softText">@color/md_grey_400</item>
+        <item name="greenText">@color/md_green_600</item>
+
+        <item name="android:statusBarColor">@color/md_grey_900</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColor">?attr/defaultText</item>
         <item name="android:textSize">15sp</item>
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
         <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
         <item name="android:editTextStyle">@style/AkbEditText</item>
         <item name="buttonStyle">@style/AkbButton</item>
         <item name="actionBarTheme">@style/AkbActionBar</item>
+        <item name="android:navigationBarColor">@color/md_grey_900</item>
     </style>
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
-        <item name="android:background">@color/md_black_1000</item>
-        <item name="backgroundColor">@color/md_black_1000</item>
+        <item name="android:background">@color/md_grey_900</item>
     </style>
 
     <style name="AkbTabLayout" parent="Widget.Design.TabLayout">
         <!--        <item name="tabBackground">@drawable/tabs_selector</item>--> <!-- todo -->
+        <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/bg_tablayout</item>
-        <item name="tabSelectedTextColor">@color/md_grey_50</item>
-        <item name="tabTextColor">@color/md_yellow_200</item>
+        <item name="tabSelectedTextColor">@color/md_grey_900</item>
+        <item name="tabTextColor">@color/md_grey_50</item>
         <item name="tabGravity">fill</item>
         <item name="tabIndicatorHeight">0dp</item>
         <item name="tabMode">fixed</item>
@@ -52,13 +60,13 @@
     </style>
 
     <style name="ThemeOverlay.App.Snackbar" parent="">
-        <item name="colorOnSurface">@color/md_black_1000</item>
+        <item name="colorOnSurface">@color/md_grey_900</item>
     </style>
 
     <style name="AkbEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/bg_edittext</item>
         <!--        <item name="android:textColor">@color/text</item>-->
-        <item name="android:textColorHint">@color/text_soft</item>
+        <item name="android:textColorHint">?attr/softText</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingStart">@dimen/edit_horizontal_padding</item>
         <item name="android:paddingEnd">@dimen/edit_horizontal_padding</item>
