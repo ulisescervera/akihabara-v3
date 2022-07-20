@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gmail.uli153.akihabara3">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
+
+
     <application
         android:name=".AkihabaraApp"
         android:allowBackup="true"

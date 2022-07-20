@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
+import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
@@ -26,6 +27,7 @@ import com.gmail.uli153.akihabara3.databinding.FragmentProductsBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
+import com.gmail.uli153.akihabara3.utils.setProductImage
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -33,6 +35,7 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.row_product.view.*
 import kotlinx.coroutines.*
+import java.io.File
 import java.text.DecimalFormat
 import java.util.*
 
@@ -208,6 +211,12 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
             itemView.btn_edit.setSafeClickListener {
                 listener.onEditProduct(product)
             }
+            itemView.surface.setSafeClickListener {
+                when (itemView.swipe.openStatus) {
+                    SwipeLayout.Status.Open -> itemView.swipe.close(true)
+                    SwipeLayout.Status.Close -> itemView.swipe.open(true)
+                }
+            }
         }
 
         lateinit var product: Product private set
@@ -215,6 +224,7 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
             this.product = product
             itemView.swipe.dragDistance = 120
             itemView.swipe.close(false)
+            itemView.imageview_product.setProductImage(product)
             itemView.label_name.text = product.name
             itemView.label_price.text = String.format("%s €", AkbNumberParser.LocaleParser.format(product.price))
             itemView.btn_favorite.isLiked = product.favorite

@@ -31,4 +31,7 @@
     <string name="choose_category">Elige una categoría para el producto</string>
     <string name="confirm">Confirmar</string>
     <string name="ok">Ok</string>
+    <string name="camera">Cámara</string>
+    <string name="gallery">Galería</string>
+    <string name="choose_image">Elige una imagen</string>
 </resources>

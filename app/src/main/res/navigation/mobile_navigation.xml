@@ -20,8 +20,8 @@
         </action>
 
         <action
-            android:id="@+id/action_add_product"
-            app:destination="@+id/destination_add_product" />
+            android:id="@+id/action_create_product"
+            app:destination="@+id/destination_create_product" />
 
     </fragment>
 
@@ -49,8 +49,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/destination_add_product"
-        android:name="com.gmail.uli153.akihabara3.ui.products.AddProductFragment"
+        android:id="@+id/destination_create_product"
+        android:name="com.gmail.uli153.akihabara3.ui.products.CreateProductFragment"
         android:label="@string/edit_product"
         tools:layout="@layout/fragment_product_base_form" />
 

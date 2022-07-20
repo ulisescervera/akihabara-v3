@@ -1,7 +1,9 @@
 package com.gmail.uli153.akihabara3.data.models
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.File
 import java.math.BigDecimal
 import java.util.*
 
@@ -16,5 +18,6 @@ data class Transaction(
     val date: Date?, // Puede fallar en el parseo desde la base de datos
     val title: String?,
     val amount: BigDecimal,
-    val image: String? = null
+    @ColumnInfo(name = "default_image") val defaultImage: Int,
+    @ColumnInfo(name = "custom_image") val customImage: File?,
 )

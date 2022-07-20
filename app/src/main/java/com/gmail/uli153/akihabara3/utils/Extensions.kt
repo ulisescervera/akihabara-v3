@@ -6,10 +6,13 @@ import android.os.Handler
 import android.os.Looper
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.gmail.uli153.akihabara3.data.models.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,4 +50,10 @@ fun Context.getColorFromAttr(
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
+}
+
+fun ImageView.setProductImage(product: Product) {
+    product.customImage?.let {
+        Glide.with(this).load(it).error(product.defaultImage).into(this)
+    } ?: this.setImageResource(product.defaultImage)
 }

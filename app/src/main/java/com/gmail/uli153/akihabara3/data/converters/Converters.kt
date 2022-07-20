@@ -2,6 +2,7 @@ package com.gmail.uli153.akihabara3.data.converters
 
 import androidx.room.TypeConverter
 import com.gmail.uli153.akihabara3.data.models.ProductType
+import java.io.File
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,5 +39,15 @@ class Converters {
     @TypeConverter
     fun fromDate(value: Date?): String? {
         return value?.let { dateFormatter.format(it) }
+    }
+
+    @TypeConverter
+    fun fromString(path: String): File? {
+        return File(path).takeIf { it.exists() && !it.isDirectory }
+    }
+
+    @TypeConverter
+    fun fromFile(file: File?): String {
+        return file?.absolutePath ?: ""
     }
 }

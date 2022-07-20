@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gmail.uli153.akihabara3.R
+import java.io.File
 import java.math.BigDecimal
 
 enum class ProductType(val nameResId: Int) {
@@ -17,7 +18,7 @@ data class Product(
     val type: ProductType,
     val name: String,
     val price: BigDecimal,
-    @ColumnInfo(name = "default_image") val defaultImage: Int?,
-    @ColumnInfo(name = "local_image") val localImage: String?,
+    @ColumnInfo(name = "default_image") val defaultImage: Int,
+    @ColumnInfo(name = "custom_image") val customImage: File?,
     val favorite: Boolean = false
 )

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.*
+import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Transaction
 import com.gmail.uli153.akihabara3.data.models.TransactionType
@@ -20,7 +21,6 @@ import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import kotlinx.android.synthetic.main.row_product.view.*
 import kotlinx.android.synthetic.main.row_transaction.view.*
 import kotlinx.android.synthetic.main.row_transaction.view.label_name
 import java.text.DecimalFormat
@@ -88,6 +88,12 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         init {
             itemView.btn_remove.setSafeClickListener {
                 listener.onRollbackTransaction(transaction)
+            }
+            itemView.surface.setSafeClickListener {
+                when (itemView.swipe.openStatus) {
+                    SwipeLayout.Status.Open -> itemView.swipe.close(true)
+                    SwipeLayout.Status.Close -> itemView.swipe.open(true)
+                }
             }
         }
 

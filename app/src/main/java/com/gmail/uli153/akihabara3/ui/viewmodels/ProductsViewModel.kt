@@ -59,11 +59,12 @@ class ProductsViewModel @Inject constructor(private val repo: AkbRepository): Vi
 
     fun buyProduct(product: Product, listener: ((Long) -> Unit)? = null) {
         val transaction = Transaction(
-                type = TransactionType.BUY,
-                date = Date(),
-                title = product.name,
-                amount = product.price,
-                image = product.localImage
+            type = TransactionType.BUY,
+            date = Date(),
+            title = product.name,
+            amount = product.price,
+            customImage = product.customImage,
+            defaultImage = product.defaultImage
         )
         viewModelScope.launch(Dispatchers.IO) {
             val id = repo.addTransaction(transaction)
@@ -87,7 +88,9 @@ class ProductsViewModel @Inject constructor(private val repo: AkbRepository): Vi
                 type = TransactionType.BALANCE,
                 date = Date(),
                 title = null,
-                amount = amount
+                amount = amount,
+                defaultImage = 0,
+                customImage = null
             )
             repo.addTransaction(transaction)
         }

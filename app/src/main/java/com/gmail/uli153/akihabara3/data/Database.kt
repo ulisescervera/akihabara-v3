@@ -54,9 +54,9 @@ class AkihabaraDatabaseCallack(): RoomDatabase.Callback() {
         val l = mutableListOf<Product>()
         for (i in 1..20) {
             if (i <= 10) {
-                l.add(Product(i.toLong(), ProductType.DRINK , "bebida ${i}", BigDecimal(1.0 * i), null, null))
+                l.add(Product(i.toLong(), ProductType.DRINK , "bebida ${i}", BigDecimal(1.0 * i), R.drawable.ic_res_drink1, null))
             } else {
-                l.add(Product(i.toLong(), ProductType.FOOD, "comida ${i}", BigDecimal(1.0 * i), null, null))
+                l.add(Product(i.toLong(), ProductType.FOOD, "comida ${i}", BigDecimal(1.0 * i), R.drawable.ic_res_food6, null))
             }
 
         }
