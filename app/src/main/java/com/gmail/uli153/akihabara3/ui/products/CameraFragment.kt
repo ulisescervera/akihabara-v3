@@ -1,10 +1,14 @@
 package com.gmail.uli153.akihabara3.ui.products
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
@@ -17,6 +21,7 @@ import androidx.core.net.toFile
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
@@ -29,6 +34,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+
 
 class CameraFragment: AkbFragment() {
 
@@ -47,31 +53,57 @@ class CameraFragment: AkbFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupCamera()
         binding.btnTakePhoto.setSafeClickListener {
-            val imageCapture = this.imageCapture ?: return@setSafeClickListener
+            onTakeImageClicked()
+        }
+        setupButtonAnimation()
+    }
 
-            val options = ImageCapture.OutputFileOptions.Builder(newTmpFile()).build()
-            val executor = ContextCompat.getMainExecutor(requireContext())
-            val callback = object: ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    outputFileResults.savedUri?.let {
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            val imageFile = cropSquare(it.toFile().absolutePath)
-                            productsViewModel.setProductFormImage(imageFile)
-                            navigateUp()
-                        }
-                    } ?: run {
-                        //todo
-                        navigateUp()
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupButtonAnimation() {
+        binding.btnTakePhoto.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    AnimatorInflater.loadAnimator(requireContext(), R.animator.grows).apply {
+                        setTarget(view)
+                        start()
                     }
                 }
+                MotionEvent.ACTION_UP -> {
+                    AnimatorInflater.loadAnimator(requireContext(), R.animator.regain_size).apply {
+                        setTarget(view)
+                        start()
+                    }
+                }
+            }
+            false
+        }
+    }
 
-                override fun onError(exception: ImageCaptureException) {
+    private fun onTakeImageClicked() {
+        val imageCapture = this.imageCapture ?: return
+
+        val options = ImageCapture.OutputFileOptions.Builder(newTmpFile()).build()
+        val executor = ContextCompat.getMainExecutor(requireContext())
+        val callback = object: ImageCapture.OnImageSavedCallback {
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                outputFileResults.savedUri?.let {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        val imageFile = cropSquare(it.toFile().absolutePath)
+                        productsViewModel.setProductFormImage(imageFile)
+                        navigateUp()
+                    }
+                } ?: run {
                     //todo
+                    navigateUp()
                 }
             }
 
-            imageCapture.takePicture(options, executor, callback)
+            override fun onError(exception: ImageCaptureException) {
+                //todo
+            }
         }
+
+        imageCapture.takePicture(options, executor, callback)
     }
 
     private fun setupCamera() {
@@ -109,26 +141,21 @@ class CameraFragment: AkbFragment() {
         val cropped = Bitmap.createBitmap(bitmap, x, y, size, size)
         val scaled = Bitmap.createScaledBitmap(cropped, croppedSize, croppedSize, true)
 
-
         val oldExif = ExifInterface(path)
         val exifOrientation = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION)
-        val b: Bitmap
-        if (exifOrientation != null) {
-//            val newExif = ExifInterface(file.absolutePath)
-//            newExif.setAttribute(ExifInterface.TAG_ORIENTATION, exifOrientation)
-//            newExif.saveAttributes()
-            b = rotateBitmap(scaled, oldExif)
+        val finalBitmap = if (exifOrientation != null) {
+            rotateBitmap(scaled, oldExif)
         } else {
-            b = scaled
+            scaled
         }
 
         val file = newTmpFile()
-        saveBitmap(b, file)
+        saveBitmap(finalBitmap, file)
 
         return@withContext file
     }
 
-    private suspend fun saveBitmap(bitmap: Bitmap, file: File) = withContext(Dispatchers.IO) {
+    private fun saveBitmap(bitmap: Bitmap, file: File) {
         try {
             val fos = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -141,7 +168,7 @@ class CameraFragment: AkbFragment() {
         }
     }
 
-    private suspend fun rotateBitmap(bitmap: Bitmap, exif: ExifInterface): Bitmap = withContext(Dispatchers.Default) {
+    private fun rotateBitmap(bitmap: Bitmap, exif: ExifInterface): Bitmap {
         var rotate = 0f
         val orientation = exif.getAttributeInt(
             ExifInterface.TAG_ORIENTATION,
@@ -154,6 +181,6 @@ class CameraFragment: AkbFragment() {
         }
         val matrix = Matrix()
         matrix.postRotate(rotate)
-        return@withContext Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 }

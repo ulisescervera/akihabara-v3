@@ -4,6 +4,7 @@
     <string name="title_settings">Ajustes</string>
     <string name="title_history">Historial</string>
     <string name="edit_product">Editar producto</string>
+    <string name="new_product">Nuevo producto</string>
 
     <string name="drinks">Bebidas</string>
     <string name="foods">Comidas</string>

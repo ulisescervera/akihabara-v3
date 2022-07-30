@@ -32,6 +32,8 @@
         <item name="buttonStyle">@style/AkbButton</item>
         <item name="actionBarTheme">@style/AkbActionBar</item>
         <item name="android:navigationBarColor">@color/md_grey_900</item>
+
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
     </style>
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
@@ -89,4 +91,9 @@
     <style name="AkbBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">@color/white</item>
+    </style>
+
 </resources>

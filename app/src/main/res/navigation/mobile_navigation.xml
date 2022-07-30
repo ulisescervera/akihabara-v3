@@ -56,13 +56,13 @@
     <fragment
         android:id="@+id/destination_create_product"
         android:name="com.gmail.uli153.akihabara3.ui.products.CreateProductFragment"
-        android:label="@string/edit_product"
+        android:label="@string/new_product"
         tools:layout="@layout/fragment_product_base_form" />
 
     <fragment
         android:id="@+id/destination_take_photo"
         android:name="com.gmail.uli153.akihabara3.ui.products.CameraFragment"
-        android:label="@string/edit_product"
+        android:label=""
         tools:layout="@layout/fragment_camera" />
 
 </navigation>

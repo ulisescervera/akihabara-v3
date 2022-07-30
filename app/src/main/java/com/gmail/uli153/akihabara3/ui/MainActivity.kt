@@ -50,12 +50,14 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomAppBar.fabCradleMargin = 6.toPx
                     binding.bottomAppBar.fabCradleRoundedCornerRadius = 12.toPx
                     binding.bottomAppBar.cradleVerticalOffset = 0f
+                    binding.toolbar.navigationIcon = null
                 }
                 else -> {
                     binding.fav.hide()
                     binding.bottomAppBar.fabCradleMargin = 0f
                     binding.bottomAppBar.fabCradleRoundedCornerRadius = 0f
                     binding.bottomAppBar.cradleVerticalOffset = 0f
+                    binding.toolbar.setNavigationIcon(R.drawable.ic_chevron_left)
                 }
             }
         }
@@ -73,9 +75,8 @@ class MainActivity : AppCompatActivity() {
 
 /**
  * TODO
- * - Cradle not seen ok in xiaomi mi 9 lite dark mode
  * - Alert confirm shows default Material Theme colors
  * - Crop image from gallery
  * - Camera preview
- * - Resize image from camera/gallery
+ * - Resize image from gallery
  */

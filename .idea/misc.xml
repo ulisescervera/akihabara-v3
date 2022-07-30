@@ -13,13 +13,17 @@
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_swipe.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_tablayout.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/bg_unselected_tab.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_camera_pressed_off.xml" value="0.2495" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_camera_pressed_on.xml" value="0.2495" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_chevron_left.xml" value="0.315" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_remove.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_buy.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_favorite.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_undo.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/selector_camera_button.xml" value="0.315" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/separator_balance.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/separator_product.xml" value="0.2125" />
-        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/bottom_sheet_balance.xml" value="0.33" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/bottom_sheet_images.xml" value="0.2479692176143651" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/cell_image.xml" value="0.2479692176143651" />
