@@ -19,10 +19,11 @@
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_undo.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/separator_balance.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/separator_product.xml" value="0.2125" />
-        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/bottom_sheet_balance.xml" value="0.33" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/bottom_sheet_images.xml" value="0.2479692176143651" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/cell_image.xml" value="0.2479692176143651" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_camera.xml" value="0.2479692176143651" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_history.xml" value="0.26336041043180847" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_product_base_form.xml" value="0.303125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_products.xml" value="0.25" />
@@ -75,7 +76,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

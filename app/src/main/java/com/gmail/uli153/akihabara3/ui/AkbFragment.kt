@@ -1,12 +1,15 @@
 package com.gmail.uli153.akihabara3.ui
 
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.gmail.uli153.akihabara3.R
+import java.io.File
 
 open class AkbFragment: Fragment() {
 
@@ -48,5 +51,13 @@ open class AkbFragment: Fragment() {
             .setPositiveButton(getString(R.string.accept), accept)
             .create()
             .show()
+    }
+
+    protected fun isPermissionGranted(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    protected fun newTmpFile(): File {
+        return File(requireContext().cacheDir, "${System.currentTimeMillis()}_image_jpeg")
     }
 }

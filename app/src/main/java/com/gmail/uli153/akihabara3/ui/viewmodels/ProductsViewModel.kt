@@ -57,6 +57,9 @@ class ProductsViewModel @Inject constructor(private val repo: AkbRepository): Vi
         }
     }
 
+    private val _productFormImage: MutableLiveData<Any?> = MutableLiveData(null)
+    val productFormImage: LiveData<Any?> = _productFormImage
+
     fun buyProduct(product: Product, listener: ((Long) -> Unit)? = null) {
         val transaction = Transaction(
             type = TransactionType.BUY,
@@ -130,5 +133,9 @@ class ProductsViewModel @Inject constructor(private val repo: AkbRepository): Vi
 //        .onStart { DataWrapper.Loading<List<Product>>() }
 //        .map { DataWrapper.Success(it) }
 //        .asLiveData()
+
+    fun setProductFormImage(image: Any?) {
+        _productFormImage.value = image
+    }
 
 }

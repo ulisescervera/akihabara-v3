@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.setPadding
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -13,10 +14,7 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
-import com.gmail.uli153.akihabara3.utils.AkbNumberParser
-import com.gmail.uli153.akihabara3.utils.DataWrapper
-import com.gmail.uli153.akihabara3.utils.setProductImage
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.*
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment_product_base_form.*
@@ -44,8 +42,14 @@ class EditProductFragment: ProductFormBaseFragment() {
 
     override fun updateImage(file: Any?) {
         when (file) {
-            is File -> Glide.with(binding.imageviewProduct).load(file).into(binding.imageviewProduct)
-            is Int -> Glide.with(binding.imageviewProduct).load(file).into(binding.imageviewProduct)
+            is File -> {
+                Glide.with(binding.imageviewProduct).load(file).circleCrop().into(binding.imageviewProduct)
+                binding.imageviewProduct.setPadding(0)
+            }
+            is Int -> {
+                Glide.with(binding.imageviewProduct).load(file).into(binding.imageviewProduct)
+                binding.imageviewProduct.setPadding(20.toPx.toInt())
+            }
             else -> binding.imageviewProduct.setProductImage(product)
         }
     }
@@ -64,6 +68,7 @@ class EditProductFragment: ProductFormBaseFragment() {
             return
         }
 
+        updateImage(product.customImage ?: product.defaultImage)
         binding.btnFavorite.isLiked = product.favorite
         binding.btnFavorite.setOnLikeListener(likeListener)
         binding.editName.setText(product.name)
@@ -78,6 +83,7 @@ class EditProductFragment: ProductFormBaseFragment() {
 
     override fun updateButton() {
         val isValid = isValidName && isValidPrice
+        val image = productsViewModel.productFormImage.value
         val fileChanged = image != null
         val changed = type != product.type
                 || name != product.name
@@ -91,6 +97,7 @@ class EditProductFragment: ProductFormBaseFragment() {
     private fun saveProduct() {
         val price = this.price ?: return
 
+        val image = productsViewModel.productFormImage.value
         val product = product.copy(
             type = type,
             name = name,

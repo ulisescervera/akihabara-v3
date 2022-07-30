@@ -2,6 +2,7 @@ package com.gmail.uli153.akihabara3.ui.products
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.setPadding
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
@@ -10,6 +11,7 @@ import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.setProductImage
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.toPx
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -18,8 +20,14 @@ class CreateProductFragment: ProductFormBaseFragment() {
 
     override fun updateImage(file: Any?) {
         when (file) {
-            is File -> Glide.with(binding.imageviewProduct).load(file).into(binding.imageviewProduct)
-            is Int -> Glide.with(binding.imageviewProduct).load(file).into(binding.imageviewProduct)
+            is File -> {
+                Glide.with(binding.imageviewProduct).load(file).circleCrop().into(binding.imageviewProduct)
+                binding.imageviewProduct.setPadding(0)
+            }
+            is Int -> {
+                Glide.with(binding.imageviewProduct).load(file).into(binding.imageviewProduct)
+                binding.imageviewProduct.setPadding(20.toPx.toInt())
+            }
             else -> binding.imageviewProduct.setImageDrawable(null)
         }
     }
@@ -30,7 +38,6 @@ class CreateProductFragment: ProductFormBaseFragment() {
         binding.button.setSafeClickListener {
             trySaveProduct()
         }
-        image = R.drawable.ic_res_food27
     }
 
     override fun updateButton() {
@@ -49,12 +56,13 @@ class CreateProductFragment: ProductFormBaseFragment() {
             return
         }
 
+        val img = productsViewModel.productFormImage.value
         val newProduct = Product(
             type = categories[binding.spinnerType.selectedItemPosition],
             name = name,
             price = price,
-            defaultImage = image as? Int ?: 0,
-            customImage = image as? File,
+            defaultImage = img as? Int ?: 0,
+            customImage = img as? File,
             favorite = isFavorite
         )
 

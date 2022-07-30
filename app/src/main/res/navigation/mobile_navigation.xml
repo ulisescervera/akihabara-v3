@@ -5,6 +5,11 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/destination_products">
 
+    <!-- Global actions -->
+    <action android:id="@+id/action_open_camera"
+        app:destination="@+id/destination_take_photo" />
+
+    <!-- Destinations -->
     <fragment
         android:id="@+id/destination_products"
         android:name="com.gmail.uli153.akihabara3.ui.products.ProductsFragment"
@@ -53,5 +58,11 @@
         android:name="com.gmail.uli153.akihabara3.ui.products.CreateProductFragment"
         android:label="@string/edit_product"
         tools:layout="@layout/fragment_product_base_form" />
+
+    <fragment
+        android:id="@+id/destination_take_photo"
+        android:name="com.gmail.uli153.akihabara3.ui.products.CameraFragment"
+        android:label="@string/edit_product"
+        tools:layout="@layout/fragment_camera" />
 
 </navigation>

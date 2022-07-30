@@ -1,6 +1,7 @@
 package com.gmail.uli153.akihabara3.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheet.BalanceBottomSheet
+import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.toPx
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val productsViewModel: ProductsViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
         navView.itemIconTintList = null
+        navView.background = null
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAddProduct.setSafeClickListener {
+            productsViewModel.setProductFormImage(R.drawable.ic_res_food27)
             navController.navigate(R.id.destination_create_product)
         }
 

@@ -21,6 +21,7 @@ import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.setTransactionImage
 import kotlinx.android.synthetic.main.row_transaction.view.*
 import kotlinx.android.synthetic.main.row_transaction.view.label_name
 import java.text.DecimalFormat
@@ -43,8 +44,7 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         Adapter(requireContext(), this)
     }
 
-    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.getDefault())
-    private val numberFormatter = DecimalFormat("0.00")
+    private val dateFormatter = SimpleDateFormat("E dd/MM/yyyy HH:mm", Locale.getDefault())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
@@ -101,6 +101,7 @@ class HistoryFragment : AkbFragment(), HistoryListener {
         fun set(transaction: Transaction) {
             this.transaction = transaction
 
+            itemView.image.setTransactionImage(transaction)
             if (transaction.date != null) {
                 itemView.label_date.text = dateFormatter.format(transaction.date)
                 itemView.label_date.visibility = View.VISIBLE

@@ -1,6 +1,8 @@
 package com.gmail.uli153.akihabara3.ui.products.base
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -12,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.gmail.uli153.akihabara3.R
@@ -39,13 +42,6 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
 
     protected lateinit var binding: FragmentProductBaseFormBinding
     protected val productsViewModel: ProductsViewModel by activityViewModels()
-
-    protected var image: Any? = null
-        set(value) {
-            field = value
-            updateImage(value)
-            updateButton()
-        }
 
     protected val type: ProductType get() {
         return categories[spinner_type.selectedItemPosition]
@@ -105,13 +101,19 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
             .build()
     }
 
-    private val tmpFile: File by lazy {
-        File(requireContext().filesDir, "image_jpeg")
-    }
+    private lateinit var launcher: ActivityResultLauncher<String>
 
     override fun onImageSelected(imageRes: Int?) {
-        this.image = imageRes
-        updateImage(imageRes)
+        productsViewModel.setProductFormImage(imageRes)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        launcher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (!granted) return@registerForActivityResult
+
+            navController.navigate(R.id.action_open_camera)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -128,6 +130,10 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
         binding.imageviewProduct.setSafeClickListener {
             showImagesBottomSheet()
         }
+        productsViewModel.productFormImage.observe(viewLifecycleOwner) {
+            updateImage(it)
+            updateButton()
+        }
     }
 
     protected fun showImagesBottomSheet() {
@@ -135,7 +141,12 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
     }
 
     override fun showCamera() {
-        easy.openCameraForImage(this)
+//        easy.openCameraForImage(this)
+        if (isPermissionGranted(Manifest.permission.CAMERA)) {
+            navController.navigate(R.id.action_open_camera)
+        } else {
+            launcher.launch(Manifest.permission.CAMERA)
+        }
     }
 
     override fun showGallery() {
@@ -153,8 +164,10 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
             override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                 imageFiles.firstOrNull()?.file?.let { file ->
                     lifecycleScope.launch(Dispatchers.Main) {
-                        moveFile(file, tmpFile)
-                        image = tmpFile
+                        val tmp = newTmpFile()
+                        moveFile(file, tmp)
+                        updateImage(null)
+                        productsViewModel.setProductFormImage(tmp)
                     }
                 }
             }
@@ -166,6 +179,10 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
         var out: OutputStream? = null
         try {
             //create output directory if it doesn't exist
+            if (outputFile.exists()) {
+                outputFile.delete()
+            }
+
             if (!outputFile.exists()) {
                 outputFile.createNewFile()
             }

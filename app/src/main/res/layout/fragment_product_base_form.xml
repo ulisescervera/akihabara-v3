@@ -27,26 +27,18 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/default_horizontal_margin" />
 
-
-        <LinearLayout
-            android:id="@+id/container_imageview_product"
+        <ImageView
+            android:id="@+id/imageview_product"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/stroke_main"
             android:orientation="vertical"
             android:padding="20dp"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageview_product"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.like.LikeButton
             android:id="@+id/btn_favorite"
@@ -59,8 +51,8 @@
             app:icon_type="heart"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintHorizontal_bias="0.75"
-            app:layout_constraintStart_toEndOf="@+id/container_imageview_product"
-            app:layout_constraintTop_toTopOf="@+id/container_imageview_product" />
+            app:layout_constraintStart_toEndOf="@+id/imageview_product"
+            app:layout_constraintTop_toTopOf="@+id/imageview_product" />
 
         <TextView
             android:id="@+id/label_name"
@@ -69,7 +61,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/name"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/container_imageview_product" />
+            app:layout_constraintTop_toBottomOf="@+id/imageview_product" />
 
         <EditText
             android:id="@+id/edit_name"
