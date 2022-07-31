@@ -17,6 +17,8 @@
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_camera_pressed_on.xml" value="0.2495" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_chevron_left.xml" value="0.315" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_remove.xml" value="0.2125" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_rotate_left.xml" value="0.2495" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ic_rotate_right.xml" value="0.2495" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_buy.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_favorite.xml" value="0.2125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/drawable/ripple_undo.xml" value="0.2125" />
@@ -28,6 +30,7 @@
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/bottom_sheet_images.xml" value="0.2479692176143651" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/cell_image.xml" value="0.2479692176143651" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_camera.xml" value="0.2479692176143651" />
+        <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_crop.xml" value="0.2503415300546448" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_history.xml" value="0.26336041043180847" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_product_base_form.xml" value="0.303125" />
         <entry key="..\:/Uli/_Workspaces/_Android/Akihabara-v3/app/src/main/res/layout/fragment_products.xml" value="0.25" />

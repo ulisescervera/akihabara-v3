@@ -18,10 +18,7 @@ import com.gmail.uli153.akihabara3.utils.*
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment_product_base_form.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 import java.math.BigDecimal
 
@@ -83,7 +80,7 @@ class EditProductFragment: ProductFormBaseFragment() {
 
     override fun updateButton() {
         val isValid = isValidName && isValidPrice
-        val image = productsViewModel.productFormImage.value
+        val image = productsFormViewModel.productFormImage.value
         val fileChanged = image != null
         val changed = type != product.type
                 || name != product.name
@@ -97,20 +94,29 @@ class EditProductFragment: ProductFormBaseFragment() {
     private fun saveProduct() {
         val price = this.price ?: return
 
-        val image = productsViewModel.productFormImage.value
-        val product = product.copy(
-            type = type,
-            name = name,
-            price = price,
-            favorite = isFavorite,
-            customImage = image as? File,
-            defaultImage = image as? Int ?: 0
-        )
         val saveListener = DialogInterface.OnClickListener { _, _ ->
             productsViewModel.viewModelScope.launch(Dispatchers.Main) {
-                navController.navigateUp()
-                delay(500)
+                val image = productsFormViewModel.productFormImage.value?.let {
+                    if (it is File) {
+                        val finalFile = newImageFile()
+                        runBlocking {
+                            FileUtils.moveFile(it, finalFile)
+                        }
+                        finalFile
+                    } else {
+                        it
+                    }
+                }
+                val product = product.copy(
+                    type = type,
+                    name = name,
+                    price = price,
+                    favorite = isFavorite,
+                    customImage = image as? File,
+                    defaultImage = image as? Int ?: 0
+                )
                 productsViewModel.addProduct(product)
+                navController.navigateUp()
             }
         }
 

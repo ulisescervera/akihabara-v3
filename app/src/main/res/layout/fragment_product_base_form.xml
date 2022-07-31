@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:overScrollMode="never"
-    android:paddingBottom="@dimen/bottom_nav_bar_height"
     android:scrollbars="none">
 
     <androidx.constraintlayout.widget.ConstraintLayout

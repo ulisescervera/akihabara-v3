@@ -9,6 +9,9 @@
     <action android:id="@+id/action_open_camera"
         app:destination="@+id/destination_take_photo" />
 
+    <action android:id="@+id/action_crop_image"
+        app:destination="@+id/destination_crop_image" />
+
     <!-- Destinations -->
     <fragment
         android:id="@+id/destination_products"
@@ -61,8 +64,14 @@
 
     <fragment
         android:id="@+id/destination_take_photo"
-        android:name="com.gmail.uli153.akihabara3.ui.products.CameraFragment"
+        android:name="com.gmail.uli153.akihabara3.ui.camera.CameraFragment"
         android:label=""
         tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/destination_crop_image"
+        android:name="com.gmail.uli153.akihabara3.ui.camera.CropFragment"
+        android:label=""
+        tools:layout="@layout/fragment_crop" />
 
 </navigation>

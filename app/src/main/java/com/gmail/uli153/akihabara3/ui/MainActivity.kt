@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheet.BalanceBottomSheet
+import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.toPx
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val productsViewModel: ProductsViewModel by viewModels()
+    private val productsFormViewModel: ProductFormViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,24 +47,26 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.destination_products, R.id.destination_history -> {
+                    binding.bottomAppBar.performShow(true)
                     binding.fav.show()
-                    binding.bottomAppBar.fabCradleMargin = 6.toPx
-                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 12.toPx
-                    binding.bottomAppBar.cradleVerticalOffset = 0f
                     binding.toolbar.navigationIcon = null
+//                    binding.bottomAppBar.fabCradleMargin = 6.toPx
+//                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 12.toPx
+//                    binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
                 else -> {
+                    binding.bottomAppBar.performHide(true)
                     binding.fav.hide()
-                    binding.bottomAppBar.fabCradleMargin = 0f
-                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 0f
-                    binding.bottomAppBar.cradleVerticalOffset = 0f
                     binding.toolbar.setNavigationIcon(R.drawable.ic_chevron_left)
+//                    binding.bottomAppBar.fabCradleMargin = 0f
+//                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 0f
+//                    binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
             }
         }
 
         binding.btnAddProduct.setSafeClickListener {
-            productsViewModel.setProductFormImage(R.drawable.ic_res_food27)
+            productsFormViewModel.setProductFormImage(R.drawable.ic_res_food27)
             navController.navigate(R.id.destination_create_product)
         }
 

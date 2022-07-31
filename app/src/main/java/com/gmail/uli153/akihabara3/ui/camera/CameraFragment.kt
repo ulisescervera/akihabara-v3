@@ -1,7 +1,6 @@
-package com.gmail.uli153.akihabara3.ui.products
+package com.gmail.uli153.akihabara3.ui.camera
 
 import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -24,7 +23,9 @@ import androidx.lifecycle.lifecycleScope
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
+import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
+import com.gmail.uli153.akihabara3.utils.FileUtils
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.toPx
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +41,7 @@ class CameraFragment: AkbFragment() {
 
     private lateinit var binding: FragmentCameraBinding
 
-    private val productsViewModel: ProductsViewModel by activityViewModels()
+    private val productsFormViewModel: ProductFormViewModel by activityViewModels()
 
     private var imageCapture: ImageCapture? = null
 
@@ -88,8 +89,8 @@ class CameraFragment: AkbFragment() {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 outputFileResults.savedUri?.let {
                     lifecycleScope.launch(Dispatchers.Main) {
-                        val imageFile = cropSquare(it.toFile().absolutePath)
-                        productsViewModel.setProductFormImage(imageFile)
+                        val imageFile = FileUtils.cropSquare(it.toFile().absolutePath, newTmpFile())
+                        productsFormViewModel.setProductFormImage(imageFile)
                         navigateUp()
                     }
                 } ?: run {
@@ -130,57 +131,4 @@ class CameraFragment: AkbFragment() {
         providerFuture.addListener(listener, executor)
     }
 
-    private suspend fun cropSquare(
-        path: String,
-        croppedSize: Int = 100.toPx.toInt()
-    ): File = withContext(Dispatchers.Default) {
-        val bitmap = BitmapFactory.decodeFile(path)
-        val size = Math.min(bitmap.width, bitmap.height)
-        val x = (bitmap.width - size)/2
-        val y = (bitmap.height - size)/2
-        val cropped = Bitmap.createBitmap(bitmap, x, y, size, size)
-        val scaled = Bitmap.createScaledBitmap(cropped, croppedSize, croppedSize, true)
-
-        val oldExif = ExifInterface(path)
-        val exifOrientation = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION)
-        val finalBitmap = if (exifOrientation != null) {
-            rotateBitmap(scaled, oldExif)
-        } else {
-            scaled
-        }
-
-        val file = newTmpFile()
-        saveBitmap(finalBitmap, file)
-
-        return@withContext file
-    }
-
-    private fun saveBitmap(bitmap: Bitmap, file: File) {
-        try {
-            val fos = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-            fos.flush()
-            fos.close()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun rotateBitmap(bitmap: Bitmap, exif: ExifInterface): Bitmap {
-        var rotate = 0f
-        val orientation = exif.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-        )
-        when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_270 -> rotate = 270f
-            ExifInterface.ORIENTATION_ROTATE_180 -> rotate = 180f
-            ExifInterface.ORIENTATION_ROTATE_90 -> rotate = 90f
-        }
-        val matrix = Matrix()
-        matrix.postRotate(rotate)
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    }
 }

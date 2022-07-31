@@ -58,6 +58,10 @@ open class AkbFragment: Fragment() {
     }
 
     protected fun newTmpFile(): File {
-        return File(requireContext().cacheDir, "${System.currentTimeMillis()}_image_jpeg")
+        return File(requireContext().cacheDir, "${System.currentTimeMillis()}_tmp_file")
+    }
+
+    protected fun newImageFile(): File {
+        return File(requireContext().filesDir, "${System.currentTimeMillis()}_image.jpeg")
     }
 }

@@ -9,11 +9,13 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
+import com.gmail.uli153.akihabara3.utils.FileUtils
 import com.gmail.uli153.akihabara3.utils.setProductImage
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.toPx
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 class CreateProductFragment: ProductFormBaseFragment() {
@@ -56,7 +58,18 @@ class CreateProductFragment: ProductFormBaseFragment() {
             return
         }
 
-        val img = productsViewModel.productFormImage.value
+        val img = productsFormViewModel.productFormImage.value?.let {
+            if (it is File) {
+                val finalFile = newImageFile()
+                runBlocking {
+                    FileUtils.moveFile(it, finalFile)
+                }
+                finalFile
+            } else {
+                it
+            }
+        }
+
         val newProduct = Product(
             type = categories[binding.spinnerType.selectedItemPosition],
             name = name,

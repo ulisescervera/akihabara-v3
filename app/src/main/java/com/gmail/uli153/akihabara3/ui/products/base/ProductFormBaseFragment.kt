@@ -22,6 +22,7 @@ import com.gmail.uli153.akihabara3.data.models.ProductType
 import com.gmail.uli153.akihabara3.databinding.FragmentProductBaseFormBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheet.ImagesBottomSheet
+import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
@@ -42,6 +43,7 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
 
     protected lateinit var binding: FragmentProductBaseFormBinding
     protected val productsViewModel: ProductsViewModel by activityViewModels()
+    protected val productsFormViewModel: ProductFormViewModel by activityViewModels()
 
     protected val type: ProductType get() {
         return categories[spinner_type.selectedItemPosition]
@@ -104,7 +106,7 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
     private lateinit var launcher: ActivityResultLauncher<String>
 
     override fun onImageSelected(imageRes: Int?) {
-        productsViewModel.setProductFormImage(imageRes)
+        productsFormViewModel.setProductFormImage(imageRes)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,7 +132,7 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
         binding.imageviewProduct.setSafeClickListener {
             showImagesBottomSheet()
         }
-        productsViewModel.productFormImage.observe(viewLifecycleOwner) {
+        productsFormViewModel.productFormImage.observe(viewLifecycleOwner) {
             updateImage(it)
             updateButton()
         }
@@ -141,7 +143,6 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
     }
 
     override fun showCamera() {
-//        easy.openCameraForImage(this)
         if (isPermissionGranted(Manifest.permission.CAMERA)) {
             navController.navigate(R.id.action_open_camera)
         } else {
@@ -156,57 +157,16 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         easy.handleActivityResult(requestCode, resultCode, data, requireActivity(), object : EasyImage.Callbacks {
-            override fun onCanceled(source: MediaSource) {
-            }
-            override fun onImagePickerError(error: Throwable, source: MediaSource) {
-            }
+            override fun onCanceled(source: MediaSource) {}
+            override fun onImagePickerError(error: Throwable, source: MediaSource) {}
 
             override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                 imageFiles.firstOrNull()?.file?.let { file ->
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        val tmp = newTmpFile()
-                        moveFile(file, tmp)
-                        updateImage(null)
-                        productsViewModel.setProductFormImage(tmp)
-                    }
+                    productsFormViewModel.setGalleryImage(file)
+                    navController.navigate(R.id.action_crop_image)
                 }
             }
         })
     }
 
-    private suspend fun moveFile(inputFile: File, outputFile: File) = withContext(Dispatchers.IO) {
-        var inputStream: InputStream? = null
-        var out: OutputStream? = null
-        try {
-            //create output directory if it doesn't exist
-            if (outputFile.exists()) {
-                outputFile.delete()
-            }
-
-            if (!outputFile.exists()) {
-                outputFile.createNewFile()
-            }
-            inputStream = FileInputStream(inputFile)
-            out = FileOutputStream(outputFile)
-            val buffer = ByteArray(1024)
-            var read: Int
-            while (inputStream.read(buffer).also { read = it } != -1) {
-                out.write(buffer, 0, read)
-            }
-            inputStream.close()
-            inputStream = null
-
-            // write the output file
-            out.flush()
-            out.close()
-            out = null
-
-            // delete the original file
-            inputFile.delete()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 }
