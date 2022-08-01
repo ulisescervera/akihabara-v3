@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.ui.bottomsheet.DeleteProductBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheet.base.DeleteBaseBottomSheet
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.*
@@ -24,7 +25,7 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.math.BigDecimal
 
-class EditProductFragment: ProductFormBaseFragment() {
+class EditProductFragment: ProductFormBaseFragment(), DeleteBaseBottomSheet.DeleteListener<Product> {
 
     private val args: EditProductFragmentArgs by navArgs()
 
@@ -51,6 +52,11 @@ class EditProductFragment: ProductFormBaseFragment() {
             }
             else -> binding.imageviewProduct.setProductImage(product)
         }
+    }
+
+    override fun onDeleteItem(item: Product) {
+        productsViewModel.deleteProduct(product)
+        navigateUp()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,7 +86,7 @@ class EditProductFragment: ProductFormBaseFragment() {
         }
         binding.btnDelete.isGone = false
         binding.btnDelete.setSafeClickListener {
-            DeleteProductBottomSheet.show(childFragmentManager, product)
+            DeleteProductBottomSheet.show(childFragmentManager, product, this)
         }
     }
 
@@ -105,9 +111,7 @@ class EditProductFragment: ProductFormBaseFragment() {
                 val image = productsFormViewModel.productFormImage.value?.let {
                     if (it is File) {
                         val finalFile = newImageFile()
-                        runBlocking {
-                            FileUtils.moveFile(it, finalFile)
-                        }
+                        FileUtils.moveFile(it, finalFile)
                         finalFile
                     } else {
                         it

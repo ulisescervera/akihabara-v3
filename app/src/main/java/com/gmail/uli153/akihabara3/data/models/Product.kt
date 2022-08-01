@@ -16,9 +16,9 @@ enum class ProductType(val nameResId: Int) {
 data class Product(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val type: ProductType,
-    val name: String,
+    override val name: String,
     val price: BigDecimal,
     @ColumnInfo(name = "default_image") val defaultImage: Int,
     @ColumnInfo(name = "custom_image") val customImage: File?,
     val favorite: Boolean = false
-)
+): Nameable

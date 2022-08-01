@@ -24,7 +24,7 @@
 
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
-    <string name="want_to_remove_transaction">¿Desea eliminar esta operación? No podrás deshacerlo</string>
+    <string name="want_to_remove_transaction">¿Desea eliminar %s? No podrás deshacerlo</string>
 
     <string name="edit_balance">Modificar saldo</string>
     <string name="add_product">Añadir producto</string>
@@ -39,5 +39,7 @@
 
     <string name="info_about">Akihabara ha sido desarollada por Ulises Cervera. Su uso es libre y gratuito, y no ofrece ninguna garantía.</string>
     <string name="confirm_delete_product">¿Deseas eliminar %s?</string>
-    <string name="delete_product_tip">Para confirmar arrastra la barra hasta el final</string>
+    <string name="delete_product_tip">Para confirmar arrastra el punto hasta el final</string>
+
+    <string name="balance_title">Movimiento de saldo (%s)</string>
 </resources>

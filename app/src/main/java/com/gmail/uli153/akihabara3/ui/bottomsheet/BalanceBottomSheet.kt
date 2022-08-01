@@ -122,7 +122,8 @@ class BalanceBottomSheet: BottomSheetDialogFragment() {
         btn_save_balance.setSafeClickListener {
             val amount = this.amount
             if (isValidAmount && amount.compareTo(BigDecimal(0)) != 0) {
-                productsViewModel.addBalance(amount)
+                val decimalFormat = DecimalFormat("+0.00€")
+                productsViewModel.addBalance(amount, getString(R.string.balance_title, decimalFormat.format(amount)))
                 behavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
         }

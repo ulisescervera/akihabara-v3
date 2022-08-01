@@ -82,12 +82,12 @@ class ProductsViewModel @Inject constructor(private val repo: AkbRepository): Vi
         }
     }
 
-    fun addBalance(amount: BigDecimal) {
+    fun addBalance(amount: BigDecimal, title: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val transaction = Transaction(
                 type = TransactionType.BALANCE,
                 date = Date(),
-                title = null,
+                title = title,
                 amount = amount,
                 defaultImage = 0,
                 customImage = null

@@ -17,6 +17,8 @@ import com.gmail.uli153.akihabara3.data.models.TransactionType
 import com.gmail.uli153.akihabara3.databinding.FragmentHistoryBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentSettingsBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
+import com.gmail.uli153.akihabara3.ui.bottomsheet.DeleteTransactionBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheet.base.DeleteBaseBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.DataWrapper
@@ -32,7 +34,7 @@ interface HistoryListener {
     fun onRollbackTransaction(transaction: Transaction)
 }
 
-class HistoryFragment : AkbFragment(), HistoryListener {
+class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.DeleteListener<Transaction> {
 
     private var _binding: FragmentHistoryBinding? = null
 
@@ -45,6 +47,20 @@ class HistoryFragment : AkbFragment(), HistoryListener {
     }
 
     private val dateFormatter = SimpleDateFormat("E dd/MM/yyyy HH:mm", Locale.getDefault())
+
+    override fun onRollbackTransaction(transaction: Transaction) {
+        DeleteTransactionBottomSheet.show(childFragmentManager, transaction, this)
+    }
+
+    override fun onDeleteItem(item: Transaction) {
+        productsViewModel.deleteTransaction(item)
+    }
+
+    override fun onCancel(item: Transaction) {
+        adapter.currentList.indexOfFirst { it.id == item.id }.takeIf { it >= 0 }?.let {
+            adapter.notifyItemChanged(it)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
@@ -71,16 +87,6 @@ class HistoryFragment : AkbFragment(), HistoryListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onRollbackTransaction(transaction: Transaction) {
-        showConfirmDialog(message = getString(R.string.want_to_remove_transaction), cancel = { _, _ ->
-            adapter.currentList.indexOfFirst { it.id == transaction.id }.takeIf { it >= 0 }?.let {
-                adapter.notifyItemChanged(it)
-            }
-        }, accept = { _, _ ->
-            productsViewModel.deleteTransaction(transaction)
-        })
     }
 
     private inner class TransactionVH(view: View, listener: HistoryListener): RecyclerView.ViewHolder(view) {
