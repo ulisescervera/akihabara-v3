@@ -37,14 +37,14 @@ class CreateProductFragment: ProductFormBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button.setSafeClickListener {
+        binding.btnSave.setSafeClickListener {
             trySaveProduct()
         }
     }
 
     override fun updateButton() {
         val isValid = isValidName && isValidPrice
-        binding.button.style = if (isValid) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
+        binding.btnSave.style = if (isValid) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
     }
 
     private fun trySaveProduct() {

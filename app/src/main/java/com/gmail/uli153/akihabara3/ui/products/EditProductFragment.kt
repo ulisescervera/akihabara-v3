@@ -6,12 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isGone
 import androidx.core.view.setPadding
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Product
+import com.gmail.uli153.akihabara3.ui.bottomsheet.DeleteProductBottomSheet
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.*
@@ -73,8 +75,12 @@ class EditProductFragment: ProductFormBaseFragment() {
         categories.indexOf(product.type).takeIf { it >= 0 }?.let {
             binding.spinnerType.setSelection(it)
         }
-        binding.button.setSafeClickListener {
+        binding.btnSave.setSafeClickListener {
             saveProduct()
+        }
+        binding.btnDelete.isGone = false
+        binding.btnDelete.setSafeClickListener {
+            DeleteProductBottomSheet.show(childFragmentManager, product)
         }
     }
 
@@ -88,7 +94,7 @@ class EditProductFragment: ProductFormBaseFragment() {
                 || price?.compareTo(product.price) != 0
                 || fileChanged
         val enable = isValid && changed
-        binding.button.style = if (enable) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
+        binding.btnSave.style = if (enable) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
     }
 
     private fun saveProduct() {

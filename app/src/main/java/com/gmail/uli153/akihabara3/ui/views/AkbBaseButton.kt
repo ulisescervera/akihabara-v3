@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import com.gmail.uli153.akihabara3.R
 
 enum class AkbButtonStyle {
-    MAIN, GREY
+    MAIN, GREY, RISKY
 }
 
 open class AkbBaseButton: AppCompatButton {
@@ -25,6 +25,11 @@ open class AkbBaseButton: AppCompatButton {
                     background = ContextCompat.getDrawable(context, R.drawable.bg_grey_button)
                     setTextColor(ContextCompat.getColor(context, R.color.white))
                     isEnabled = false
+                }
+                AkbButtonStyle.RISKY -> {
+                    background = ContextCompat.getDrawable(context, R.drawable.bg_risky_button)
+                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    isEnabled = true
                 }
             }
         }

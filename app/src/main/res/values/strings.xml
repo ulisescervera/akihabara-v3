@@ -20,6 +20,7 @@
     <string name="save_product_changes_message">¿Deseas guardar los cambios?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="delete">Eliminar</string>
 
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
@@ -37,4 +38,6 @@
     <string name="choose_image">Elige una imagen</string>
 
     <string name="info_about">Akihabara ha sido desarollada por Ulises Cervera. Su uso es libre y gratuito, y no ofrece ninguna garantía.</string>
+    <string name="confirm_delete_product">¿Deseas eliminar %s?</string>
+    <string name="delete_product_tip">Para confirmar arrastra la barra hasta el final</string>
 </resources>

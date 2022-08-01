@@ -115,17 +115,31 @@
             app:layout_constraintTop_toBottomOf="@+id/label_type" />
 
         <com.gmail.uli153.akihabara3.ui.views.AkbBaseButton
-            android:id="@+id/button"
+            android:id="@+id/btn_save"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/save"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_delete"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/spinner_type"
             app:layout_constraintVertical_bias="1" />
+
+        <com.gmail.uli153.akihabara3.ui.views.AkbRiskyButton
+            android:id="@+id/btn_delete"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/delete"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintVertical_bias="1"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
