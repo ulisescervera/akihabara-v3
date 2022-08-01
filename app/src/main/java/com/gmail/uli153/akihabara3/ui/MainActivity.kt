@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheet.BalanceBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheet.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
@@ -50,17 +51,11 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomAppBar.performShow(true)
                     binding.fav.show()
                     binding.toolbar.navigationIcon = null
-//                    binding.bottomAppBar.fabCradleMargin = 6.toPx
-//                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 12.toPx
-//                    binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
                 else -> {
                     binding.bottomAppBar.performHide(true)
                     binding.fav.hide()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_chevron_left)
-//                    binding.bottomAppBar.fabCradleMargin = 0f
-//                    binding.bottomAppBar.fabCradleRoundedCornerRadius = 0f
-//                    binding.bottomAppBar.cradleVerticalOffset = 0f
                 }
             }
         }
@@ -72,6 +67,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnEditBalance.setSafeClickListener {
             BalanceBottomSheet.show(supportFragmentManager)
+        }
+
+        binding.lottieView.setSafeClickListener {
+            InfoBottomSheet.show(supportFragmentManager)
         }
     }
 }

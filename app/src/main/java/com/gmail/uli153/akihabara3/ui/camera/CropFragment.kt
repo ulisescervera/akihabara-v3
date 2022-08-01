@@ -38,7 +38,7 @@ class CropFragment: AkbFragment() {
         binding.cropImageview.setAspectRatio(1,1)
         binding.cropImageview.setMinCropResultSize(imageSize, imageSize)
 
-        binding.btnRotateLeft.setSafeClickListener {
+        binding.btnRotateLeft.setOnClickListener {
             binding.cropImageview.rotateImage(-90)
         }
         binding.btnCrop.setSafeClickListener {
@@ -52,7 +52,7 @@ class CropFragment: AkbFragment() {
                 }
             }
         }
-        binding.btnRotateRight.setSafeClickListener {
+        binding.btnRotateRight.setOnClickListener {
             binding.cropImageview.rotateImage(90)
         }
 

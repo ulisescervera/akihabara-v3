@@ -35,4 +35,6 @@
     <string name="camera">Cámara</string>
     <string name="gallery">Galería</string>
     <string name="choose_image">Elige una imagen</string>
+
+    <string name="info_about">Akihabara ha sido desarollada por Ulises Cervera. Su uso es libre y gratuito, y no ofrece ninguna garantía.</string>
 </resources>
