@@ -50,7 +50,7 @@ class BalanceBottomSheet: BottomSheetDialogFragment() {
     private var balance: BigDecimal = BigDecimal(0)
 
     private val amount: BigDecimal get() {
-        return text.toDoubleOrNull()?.toBigDecimal() ?: BigDecimal(0)
+        return text.replace(",", ".").toDoubleOrNull()?.toBigDecimal() ?: BigDecimal(0)
     }
 
     private val isValidAmount: Boolean get() {
@@ -139,10 +139,8 @@ class BalanceBottomSheet: BottomSheetDialogFragment() {
     }
 
     private fun toggleSign() {
-        if (text.isEmpty()) {
+        if (text.isEmpty() || amount.compareTo(BigDecimal(0)) == 0) {
             edit_balance.setText("-")
-        } else if (amount.compareTo(BigDecimal(0)) == 0) {
-            edit_balance.setText("-0")
         } else {
             val a = amount.multiply(BigDecimal(-1))
             edit_balance.setText(formatter.format(a))
