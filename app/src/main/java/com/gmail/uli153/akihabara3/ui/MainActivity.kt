@@ -78,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 /**
  * TODO
  * - Alert confirm shows default Material Theme colors
- * - Crop image from gallery
- * - Camera preview
- * - Resize image from gallery
+ * - Márgenes snackbar
+ * - Imagen transacción balance
  */

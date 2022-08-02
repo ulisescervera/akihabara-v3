@@ -1,21 +1,15 @@
 package com.gmail.uli153.akihabara3.ui.products
 
-import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.service.autofill.TextValueSanitizer
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.LayoutAnimationController
 import android.widget.Button
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
@@ -23,10 +17,10 @@ import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
-import com.gmail.uli153.akihabara3.databinding.FragmentProductsBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
+import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.setProductImage
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -35,8 +29,6 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.row_product.view.*
 import kotlinx.coroutines.*
-import java.io.File
-import java.text.DecimalFormat
 import java.util.*
 
 interface ProductListener {
@@ -71,8 +63,9 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
         ProductAdapter(this)
     }
 
-    private val snackQueue: Queue<Snackbar> = LinkedList()
-    private var currentSnackbar: Snackbar? = null
+    private val snackBarManager: SnackBarManager by lazy {
+        SnackBarManager(requireContext(), binding.root, lifecycleScope)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProductsBaseBinding.inflate(inflater, container, false)
@@ -96,7 +89,8 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
 
     override fun onBuyProduct(product: Product) {
         productsViewModel.buyProduct(product) { transactionId ->
-            showUndoSnackbar(product) {
+            val message = getString(R.string.snackbar_undo_message, product.name, AkbNumberParser.LocaleParser.format(product.price))
+            snackBarManager.showUndoSnackbar(message) {
                 productsViewModel.deleteTransaction(transactionId)
             }
         }
@@ -114,73 +108,6 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
     protected fun filter() {
         //todo filter
         filteredProducts = products
-    }
-
-    private fun showUndoSnackbar(product: Product, listener: () -> Unit) {
-        var snackbar: Snackbar? = Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE)
-
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.snack_bar_undo, null)
-        val label = view.findViewById<TextView>(R.id.label_message)
-        val button = view.findViewById<Button>(R.id.btn_undo)
-        val progressBar = view.findViewById<LinearProgressIndicator>(R.id.progress_bar)
-
-        progressBar.isIndeterminate = false
-        progressBar.max = SNACKBAR_MAX_DURATION
-        label.text = getString(R.string.snackbar_undo_message, product.name, AkbNumberParser.LocaleParser.format(product.price))
-        button.setSafeClickListener {
-            snackbar?.dismiss()
-            listener()
-        }
-
-        val job = lifecycleScope.launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
-            while (progressBar.progress > 0) {
-                delay(10)
-                progressBar.progress -= 10
-            }
-            snackbar?.dismiss()
-        }
-
-        snackbar?.apply {
-//            duration = SNACKBAR_MAX_DURATION // hay desfase entre la coroutina y el snackbar
-            val rootView = getView() as Snackbar.SnackbarLayout
-            val layoutParams = getView().layoutParams as? CoordinatorLayout.LayoutParams
-            if (layoutParams != null) {
-                getView().layoutParams = layoutParams.apply {
-                    gravity = Gravity.TOP
-                }
-            }
-            rootView.setPadding(0, 0, 0, 0)
-            rootView.addView(view, 0)
-            addCallback(object: Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    super.onDismissed(transientBottomBar, event)
-                    job.cancel()
-                    snackQueue.remove(snackbar)
-                    currentSnackbar = null
-                    snackQueue.peek()?.show()
-                    snackbar = null
-                }
-                override fun onShown(sb: Snackbar?) {
-                    super.onShown(sb)
-                    currentSnackbar = snackbar
-                    progressBar.progress = SNACKBAR_MAX_DURATION
-                    job.start()
-                }
-            })
-        }
-
-        if (snackQueue.size > 0) {
-            if (currentSnackbar == null) {
-                snackQueue.clear()
-                snackQueue.add(snackbar!!)
-                snackbar?.show()
-            } else {
-                snackQueue.add(snackbar!!)
-            }
-        } else {
-            snackQueue.add(snackbar!!)
-            snackbar?.show()
-        }
     }
 
     protected inner class ProductVH(
