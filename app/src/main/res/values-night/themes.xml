@@ -17,6 +17,7 @@
         <item name="colorOnBackground">@color/md_grey_50</item>
         <item name="colorOnSurface">@color/md_grey_50</item>
 
+        <!-- Custom colors -->
         <item name="defaultText">@color/md_grey_50</item>
         <item name="heavyText">@color/white</item>
         <item name="softText">@color/md_grey_400</item>
@@ -26,8 +27,8 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:textColor">?attr/defaultText</item>
         <item name="android:textSize">15sp</item>
-        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
-        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
+        <item name="snackbarStyle">@style/AkbSnackbar</item>
+        <item name="snackbarButtonStyle">@style/AkbSnackbarButton</item>
         <item name="android:editTextStyle">@style/AkbEditText</item>
         <item name="buttonStyle">@style/AkbButton</item>
         <item name="actionBarTheme">@style/AkbActionBar</item>
@@ -41,7 +42,6 @@
     </style>
 
     <style name="AkbTabLayout" parent="Widget.Design.TabLayout">
-        <!--        <item name="tabBackground">@drawable/tabs_selector</item>--> <!-- todo -->
         <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/bg_tablayout</item>
         <item name="tabSelectedTextColor">@color/md_grey_900</item>
@@ -54,13 +54,13 @@
         <item name="tabRippleColor">@null</item>
     </style>
 
-    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+    <style name="AkbSnackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
         <item name="actionTextColorAlpha">1</item>
         <item name="android:layout_margin">@dimen/snackbar_margin</item>
     </style>
 
-    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <style name="AkbSnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textColor">@color/md_grey_50</item>
     </style>
 
@@ -70,8 +70,8 @@
 
     <style name="AkbEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/bg_edittext</item>
-        <!--        <item name="android:textColor">@color/text</item>-->
         <item name="android:textColorHint">?attr/softText</item>
+        <item name="android:textColor">?attr/defaultText</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingStart">@dimen/edit_horizontal_padding</item>
         <item name="android:paddingEnd">@dimen/edit_horizontal_padding</item>
