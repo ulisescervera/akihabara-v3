@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.models.Nameable
-import com.gmail.uli153.akihabara3.databinding.BottomSheetDeleteProductBinding
+import com.gmail.uli153.akihabara3.databinding.BottomSheetDeleteBinding
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -29,14 +29,14 @@ abstract class DeleteBaseBottomSheet<T: Nameable> constructor(
         return R.style.AkbBottomSheetDialog
     }
 
-    private lateinit var binding: BottomSheetDeleteProductBinding
+    private lateinit var binding: BottomSheetDeleteBinding
 
     protected open val message: String get() {
         return getString(R.string.confirm_delete_product, item.name)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return BottomSheetDeleteProductBinding.inflate(inflater, container, false).apply {
+        return BottomSheetDeleteBinding.inflate(inflater, container, false).apply {
             binding = this
         }.root
     }

@@ -45,8 +45,11 @@
         <item name="tabSelectedTextColor">@color/white</item>
         <item name="tabTextColor">@color/md_yellow_700</item>
         <item name="tabGravity">fill</item>
-        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabIndicatorHeight">@dimen/tab_height</item>
         <item name="tabMode">fixed</item>
+        <item name="tabIndicator">@drawable/bg_selected_tab</item>
+        <item name="tabIndicatorColor">?attr/colorPrimary</item>
+        <item name="tabRippleColor">@null</item>
     </style>
 
     <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">

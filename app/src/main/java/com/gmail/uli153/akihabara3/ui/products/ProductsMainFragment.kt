@@ -32,16 +32,6 @@ class ProductsFragment: AkbFragment() {
         val adapter = ProductsPagerAdapter(requireActivity())
         pager.isUserInputEnabled = false
         pager.adapter = ProductsPagerAdapter(requireActivity())
-        tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.view?.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_selected_tab)
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                tab?.view?.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_unselected_tab)
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
         TabLayoutMediator(tabs, pager) { tab, position ->
             tab.text = adapter.getTitle(position)
         }.attach()
