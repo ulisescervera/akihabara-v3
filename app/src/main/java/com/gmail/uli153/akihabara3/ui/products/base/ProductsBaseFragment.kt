@@ -39,8 +39,6 @@ interface ProductListener {
 
 abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
 
-    private val SNACKBAR_MAX_DURATION = 4000 // ms
-
     private var _binding: FragmentProductsBaseBinding? = null
 
     // This property is only valid between onCreateView and
@@ -54,13 +52,34 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
             field = value
             filter()
         }
+
     private var filteredProducts: List<Product> = listOf()
         set(value) {
             field = value
             adapter.submitList(value)
         }
+
     protected val adapter: ProductAdapter by lazy {
-        ProductAdapter(this)
+        ProductAdapter(this).apply {
+            registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    smoothScroller.targetPosition = Math.max(0, positionStart - 1)
+                    layoutManager.startSmoothScroll(smoothScroller)
+                }
+            })
+        }
+    }
+
+    protected val layoutManager: LinearLayoutManager by lazy {
+        LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+    }
+
+    protected val smoothScroller: LinearSmoothScroller by lazy {
+        object: LinearSmoothScroller(requireContext()) {
+            override fun getVerticalSnapPreference(): Int {
+                return LinearSmoothScroller.SNAP_TO_START
+            }
+        }
     }
 
     private val snackBarManager: SnackBarManager by lazy {
@@ -82,7 +101,7 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
         val separator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL).also {
             it.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.separator_product)!!)
         }
-        binding.recyclerviewProducts.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        binding.recyclerviewProducts.layoutManager = layoutManager
         binding.recyclerviewProducts.addItemDecoration(separator)
         binding.recyclerviewProducts.adapter = adapter
     }

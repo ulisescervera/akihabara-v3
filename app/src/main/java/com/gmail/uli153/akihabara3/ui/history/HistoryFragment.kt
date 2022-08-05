@@ -43,7 +43,13 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
     protected val productsViewModel: ProductsViewModel by activityViewModels()
 
     private val adapter by lazy {
-        Adapter(requireContext(), this)
+        Adapter(requireContext(), this).apply {
+            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    binding.recyclerviewTransactions.smoothScrollToPosition(positionStart)
+                }
+            })
+        }
     }
 
     private val dateFormatter = SimpleDateFormat("E dd/MM/yyyy HH:mm", Locale.getDefault())

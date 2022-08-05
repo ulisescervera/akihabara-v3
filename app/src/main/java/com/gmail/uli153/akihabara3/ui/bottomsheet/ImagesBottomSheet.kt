@@ -77,11 +77,11 @@ class ImagesBottomSheet(private val listener: ImageSelectedListener): BottomShee
         R.drawable.ic_res_food20,
 //        R.drawable.ic_res_food21,
         R.drawable.ic_res_food22,
-        R.drawable.ic_res_food23,
-        R.drawable.ic_res_food24,
-        R.drawable.ic_res_food25,
+//        R.drawable.ic_res_food23,
+//        R.drawable.ic_res_food24,
+//        R.drawable.ic_res_food25,
 //        R.drawable.ic_res_food26,
-        R.drawable.ic_res_food27,
+//        R.drawable.ic_res_food27,
         R.drawable.ic_res_food28
     )
 

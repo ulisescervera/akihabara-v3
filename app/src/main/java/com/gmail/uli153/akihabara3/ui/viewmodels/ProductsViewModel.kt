@@ -23,7 +23,7 @@ class ProductsViewModel @Inject constructor(private val repo: AkbRepository): Vi
     val products: LiveData<DataWrapper<List<Product>>> = repo.fetchProducts()
         .onStart { DataWrapper.Loading<List<Product>>() }
         .map {
-            val sorted = it.sortedWith(compareByDescending<Product> { it.favorite }.thenBy { it.name }.thenBy { it.id })
+            val sorted = it.sortedWith(compareByDescending<Product> { it.favorite }.thenBy { it.name.lowercase() }.thenBy { it.id })
             DataWrapper.Success(sorted)
         }
         .asLiveData()

@@ -55,8 +55,8 @@ class EditProductFragment: ProductFormBaseFragment(), DeleteBaseBottomSheet.Dele
     }
 
     override fun onDeleteItem(item: Product) {
-        productsViewModel.deleteProduct(product)
         navigateUp()
+        productsViewModel.deleteProduct(product)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

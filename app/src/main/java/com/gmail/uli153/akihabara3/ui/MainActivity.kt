@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAddProduct.setSafeClickListener {
-            productsFormViewModel.setProductFormImage(R.drawable.ic_res_food27)
+            productsFormViewModel.setProductFormImage(R.drawable.ic_res_drink10)
             navController.navigate(R.id.destination_create_product)
         }
 
