@@ -65,3 +65,9 @@ fun ImageView.setTransactionImage(transaction: Transaction) {
         Glide.with(this).load(it).circleCrop().error(transaction.defaultImage).into(this)
     } ?: this.setImageResource(transaction.defaultImage)
 }
+
+fun List<Product>.sorted(): List<Product> {
+    return this.sortedWith(compareByDescending<Product> { it.favorite }
+        .thenBy { it.name.lowercase() }
+        .thenBy { it.id })
+}

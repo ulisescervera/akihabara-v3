@@ -59,7 +59,7 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
     }
 
     override fun onDeleteItem(item: Transaction) {
-        productsViewModel.deleteTransaction(item)
+        productsViewModel.deleteTransaction(item.id)
     }
 
     override fun onCancel(item: Transaction) {

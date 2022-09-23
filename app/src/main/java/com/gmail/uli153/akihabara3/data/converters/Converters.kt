@@ -32,13 +32,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun toDate(value: String): Date? {
-        return dateFormatter.parse(value)
+    fun toDate(value: String): Date {
+        return dateFormatter.parse(value)!!
     }
 
     @TypeConverter
-    fun fromDate(value: Date?): String? {
-        return value?.let { dateFormatter.format(it) }
+    fun fromDate(value: Date): String {
+        return dateFormatter.format(value)
     }
 
     @TypeConverter
