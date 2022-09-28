@@ -1,7 +1,7 @@
 package com.gmail.uli153.akihabara3.data.converters
 
 import androidx.room.TypeConverter
-import com.gmail.uli153.akihabara3.data.models.ProductType
+import com.gmail.uli153.akihabara3.data.entities.ProductType
 import java.io.File
 import java.math.BigDecimal
 import java.text.SimpleDateFormat

@@ -1,10 +1,10 @@
 package com.gmail.uli153.akihabara3.di
 
 import android.content.Context
-import com.gmail.uli153.akihabara3.AkihabaraDatabase
+import com.gmail.uli153.akihabara3.data.AkihabaraDatabase
 import com.gmail.uli153.akihabara3.data.repositories.AkbRepository
-import com.gmail.uli153.akihabara3.domain.use_case.product.*
-import com.gmail.uli153.akihabara3.domain.use_case.transaction.*
+import com.gmail.uli153.akihabara3.domain.use_cases.product.*
+import com.gmail.uli153.akihabara3.domain.use_cases.transaction.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

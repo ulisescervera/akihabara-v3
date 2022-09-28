@@ -2,8 +2,6 @@ package com.gmail.uli153.akihabara3.ui.products
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isGone
@@ -12,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.models.Product
+import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.ui.bottomsheet.DeleteProductBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheet.base.DeleteBaseBottomSheet
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
@@ -20,10 +18,9 @@ import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.*
 import com.like.LikeButton
 import com.like.OnLikeListener
-import kotlinx.android.synthetic.main.fragment_product_base_form.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
-import java.math.BigDecimal
 
 class EditProductFragment: ProductFormBaseFragment(), DeleteBaseBottomSheet.DeleteListener<Product> {
 
@@ -117,15 +114,16 @@ class EditProductFragment: ProductFormBaseFragment(), DeleteBaseBottomSheet.Dele
                         it
                     }
                 }
-                val product = product.copy(
-                    type = type,
-                    name = name,
-                    price = price,
-                    favorite = isFavorite,
-                    customImage = image as? File,
-                    defaultImage = image as? Int ?: 0
+
+                productsViewModel.addProduct(
+                    product.id,
+                    type,
+                    name,
+                    price,
+                    image as? Int ?: 0,
+                    image as? File,
+                    isFavorite,
                 )
-                productsViewModel.addProduct(product)
                 navController.navigateUp()
             }
         }

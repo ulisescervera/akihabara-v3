@@ -1,27 +1,26 @@
-package com.gmail.uli153.akihabara3
+package com.gmail.uli153.akihabara3.data
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.gmail.uli153.akihabara3.AkihabaraDatabase.Companion.DATABASE_VERSION
+import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.data.AkihabaraDatabase.Companion.DATABASE_VERSION
 import com.gmail.uli153.akihabara3.data.converters.Converters
 import com.gmail.uli153.akihabara3.data.daos.ProductDao
 import com.gmail.uli153.akihabara3.data.daos.TransactionDao
-import com.gmail.uli153.akihabara3.data.models.Product
-import com.gmail.uli153.akihabara3.data.models.ProductType
-import com.gmail.uli153.akihabara3.data.models.Transaction
+import com.gmail.uli153.akihabara3.data.entities.ProductEntity
+import com.gmail.uli153.akihabara3.data.entities.ProductType
+import com.gmail.uli153.akihabara3.data.entities.TransactionEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import javax.inject.Provider
 
-@Database(entities = [Product::class, Transaction::class], version = DATABASE_VERSION)
+@Database(entities = [ProductEntity::class, TransactionEntity::class], version = DATABASE_VERSION)
 @TypeConverters(Converters::class)
 abstract class AkihabaraDatabase: RoomDatabase() {
 
@@ -50,13 +49,15 @@ class AkihabaraDatabaseCallack(): RoomDatabase.Callback() {
 
     private val scope = CoroutineScope(SupervisorJob())
 
-    private val initialProducts: List<Product> by lazy {
-        val l = mutableListOf<Product>()
+    private val initialProductEntities: List<ProductEntity> by lazy {
+        val l = mutableListOf<ProductEntity>()
         for (i in 1..20) {
             if (i <= 10) {
-                l.add(Product(i.toLong(), ProductType.DRINK , "bebida ${i}", BigDecimal(1.0 * i), R.drawable.ic_res_drink1, null))
+                l.add(ProductEntity(i.toLong(), ProductType.DRINK , "bebida ${i}", BigDecimal(1.0 * i),
+                    R.drawable.ic_res_drink1, ""))
             } else {
-                l.add(Product(i.toLong(), ProductType.FOOD, "comida ${i}", BigDecimal(1.0 * i), R.drawable.ic_res_food6, null))
+                l.add(ProductEntity(i.toLong(), ProductType.FOOD, "comida ${i}", BigDecimal(1.0 * i),
+                    R.drawable.ic_res_food6, ""))
             }
 
         }
@@ -67,7 +68,7 @@ class AkihabaraDatabaseCallack(): RoomDatabase.Callback() {
         super.onCreate(db)
         val dao = AkihabaraDatabase.instance?.productDao() ?: return
         scope.launch(Dispatchers.IO) {
-            for (p in initialProducts) {
+            for (p in initialProductEntities) {
                 dao.insert(p)
             }
         }

@@ -1,19 +1,20 @@
 package com.gmail.uli153.akihabara3.ui.viewmodels
 
-import androidx.lifecycle.*
-import com.gmail.uli153.akihabara3.data.models.Product
-import com.gmail.uli153.akihabara3.data.models.Transaction
-import com.gmail.uli153.akihabara3.data.models.TransactionType
-import com.gmail.uli153.akihabara3.domain.use_case.product.ProductsUseCases
-import com.gmail.uli153.akihabara3.domain.use_case.transaction.TransactionsUseCases
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.gmail.uli153.akihabara3.data.entities.ProductType
+import com.gmail.uli153.akihabara3.domain.models.Product
+import com.gmail.uli153.akihabara3.domain.models.Transaction
+import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
+import com.gmail.uli153.akihabara3.domain.use_cases.transaction.TransactionsUseCases
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.io.File
 import java.math.BigDecimal
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,9 +60,18 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    fun addProduct(product: Product) {
+    fun addProduct(
+        id: Long,
+        type: ProductType,
+        name: String,
+        price: BigDecimal,
+        defaultImage: Int,
+        customImage: File?,
+        favorite: Boolean
+    ) {
+        val newProduct = Product(id, type, name, price, defaultImage, customImage, favorite)
         viewModelScope.launch(Dispatchers.IO) {
-            productsUseCases.createProductUseCase(product)
+            productsUseCases.createProductUseCase(newProduct)
         }
     }
 

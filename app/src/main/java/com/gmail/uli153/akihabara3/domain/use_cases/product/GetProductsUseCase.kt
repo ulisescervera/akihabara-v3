@@ -1,7 +1,8 @@
-package com.gmail.uli153.akihabara3.domain.use_case.product
+package com.gmail.uli153.akihabara3.domain.use_cases.product
 
-import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.data.repositories.AkbRepository
+import com.gmail.uli153.akihabara3.domain.models.Product
+import com.gmail.uli153.akihabara3.domain.toModel
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -12,6 +13,6 @@ class GetProductsUseCase(private val repository: AkbRepository) {
     operator fun invoke(): Flow<DataWrapper<List<Product>>> {
         return repository.fetchProducts()
             .onStart { DataWrapper.Loading }
-            .map { DataWrapper.Success(it) }
+            .map { DataWrapper.Success(it.map { it.toModel() }) }
     }
 }

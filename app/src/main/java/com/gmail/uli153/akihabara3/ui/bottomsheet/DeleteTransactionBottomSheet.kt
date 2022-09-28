@@ -2,7 +2,7 @@ package com.gmail.uli153.akihabara3.ui.bottomsheet
 
 import androidx.fragment.app.FragmentManager
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.models.Transaction
+import com.gmail.uli153.akihabara3.domain.models.Transaction
 import com.gmail.uli153.akihabara3.ui.bottomsheet.base.DeleteBaseBottomSheet
 
 class DeleteTransactionBottomSheet private constructor(

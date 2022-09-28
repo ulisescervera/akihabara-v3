@@ -1,4 +1,4 @@
-package com.gmail.uli153.akihabara3.domain.use_case.transaction
+package com.gmail.uli153.akihabara3.domain.use_cases.transaction
 
 data class TransactionsUseCases(
     val getBalanceUseCase: GetBalanceUseCase,

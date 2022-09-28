@@ -18,7 +18,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_balance.*
 import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.text.NumberFormat
 
 class BalanceBottomSheet: BottomSheetDialogFragment() {
 

@@ -2,9 +2,6 @@ package com.gmail.uli153.akihabara3.ui.camera
 
 import android.animation.AnimatorInflater
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -17,24 +14,16 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
-import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
-import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.FileUtils
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import com.gmail.uli153.akihabara3.utils.toPx
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 class CameraFragment: AkbFragment() {

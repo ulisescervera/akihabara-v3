@@ -1,6 +1,5 @@
 package com.gmail.uli153.akihabara3.utils
 
-import java.lang.Exception
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols

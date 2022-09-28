@@ -2,19 +2,16 @@ package com.gmail.uli153.akihabara3.utils
 
 import android.content.Context
 import android.content.res.Resources
-import android.os.Handler
-import android.os.Looper
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.gmail.uli153.akihabara3.data.models.Product
-import com.gmail.uli153.akihabara3.data.models.Transaction
+import com.gmail.uli153.akihabara3.domain.models.Product
+import com.gmail.uli153.akihabara3.domain.models.Transaction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -54,16 +51,16 @@ fun Context.getColorFromAttr(
     return typedValue.data
 }
 
-fun ImageView.setProductImage(product: Product) {
-    product.customImage?.let {
-        Glide.with(this).load(it).circleCrop().error(product.defaultImage).into(this)
-    } ?: this.setImageResource(product.defaultImage)
+fun ImageView.setProductImage(productEntity: Product) {
+    productEntity.customImage?.let {
+        Glide.with(this).load(it).circleCrop().error(productEntity.defaultImage).into(this)
+    } ?: this.setImageResource(productEntity.defaultImage)
 }
 
-fun ImageView.setTransactionImage(transaction: Transaction) {
-    transaction.customImage?.let {
-        Glide.with(this).load(it).circleCrop().error(transaction.defaultImage).into(this)
-    } ?: this.setImageResource(transaction.defaultImage)
+fun ImageView.setTransactionImage(transactionEntity: Transaction) {
+    transactionEntity.customImage?.let {
+        Glide.with(this).load(it).circleCrop().error(transactionEntity.defaultImage).into(this)
+    } ?: this.setImageResource(transactionEntity.defaultImage)
 }
 
 fun List<Product>.sorted(): List<Product> {

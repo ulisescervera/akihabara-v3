@@ -1,9 +1,7 @@
-package com.gmail.uli153.akihabara3.domain.use_case.transaction
+package com.gmail.uli153.akihabara3.domain.use_cases.transaction
 
-import com.gmail.uli153.akihabara3.data.models.Transaction
-import com.gmail.uli153.akihabara3.data.models.TransactionType
+import com.gmail.uli153.akihabara3.data.entities.TransactionType
 import com.gmail.uli153.akihabara3.data.repositories.AkbRepository
-import com.gmail.uli153.akihabara3.utils.DataWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.math.BigDecimal

@@ -6,16 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.*
 import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.models.Transaction
-import com.gmail.uli153.akihabara3.data.models.TransactionType
+import com.gmail.uli153.akihabara3.data.entities.TransactionType
 import com.gmail.uli153.akihabara3.databinding.FragmentHistoryBinding
-import com.gmail.uli153.akihabara3.databinding.FragmentSettingsBinding
+import com.gmail.uli153.akihabara3.domain.models.Transaction
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheet.DeleteTransactionBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheet.base.DeleteBaseBottomSheet
@@ -25,8 +22,6 @@ import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.setTransactionImage
 import kotlinx.android.synthetic.main.row_transaction.view.*
-import kotlinx.android.synthetic.main.row_transaction.view.label_name
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -114,12 +109,9 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
             this.transaction = transaction
 
             itemView.image.setTransactionImage(transaction)
-            if (transaction.date != null) {
-                itemView.label_date.text = dateFormatter.format(transaction.date)
-                itemView.label_date.visibility = View.VISIBLE
-            } else {
-                itemView.label_date.visibility = View.GONE
-            }
+
+            itemView.label_date.text = dateFormatter.format(transaction.date)
+            itemView.label_date.visibility = View.VISIBLE
 
             itemView.label_name.text = if (transaction.type == TransactionType.BALANCE) {
                 getString(R.string.added_balance)

@@ -2,8 +2,6 @@ package com.gmail.uli153.akihabara3.ui.products.base
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,11 +12,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.models.ProductType
+import com.gmail.uli153.akihabara3.data.entities.ProductType
 import com.gmail.uli153.akihabara3.databinding.FragmentProductBaseFormBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheet.ImagesBottomSheet
@@ -27,13 +23,9 @@ import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import kotlinx.android.synthetic.main.fragment_product_base_form.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
 import pl.aprilapps.easyphotopicker.MediaSource
-import java.io.*
 import java.math.BigDecimal
 
 abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSelectedListener {

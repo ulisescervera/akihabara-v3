@@ -3,18 +3,13 @@ package com.gmail.uli153.akihabara3.ui.products
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.setPadding
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.FileUtils
-import com.gmail.uli153.akihabara3.utils.setProductImage
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.toPx
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.File
 
@@ -70,16 +65,15 @@ class CreateProductFragment: ProductFormBaseFragment() {
             }
         }
 
-        val newProduct = Product(
-            type = categories[binding.spinnerType.selectedItemPosition],
-            name = name,
-            price = price,
-            defaultImage = img as? Int ?: 0,
-            customImage = img as? File,
-            favorite = isFavorite
-        )
-
         navigateUp()
-        productsViewModel.addProduct(newProduct)
+        productsViewModel.addProduct(
+            0,
+            categories[binding.spinnerType.selectedItemPosition],
+            name,
+            price,
+            img as? Int ?: 0,
+            img as? File,
+            isFavorite
+        )
     }
 }

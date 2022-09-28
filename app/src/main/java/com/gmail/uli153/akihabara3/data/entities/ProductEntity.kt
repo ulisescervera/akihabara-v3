@@ -1,10 +1,10 @@
-package com.gmail.uli153.akihabara3.data.models
+package com.gmail.uli153.akihabara3.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gmail.uli153.akihabara3.R
-import java.io.File
+import com.gmail.uli153.akihabara3.domain.models.Nameable
 import java.math.BigDecimal
 
 enum class ProductType(val nameResId: Int) {
@@ -12,13 +12,13 @@ enum class ProductType(val nameResId: Int) {
     FOOD(R.string.foods)
 }
 
-@Entity
-data class Product(
+@Entity(tableName = "product")
+data class ProductEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val type: ProductType,
     override val name: String,
     val price: BigDecimal,
     @ColumnInfo(name = "default_image") val defaultImage: Int,
-    @ColumnInfo(name = "custom_image") val customImage: File?,
+    @ColumnInfo(name = "custom_image") val customImage: String,
     val favorite: Boolean = false
 ): Nameable

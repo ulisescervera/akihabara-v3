@@ -2,7 +2,6 @@ package com.gmail.uli153.akihabara3.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,9 +11,8 @@ import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheet.BalanceBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheet.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
-import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import com.gmail.uli153.akihabara3.utils.toPx
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 

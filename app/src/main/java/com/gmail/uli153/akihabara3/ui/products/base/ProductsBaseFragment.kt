@@ -2,39 +2,32 @@ package com.gmail.uli153.akihabara3.ui.products
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.models.Product
 import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
+import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.setProductImage
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.android.material.snackbar.Snackbar
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.row_product.view.*
 import kotlinx.coroutines.*
-import java.util.*
 
 interface ProductListener {
-    fun onBuyProduct(product: Product)
-    fun onFavoriteProduct(product: Product)
-    fun onEditProduct(product: Product)
+    fun onBuyProduct(Product: Product)
+    fun onFavoriteProduct(Product: Product)
+    fun onEditProduct(Product: Product)
 }
 
 abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
@@ -53,7 +46,7 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
             filter()
         }
 
-    private var filteredProducts: List<Product> = listOf()
+    private var filteredProductEntities: List<Product> = listOf()
         set(value) {
             field = value
             adapter.submitList(value)
@@ -106,27 +99,27 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
         binding.recyclerviewProducts.adapter = adapter
     }
 
-    override fun onBuyProduct(product: Product) {
-        productsViewModel.buyProduct(product) { transactionId ->
-            val message = getString(R.string.snackbar_undo_message, product.name, AkbNumberParser.LocaleParser.format(product.price))
+    override fun onBuyProduct(Product: Product) {
+        productsViewModel.buyProduct(Product) { transactionId ->
+            val message = getString(R.string.snackbar_undo_message, Product.name, AkbNumberParser.LocaleParser.format(Product.price))
             snackBarManager.showUndoSnackbar(message) {
                 productsViewModel.deleteTransaction(transactionId)
             }
         }
     }
 
-    override fun onFavoriteProduct(product: Product) {
-        productsViewModel.toggleFavorite(product)
+    override fun onFavoriteProduct(Product: Product) {
+        productsViewModel.toggleFavorite(Product)
     }
 
-    override fun onEditProduct(product: Product) {
-        val dirs = ProductsFragmentDirections.actionEditProduct(product.id)
+    override fun onEditProduct(Product: Product) {
+        val dirs = ProductsFragmentDirections.actionEditProduct(Product.id)
         navigate(dirs)
     }
 
     protected fun filter() {
         //todo filter
-        filteredProducts = products
+        filteredProductEntities = products
     }
 
     protected inner class ProductVH(
@@ -140,14 +133,14 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
         init {
             itemView.btn_buy.setSafeClickListener {
                 itemView.swipe.close(true)
-                listener.onBuyProduct(product)
+                listener.onBuyProduct(Product)
             }
             itemView.btn_favorite.setOnLikeListener(object : OnLikeListener {
                 override fun liked(likeButton: LikeButton?) {
-                    onToggleLike(product, true)
+                    onToggleLike(Product, true)
                 }
                 override fun unLiked(likeButton: LikeButton?) {
-                    onToggleLike(product, false)
+                    onToggleLike(Product, false)
                 }
             })
             itemView.btn_favorite.setOnAnimationEndListener {
@@ -155,7 +148,7 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
                 toggleFavoriteJob?.start()
             }
             itemView.btn_edit.setSafeClickListener {
-                listener.onEditProduct(product)
+                listener.onEditProduct(Product)
             }
             itemView.surface.setSafeClickListener {
                 when (itemView.swipe.openStatus) {
@@ -165,22 +158,22 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
             }
         }
 
-        lateinit var product: Product private set
-        fun setup(product: Product) {
-            this.product = product
+        lateinit var Product: Product private set
+        fun setup(Product: Product) {
+            this.Product = Product
             itemView.swipe.dragDistance = 120
             itemView.swipe.close(false)
-            itemView.imageview_product.setProductImage(product)
-            itemView.label_name.text = product.name
-            itemView.label_price.text = String.format("%s €", AkbNumberParser.LocaleParser.format(product.price))
-            itemView.btn_favorite.isLiked = product.favorite
+            itemView.imageview_product.setProductImage(Product)
+            itemView.label_name.text = Product.name
+            itemView.label_price.text = String.format("%s €", AkbNumberParser.LocaleParser.format(Product.price))
+            itemView.btn_favorite.isLiked = Product.favorite
         }
 
-        private fun onToggleLike(product: Product, lazy: Boolean) {
+        private fun onToggleLike(Product: Product, lazy: Boolean) {
             val start = if (lazy) CoroutineStart.LAZY else CoroutineStart.DEFAULT
             toggleFavoriteJob = lifecycleScope.launch(Dispatchers.Main, start = start) {
                 if (!lazy) delay(100)
-                listener.onFavoriteProduct(product)
+                listener.onFavoriteProduct(Product)
             }
         }
     }

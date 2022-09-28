@@ -1,4 +1,4 @@
-package com.gmail.uli153.akihabara3.domain.use_case.product
+package com.gmail.uli153.akihabara3.domain.use_cases.product
 
 data class ProductsUseCases(
     val getProductsUseCase: GetProductsUseCase,
