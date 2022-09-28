@@ -12,19 +12,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM product ORDER BY name ASC")
+    @Query("SELECT * FROM products ORDER BY name ASC")
     fun getAll(): Flow<List<ProductEntity>>
 
-    @Query("SELECT * FROM product WHERE type LIKE :type ORDER BY name ASC")
+    @Query("SELECT * FROM products WHERE type LIKE :type ORDER BY name ASC")
     fun getDrikns(type: ProductType = ProductType.DRINK): Flow<List<ProductEntity>>
 
-    @Query("SELECT * FROM product WHERE type LIKE :type ORDER BY name ASC")
+    @Query("SELECT * FROM products WHERE type LIKE :type ORDER BY name ASC")
     fun getFoods(type: ProductType = ProductType.FOOD): Flow<List<ProductEntity>>
 
-    @Query("SELECT * FROM product WHERE name LIKE :name LIMIT 1")
+    @Query("SELECT * FROM products WHERE name LIKE :name LIMIT 1")
     suspend fun findByName(name: String): ProductEntity?
 
-    @Query("SELECT * FROM product WHERE id LIKE :id LIMIT 1")
+    @Query("SELECT * FROM products WHERE id LIKE :id LIMIT 1")
     suspend fun get(id: Long): ProductEntity?
 
     @Insert(onConflict = REPLACE)

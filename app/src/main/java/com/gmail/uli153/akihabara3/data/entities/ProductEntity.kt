@@ -12,13 +12,13 @@ enum class ProductType(val nameResId: Int) {
     FOOD(R.string.foods)
 }
 
-@Entity(tableName = "product")
+@Entity(tableName = "products")
 data class ProductEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val type: ProductType,
-    override val name: String,
+    val name: String,
     val price: BigDecimal,
     @ColumnInfo(name = "default_image") val defaultImage: Int,
     @ColumnInfo(name = "custom_image") val customImage: String,
     val favorite: Boolean = false
-): Nameable
+)

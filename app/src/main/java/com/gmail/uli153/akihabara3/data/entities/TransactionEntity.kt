@@ -11,7 +11,7 @@ enum class TransactionType {
     BUY, BALANCE
 }
 
-@Entity(tableName = "transaction")
+@Entity(tableName = "transactions")
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val type: TransactionType,
@@ -20,6 +20,4 @@ data class TransactionEntity(
     val amount: BigDecimal,
     @ColumnInfo(name = "default_image") val defaultImage: Int,
     @ColumnInfo(name = "custom_image") val customImage: String,
-): Nameable {
-    override val name: String get() = title
-}
+)

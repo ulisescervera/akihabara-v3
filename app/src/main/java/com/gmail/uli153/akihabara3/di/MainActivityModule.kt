@@ -1,4 +1,4 @@
-package com.gmail.uli153.akihabara3.ui
+package com.gmail.uli153.akihabara3.di
 
 import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.TransactionsUseCases

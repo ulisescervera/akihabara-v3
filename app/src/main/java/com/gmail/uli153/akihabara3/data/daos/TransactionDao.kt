@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TransactionDao {
 
-    @Query("SELECT * FROM `transaction` ORDER BY date DESC")
+    @Query("SELECT * FROM transactions ORDER BY date DESC")
     fun getAll(): Flow<List<TransactionEntity>>
 
-    @Query("SELECT * FROM `transaction` WHERE id LIKE :id LIMIT 1")
+    @Query("SELECT * FROM transactions WHERE id LIKE :id LIMIT 1")
     suspend fun get(id: Long): TransactionEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -19,7 +19,7 @@ interface TransactionDao {
     @Delete
     suspend fun delete(transactionEntity: TransactionEntity)
 
-    @Query("DELETE FROM `transaction` WHERE id LIKE :id ")
+    @Query("DELETE FROM transactions WHERE id LIKE :id ")
     suspend fun delete(id: Long)
 
 }
