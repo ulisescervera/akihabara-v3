@@ -3,7 +3,6 @@ package com.gmail.uli153.akihabara3.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gmail.uli153.akihabara3.domain.models.Nameable
 import java.math.BigDecimal
 import java.util.*
 

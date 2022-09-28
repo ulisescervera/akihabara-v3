@@ -1,47 +1,26 @@
 package com.gmail.uli153.akihabara3.data.repositories
 
-import com.gmail.uli153.akihabara3.data.AkihabaraDatabase
 import com.gmail.uli153.akihabara3.data.entities.ProductEntity
 import com.gmail.uli153.akihabara3.data.entities.TransactionEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 
-class AkbRepository(private val db: AkihabaraDatabase) {
+interface AkbRepository {
 
-    fun fetchProducts(): Flow<List<ProductEntity>> {
-        return db.productDao().getAll()
-    }
+    fun fetchProducts(): Flow<List<ProductEntity>>
 
-    fun fetchDriks(): Flow<List<ProductEntity>> {
-        return db.productDao().getDrikns()
-    }
+    fun fetchDriks(): Flow<List<ProductEntity>>
 
-    fun fetchFoods(): Flow<List<ProductEntity>> {
-        return db.productDao().getFoods()
-    }
+    fun fetchFoods(): Flow<List<ProductEntity>>
 
-    fun fetchTransactions(): Flow<List<TransactionEntity>> {
-        return db.transactionDao().getAll()
-    }
+    fun fetchTransactions(): Flow<List<TransactionEntity>>
 
-    suspend fun deleteProduct(productEntity: ProductEntity) = withContext(Dispatchers.IO) {
-        db.productDao().delete(productEntity)
-    }
+    suspend fun deleteProduct(productEntity: ProductEntity)
 
-    suspend fun addProduct(productEntity: ProductEntity) = withContext(Dispatchers.IO) {
-        db.productDao().insert(productEntity)
-    }
+    suspend fun addProduct(productEntity: ProductEntity)
 
-    suspend fun addTransaction(transactionEntity: TransactionEntity) = withContext(Dispatchers.IO) {
-        db.transactionDao().insert(transactionEntity)
-    }
+    suspend fun addTransaction(transactionEntity: TransactionEntity): Long
 
-    suspend fun deleteTransaction(transactionEntity: TransactionEntity) = withContext(Dispatchers.IO) {
-        db.transactionDao().delete(transactionEntity)
-    }
+    suspend fun deleteTransaction(transactionEntity: TransactionEntity)
 
-    suspend fun deleteTransaction(id: Long) = withContext(Dispatchers.IO) {
-        db.transactionDao().delete(id)
-    }
+    suspend fun deleteTransaction(id: Long)
 }

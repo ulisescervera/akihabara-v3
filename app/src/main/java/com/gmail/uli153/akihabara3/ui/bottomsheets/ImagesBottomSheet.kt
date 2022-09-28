@@ -1,4 +1,4 @@
-package com.gmail.uli153.akihabara3.ui.bottomsheet
+package com.gmail.uli153.akihabara3.ui.bottomsheets
 
 import android.os.Bundle
 import android.view.LayoutInflater

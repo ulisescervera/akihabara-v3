@@ -3,6 +3,7 @@ package com.gmail.uli153.akihabara3.di
 import android.content.Context
 import com.gmail.uli153.akihabara3.data.AkihabaraDatabase
 import com.gmail.uli153.akihabara3.data.repositories.AkbRepository
+import com.gmail.uli153.akihabara3.data.repositories.AkbRepositoryImpl
 import com.gmail.uli153.akihabara3.domain.use_cases.product.*
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.*
 import dagger.Module
@@ -25,7 +26,7 @@ class AppModule {
     @Provides
     @Singleton
     fun akbRepository(db: AkihabaraDatabase): AkbRepository {
-        return AkbRepository(db)
+        return AkbRepositoryImpl(db)
     }
 
     @Provides

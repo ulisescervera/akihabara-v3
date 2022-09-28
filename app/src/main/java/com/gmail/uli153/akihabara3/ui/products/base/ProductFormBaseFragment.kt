@@ -17,7 +17,7 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.entities.ProductType
 import com.gmail.uli153.akihabara3.databinding.FragmentProductBaseFormBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
-import com.gmail.uli153.akihabara3.ui.bottomsheet.ImagesBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheets.ImagesBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser

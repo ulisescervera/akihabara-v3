@@ -1,4 +1,4 @@
-package com.gmail.uli153.akihabara3.ui.bottomsheet.base
+package com.gmail.uli153.akihabara3.ui.bottomsheets.base
 
 import android.content.DialogInterface
 import android.os.Bundle

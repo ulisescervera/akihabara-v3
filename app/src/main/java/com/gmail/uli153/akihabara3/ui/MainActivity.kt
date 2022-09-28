@@ -8,8 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
-import com.gmail.uli153.akihabara3.ui.bottomsheet.BalanceBottomSheet
-import com.gmail.uli153.akihabara3.ui.bottomsheet.InfoBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheets.BalanceBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView

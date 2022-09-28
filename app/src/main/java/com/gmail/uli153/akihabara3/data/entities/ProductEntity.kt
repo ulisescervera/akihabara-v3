@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.domain.models.Nameable
 import java.math.BigDecimal
 
 enum class ProductType(val nameResId: Int) {
