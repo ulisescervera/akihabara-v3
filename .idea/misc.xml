@@ -89,8 +89,10 @@
         <entry key="app/src/main/res/layout/bottom_sheet_balance.xml" value="0.297554347826087" />
         <entry key="app/src/main/res/layout/bottom_sheet_delete_product.xml" value="0.297554347826087" />
         <entry key="app/src/main/res/layout/bottom_sheet_images.xml" value="0.297554347826087" />
+        <entry key="app/src/main/res/layout/fragment_bgg_search.xml" value="0.20425724637681159" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_products_base.xml" value="0.297554347826087" />
+        <entry key="app/src/main/res/layout/row_bgg_item.xml" value="0.297554347826087" />
       </map>
     </option>
   </component>

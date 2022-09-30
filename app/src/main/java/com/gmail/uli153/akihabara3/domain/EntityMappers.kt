@@ -1,11 +1,11 @@
 package com.gmail.uli153.akihabara3.domain
 
 import com.gmail.uli153.akihabara3.data.converters.Converters
+import com.gmail.uli153.akihabara3.data.entities.BggItem
 import com.gmail.uli153.akihabara3.data.entities.ProductEntity
 import com.gmail.uli153.akihabara3.data.entities.TransactionEntity
 import com.gmail.uli153.akihabara3.data.entities.TransactionType
-import com.gmail.uli153.akihabara3.domain.models.Product
-import com.gmail.uli153.akihabara3.domain.models.Transaction
+import com.gmail.uli153.akihabara3.domain.models.*
 import java.util.*
 
 private val converters = Converters()
@@ -66,5 +66,20 @@ fun Product.toTransactionEntity(): TransactionEntity {
         amount = price,
         defaultImage = defaultImage,
         customImage = converters.fromFile(customImage),
+    )
+}
+
+fun BggItem.toModel(): BggSearchItem {
+    return BggSearchItem(
+        id,
+        thumbnail,
+        image,
+        names.map { Name(NameType.valueOf(it.type.uppercase()), it.value) },
+        description,
+        yearpublished.value,
+        minplayers.value,
+        maxplayers.value,
+        playingtime.value,
+        minage.value
     )
 }

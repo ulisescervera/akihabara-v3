@@ -19,13 +19,13 @@ data class SimpleBggSearchItem(
 
 @Root()
 data class BggItemResponse(
-    @Attribute(name= "type") val type: String,
-    @Attribute(name = "id") val id: Long,
     @ElementList(inline = true) val items: List<BggItem>
 )
 
 @Root(name = "item")
 data class BggItem(
+    @Attribute val type: String,
+    @Attribute val id: Long,
     @Element val thumbnail: String,
     @Element val image: String,
     @ElementList(inline = true) val names: List<Name>,
@@ -33,7 +33,7 @@ data class BggItem(
     @Element val yearpublished: YearPublished,
     @Element val minplayers: MinPlayers,
     @Element val maxplayers: MaxPlayers,
-    @Element val playingtim: PlayingTime,
+    @Element val playingtime: PlayingTime,
     @Element val minage: MinAge,
 )
 

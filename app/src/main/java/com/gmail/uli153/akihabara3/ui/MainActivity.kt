@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.destination_products,
-                R.id.destination_settings,
+                R.id.destination_search,
                 R.id.destination_history
             )
         )
@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.lottieView.setSafeClickListener {
-            InfoBottomSheet.show(supportFragmentManager)
+//            InfoBottomSheet.show(supportFragmentManager)
+            navController.navigate(R.id.destination_search)
         }
     }
 }

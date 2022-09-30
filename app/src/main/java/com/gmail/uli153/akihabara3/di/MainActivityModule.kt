@@ -1,7 +1,9 @@
 package com.gmail.uli153.akihabara3.di
 
+import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.TransactionsUseCases
+import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import dagger.Module
 import dagger.Provides
@@ -19,4 +21,11 @@ class MainActivityModule {
         productsUseCases: ProductsUseCases,
         transactionsUseCases: TransactionsUseCases
     ) = ProductsViewModel(productsUseCases, transactionsUseCases)
+
+    @Provides
+    @ViewModelScoped
+    fun bggViewModel(
+        bggUseCase: SearchBggUseCase
+    ) = BggViewModel(bggUseCase)
+
 }
