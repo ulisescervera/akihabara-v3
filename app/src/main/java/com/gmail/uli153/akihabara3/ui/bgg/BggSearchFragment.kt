@@ -13,6 +13,7 @@ import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import kotlinx.android.synthetic.main.row_bgg_item.view.*
 
@@ -43,7 +44,12 @@ class BggSearchFragment: AkbFragment() {
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
         bggViewModel.searchResult.observe(viewLifecycleOwner) {
             result.clear()
-            result.addAll(it)
+            when(it) {
+                is DataWrapper.Error -> {
+
+                }
+                is DataWrapper.Success -> result.addAll(it.data)
+            }
             adapter.notifyDataSetChanged()
         }
     }
