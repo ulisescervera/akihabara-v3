@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,6 +20,7 @@ import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.setSafeClickListener
 import kotlinx.android.synthetic.main.row_bgg_item.view.*
+import kotlinx.coroutines.flow.collectLatest
 
 class BggSearchFragment: AkbFragment() {
 
@@ -38,20 +43,14 @@ class BggSearchFragment: AkbFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSearch.setSafeClickListener {
             val query = binding.editSearch.text.toString().takeIf { it.isNotBlank() } ?: return@setSafeClickListener
-            bggViewModel.search(query)
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                bggViewModel.search(query).collectLatest {
+                    adapter.submitData(it)
+                }
+            }
         }
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
-        bggViewModel.searchResult.observe(viewLifecycleOwner) {
-            result.clear()
-            when(it) {
-                is DataWrapper.Error -> {
-
-                }
-                is DataWrapper.Success -> result.addAll(it.data)
-            }
-            adapter.notifyDataSetChanged()
-        }
     }
 
     private inner class SearchResultVH(view: View): RecyclerView.ViewHolder(view) {
@@ -61,18 +60,25 @@ class BggSearchFragment: AkbFragment() {
         }
     }
 
-    private inner class Adapter: RecyclerView.Adapter<SearchResultVH>() {
+    private inner class DiffCallback : DiffUtil.ItemCallback<BggSearchItem>() {
+        override fun areItemsTheSame(oldItem: BggSearchItem, newItem: BggSearchItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: BggSearchItem, newItem: BggSearchItem): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private inner class Adapter: PagingDataAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
             return SearchResultVH(LayoutInflater.from(requireContext()).inflate(R.layout.row_bgg_item, parent, false))
         }
 
         override fun onBindViewHolder(holder: SearchResultVH, position: Int) {
-            holder.set(result[position])
-        }
-
-        override fun getItemCount(): Int {
-            return result.size
+            val item = getItem(position) ?: return
+            holder.set(item)
         }
     }
 }

@@ -30,10 +30,10 @@ class BggRepositoryImpl: BggRepository {
             .create(BggService::class.java)
     }
 
-    override suspend fun search(query: String, page: Int): List<BggItem> = withContext(Dispatchers.IO) {
-        val startIndex = 10 * page
+    override suspend fun search(query: String, page: Int, pageSize: Int): List<BggItem> = withContext(Dispatchers.IO) {
+        val startIndex = pageSize * page
         return@withContext service.search(query).items
-            .let { it.subList(startIndex, Math.min(startIndex + 10, it.size)) }
+            .let { it.subList(startIndex, Math.min(startIndex + pageSize, it.size)) }
             .map { async { service.getItem(it.id).items } }.awaitAll().flatten()
     }
 }
