@@ -9,6 +9,8 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.simpleframework.xml.convert.AnnotationStrategy
+import org.simpleframework.xml.core.Persister
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
@@ -25,15 +27,14 @@ class BggRepositoryImpl: BggRepository {
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
-            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(Persister(AnnotationStrategy())))
             .build()
             .create(BggService::class.java)
     }
 
     override suspend fun search(query: String, page: Int, pageSize: Int): List<BggItem> = withContext(Dispatchers.IO) {
-        val startIndex = pageSize * page
         return@withContext service.search(query).items
-            .let { it.subList(startIndex, Math.min(startIndex + pageSize, it.size)) }
+            .let { it.subList(page, Math.min(page + pageSize, it.size)) }
             .map { async { service.getItem(it.id).items } }.awaitAll().flatten()
     }
 }

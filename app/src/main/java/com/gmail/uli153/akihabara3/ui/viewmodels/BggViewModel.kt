@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.gmail.uli153.akihabara3.data.sources.BggPagingSource
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
@@ -32,6 +33,6 @@ class BggViewModel @Inject constructor(
     }
 
     fun search(query: String): Flow<PagingData<BggSearchItem>> {
-        return searchUseCase(query)
+        return searchUseCase(query).cachedIn(viewModelScope)
     }
 }

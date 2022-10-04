@@ -51,6 +51,8 @@ class BggSearchFragment: AkbFragment() {
         }
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.editSearch.setText("catan")
     }
 
     private inner class SearchResultVH(view: View): RecyclerView.ViewHolder(view) {

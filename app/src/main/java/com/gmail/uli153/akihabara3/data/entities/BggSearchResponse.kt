@@ -26,15 +26,15 @@ data class BggItemResponse @JvmOverloads constructor(
 data class BggItem @JvmOverloads constructor(
     @field:Attribute var type: String = "",
     @field:Attribute var id: Long = -1,
-    @field:Element var thumbnail: String = "",
-    @field:Element var image: String = "",
+    @field:Element(required = false) var thumbnail: String? = null,
+    @field:Element(required = false) var image: String? = null,
     @field:ElementList(inline = true) var names: MutableList<Name> = mutableListOf(),
     @field:Element var description: String = "",
-    @field:Element var yearpublished: YearPublished = YearPublished(),
-    @field:Element var minplayers: MinPlayers = MinPlayers(),
-    @field:Element var maxplayers: MaxPlayers = MaxPlayers(),
-    @field:Element var playingtime: PlayingTime = PlayingTime(),
-    @field:Element var minage: MinAge = MinAge(),
+    @field:Element(required = false) var yearpublished: YearPublished? = null,
+    @field:Element(required = false) var minplayers: MinPlayers? = null,
+    @field:Element(required = false) var maxplayers: MaxPlayers? = null,
+    @field:Element(required = false) var playingtime: PlayingTime? = null,
+    @field:Element(required = false) var minage: MinAge? = null,
 )
 
 @Root(name = "name", strict = false)

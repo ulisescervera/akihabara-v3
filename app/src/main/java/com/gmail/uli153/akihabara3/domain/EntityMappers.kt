@@ -76,10 +76,10 @@ fun BggItem.toModel(): BggSearchItem {
         image,
         names.map { Name(NameType.valueOf(it.type.uppercase()), it.value) },
         description,
-        yearpublished.value,
-        minplayers.value,
-        maxplayers.value,
-        playingtime.value,
-        minage.value
+        yearpublished?.value,
+        minplayers?.value,
+        maxplayers?.value,
+        playingtime?.value,
+        minage?.value
     )
 }

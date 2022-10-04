@@ -5,7 +5,9 @@ import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.domain.toModel
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.sorted
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -15,5 +17,6 @@ class GetFoodsUseCase(private val repository: AkbRepository) {
         return repository.fetchFoods()
             .onStart { DataWrapper.Loading }
             .map { DataWrapper.Success(it.map { it.toModel() }.sorted()) }
+            .flowOn(Dispatchers.IO)
     }
 }
