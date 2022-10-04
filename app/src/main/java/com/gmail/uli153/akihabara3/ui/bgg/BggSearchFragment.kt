@@ -43,14 +43,19 @@ class BggSearchFragment: AkbFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSearch.setSafeClickListener {
             val query = binding.editSearch.text.toString().takeIf { it.isNotBlank() } ?: return@setSafeClickListener
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                bggViewModel.search(query).collectLatest {
-                    adapter.submitData(it)
-                }
-            }
+            bggViewModel.search(query)
         }
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            bggViewModel.pagedSearch.collectLatest {
+                adapter.submitData(it)
+            }
+            adapter.loadStateFlow.collectLatest {
+                //todo
+            }
+        }
 
         binding.editSearch.setText("catan")
     }

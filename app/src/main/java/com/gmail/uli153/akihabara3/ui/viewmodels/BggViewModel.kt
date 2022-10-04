@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.gmail.uli153.akihabara3.data.sources.BggPagingSource
@@ -13,10 +14,8 @@ import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.utils.DataWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +31,15 @@ class BggViewModel @Inject constructor(
         }
     }
 
-    fun search(query: String): Flow<PagingData<BggSearchItem>> {
-        return searchUseCase(query).cachedIn(viewModelScope)
+    private val _pagedSearch: MutableStateFlow<PagingData<BggSearchItem>> =
+        MutableStateFlow(PagingData.from(emptyList()))
+    val pagedSearch: StateFlow<PagingData<BggSearchItem>> = _pagedSearch
+
+    fun search(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            searchUseCase(query).cachedIn(viewModelScope).collectLatest {
+                _pagedSearch.emit(it)
+            }
+        }
     }
 }
