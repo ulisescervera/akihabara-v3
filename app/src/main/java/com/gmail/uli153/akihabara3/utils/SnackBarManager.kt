@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.toPx
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*

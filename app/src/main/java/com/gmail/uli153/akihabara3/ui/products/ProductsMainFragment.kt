@@ -13,7 +13,7 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
-import com.gmail.uli153.akihabara3.utils.getColorFromAttr
+import com.gmail.uli153.akihabara3.utils.extensions.getColorFromAttr
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_products.*
 import java.math.BigDecimal

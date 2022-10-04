@@ -12,8 +12,8 @@ import com.gmail.uli153.akihabara3.databinding.FragmentCropBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.utils.FileUtils
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import com.gmail.uli153.akihabara3.utils.toPx
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.toPx
 import kotlinx.coroutines.launch
 
 class CropFragment: AkbFragment() {

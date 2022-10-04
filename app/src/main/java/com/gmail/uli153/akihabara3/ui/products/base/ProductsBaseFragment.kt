@@ -17,8 +17,8 @@ import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
-import com.gmail.uli153.akihabara3.utils.setProductImage
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setProductImage
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.row_product.view.*

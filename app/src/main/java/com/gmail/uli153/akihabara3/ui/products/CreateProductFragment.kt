@@ -8,8 +8,8 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.FileUtils
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import com.gmail.uli153.akihabara3.utils.toPx
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.toPx
 import kotlinx.coroutines.runBlocking
 import java.io.File
 

@@ -21,7 +21,7 @@ import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.utils.FileUtils
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

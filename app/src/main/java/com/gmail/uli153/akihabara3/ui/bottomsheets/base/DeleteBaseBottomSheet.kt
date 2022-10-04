@@ -9,7 +9,7 @@ import android.widget.SeekBar
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.BottomSheetDeleteBinding
 import com.gmail.uli153.akihabara3.domain.models.Nameable
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

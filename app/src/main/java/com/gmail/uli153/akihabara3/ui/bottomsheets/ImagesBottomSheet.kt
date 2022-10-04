@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_images.*

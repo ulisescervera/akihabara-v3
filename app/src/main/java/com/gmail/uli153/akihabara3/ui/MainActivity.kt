@@ -11,7 +11,7 @@ import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheets.BalanceBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*

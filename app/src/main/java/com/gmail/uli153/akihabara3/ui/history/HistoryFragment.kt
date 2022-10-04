@@ -19,8 +19,8 @@ import com.gmail.uli153.akihabara3.ui.bottomsheets.base.DeleteBaseBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.DataWrapper
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
-import com.gmail.uli153.akihabara3.utils.setTransactionImage
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setTransactionImage
 import kotlinx.android.synthetic.main.row_transaction.view.*
 import java.text.SimpleDateFormat
 import java.util.*

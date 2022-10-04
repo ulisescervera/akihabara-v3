@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import androidx.paging.PagingDataAdapter
@@ -18,7 +20,8 @@ import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.DataWrapper
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import kotlinx.android.synthetic.main.row_bgg_item.view.*
 import kotlinx.coroutines.flow.collectLatest
 
@@ -27,8 +30,6 @@ class BggSearchFragment: AkbFragment() {
     private lateinit var binding: FragmentBggSearchBinding
 
     private val bggViewModel: BggViewModel by activityViewModels()
-
-    private val result: MutableList<BggSearchItem> = mutableListOf()
 
     private val adapter: Adapter by lazy {
         Adapter()
@@ -47,8 +48,8 @@ class BggSearchFragment: AkbFragment() {
         }
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        
+        repeatOnStart {
             bggViewModel.pagedSearch.collectLatest {
                 adapter.submitData(it)
             }

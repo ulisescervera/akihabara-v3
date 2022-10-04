@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.gmail.uli153.akihabara3"
@@ -42,30 +42,27 @@ dependencies {
     def room_version = "2.4.2"
     def camerax_version = "1.1.0"
     def paging_version = "3.1.1"
+    def androidx_lifecycle = "2.5.1"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.activity:activity-ktx:1.6.0'
     implementation 'com.google.dagger:hilt-android:2.41'
     kapt 'com.google.dagger:hilt-compiler:2.41'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.20'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
 
-
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
-//    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1' // Could not find com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1
-//    implementation 'com.github.amsiq:SwipeRevealLayout:1.4.1-x' // Could not find com.github.amsiq:SwipeRevealLayout:1.4.1-x.
-//    implementation 'com.nikhilpanju.recyclerviewenhanced:recyclerviewenhanced:1.1.0'
-
 
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"

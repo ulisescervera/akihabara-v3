@@ -21,7 +21,7 @@ import com.gmail.uli153.akihabara3.ui.bottomsheets.ImagesBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
-import com.gmail.uli153.akihabara3.utils.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import kotlinx.android.synthetic.main.fragment_product_base_form.*
 import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
