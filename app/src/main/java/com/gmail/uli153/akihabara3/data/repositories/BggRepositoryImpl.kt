@@ -35,6 +35,8 @@ class BggRepositoryImpl: BggRepository {
     override suspend fun search(query: String, page: Int, pageSize: Int): List<BggItem> = withContext(Dispatchers.IO) {
         return@withContext service.search(query).items
             .let { it.subList(page, Math.min(page + pageSize, it.size)) }
-            .map { async { service.getItem(it.id).items } }.awaitAll().flatten()
+            .map { it.id }
+            .joinToString(",")
+            .let { async { service.getItems(it) } }.await().items
     }
 }

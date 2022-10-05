@@ -20,10 +20,13 @@ import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.DataWrapper
+import com.gmail.uli153.akihabara3.utils.extensions.launchMain
 import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import kotlinx.android.synthetic.main.row_bgg_item.view.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class BggSearchFragment: AkbFragment() {
 
@@ -50,11 +53,14 @@ class BggSearchFragment: AkbFragment() {
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
         
         repeatOnStart {
-            bggViewModel.pagedSearch.collectLatest {
-                adapter.submitData(it)
-            }
             adapter.loadStateFlow.collectLatest {
                 //todo
+            }
+        }
+
+        bggViewModel.pagedSearch.observe(viewLifecycleOwner) {
+            launchMain {
+                adapter.submitData(it)
             }
         }
 

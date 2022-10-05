@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 fun Fragment.repeatOnStart(block: suspend () -> Unit) {
@@ -11,5 +12,11 @@ fun Fragment.repeatOnStart(block: suspend () -> Unit) {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             block()
         }
+    }
+}
+
+fun Fragment.launchMain(block: suspend () -> Unit) {
+    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+        block()
     }
 }

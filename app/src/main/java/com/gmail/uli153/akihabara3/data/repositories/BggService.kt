@@ -12,4 +12,7 @@ interface BggService {
 
     @GET("thing")
     suspend fun getItem(@Query("id") id: Int, @Query("type") type: String? = null): BggItemResponse
+
+    @GET("thing")
+    suspend fun getItems(@Query("id", encoded = true) ids: String, @Query("type") type: String? = null): BggItemResponse
 }

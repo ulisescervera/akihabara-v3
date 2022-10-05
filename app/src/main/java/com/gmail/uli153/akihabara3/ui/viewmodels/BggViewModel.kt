@@ -1,10 +1,7 @@
 package com.gmail.uli153.akihabara3.ui.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -31,15 +28,17 @@ class BggViewModel @Inject constructor(
         }
     }
 
-    private val _pagedSearch: MutableStateFlow<PagingData<BggSearchItem>> =
-        MutableStateFlow(PagingData.from(emptyList()))
-    val pagedSearch: StateFlow<PagingData<BggSearchItem>> = _pagedSearch
+    private val _query: MutableLiveData<String> = MutableLiveData("")
+
+    val pagedSearch: LiveData<PagingData<BggSearchItem>> = _query.distinctUntilChanged().switchMap { query ->
+        if (query.isBlank()) return@switchMap MutableLiveData(PagingData.from(emptyList()))
+
+        searchUseCase(query).cachedIn(viewModelScope).asLiveData(Dispatchers.IO)
+    }
 
     fun search(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchUseCase(query).cachedIn(viewModelScope).collectLatest {
-                _pagedSearch.emit(it)
-            }
-        }
+        _query.value = query
     }
+
+
 }

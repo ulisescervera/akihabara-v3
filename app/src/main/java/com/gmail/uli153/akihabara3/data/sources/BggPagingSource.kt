@@ -11,7 +11,7 @@ class BggPagingSource(
 ): PagingSource<Int, BggItem>() {
 
     companion object {
-        const val PAGE_SIZE = 10
+        const val PAGE_SIZE = 100
         const val START = 0
     }
 
