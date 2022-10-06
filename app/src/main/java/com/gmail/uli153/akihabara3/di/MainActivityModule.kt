@@ -5,6 +5,7 @@ import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.TransactionsUseCases
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
+import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +26,8 @@ class MainActivityModule {
     @Provides
     @ViewModelScoped
     fun bggViewModel(
-        bggUseCase: SearchBggUseCase
-    ) = BggViewModel(bggUseCase)
+        bggUseCase: SearchBggUseCase,
+        preferenceUtils: PreferenceUtils
+    ) = BggViewModel(bggUseCase, preferenceUtils)
 
 }

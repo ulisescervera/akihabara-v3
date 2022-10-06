@@ -45,10 +45,16 @@ class BggSearchFragment: AkbFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.btnSearch.setSafeClickListener {
             val query = binding.editSearch.text.toString().takeIf { it.isNotBlank() } ?: return@setSafeClickListener
             bggViewModel.search(query)
         }
+
+        binding.btnFilters.setSafeClickListener {
+
+        }
+
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
         

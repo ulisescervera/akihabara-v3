@@ -9,6 +9,7 @@ import com.gmail.uli153.akihabara3.data.repositories.BggRepositoryImpl
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.product.*
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.*
+import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,6 +37,12 @@ class AppModule {
     @Singleton
     fun bggRepository(): BggRepository {
         return BggRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun preferenceUtils(@ApplicationContext context: Context): PreferenceUtils {
+        return PreferenceUtils(context)
     }
 
     @Provides
