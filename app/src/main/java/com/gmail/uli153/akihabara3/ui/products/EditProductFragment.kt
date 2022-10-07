@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.ui.bottomsheets.DeleteProductBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.base.DeleteBaseBottomSheet

@@ -2,7 +2,7 @@ package com.gmail.uli153.akihabara3.ui.products
 
 import android.os.Bundle
 import android.view.View
-import com.gmail.uli153.akihabara3.utils.DataWrapper
+import com.gmail.uli153.akihabara3.data.DataWrapper
 
 class DrinksFragment: ProductsBaseFragment() {
 

@@ -9,7 +9,7 @@ import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.domain.models.Transaction
 import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.TransactionsUseCases
-import com.gmail.uli153.akihabara3.utils.DataWrapper
+import com.gmail.uli153.akihabara3.data.DataWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

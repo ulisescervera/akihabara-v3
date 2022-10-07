@@ -1,4 +1,4 @@
-package com.gmail.uli153.akihabara3.utils
+package com.gmail.uli153.akihabara3.data
 
 sealed class DataWrapper<T> {
     object Loading : DataWrapper<Nothing>()

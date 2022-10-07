@@ -5,10 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,14 +15,11 @@ import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
-import com.gmail.uli153.akihabara3.utils.DataWrapper
 import com.gmail.uli153.akihabara3.utils.extensions.launchMain
 import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import kotlinx.android.synthetic.main.row_bgg_item.view.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class BggSearchFragment: AkbFragment() {
 

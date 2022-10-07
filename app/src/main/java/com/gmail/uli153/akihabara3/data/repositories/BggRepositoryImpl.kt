@@ -39,4 +39,12 @@ class BggRepositoryImpl: BggRepository {
             .joinToString(",")
             .let { async { service.getItems(it) } }.await().items
     }
+
+    override suspend fun search(query: String, types: Set<SearchTypes>): List<BggItem> = withContext(Dispatchers.IO) {
+        val typesQuery = types.map { it.value }.joinToString(",")
+        return@withContext service.search(query, typesQuery).items
+            .map { it.id }
+            .joinToString(",")
+            .let { async { service.getItems(it) } }.await().items
+    }
 }
