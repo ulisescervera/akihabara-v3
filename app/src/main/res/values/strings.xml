@@ -42,4 +42,10 @@
     <string name="delete_product_tip">Para confirmar arrastra el punto hasta el final</string>
 
     <string name="balance_title">Movimiento de saldo (%s)</string>
+
+    <!-- Bgg Filters -->
+    <string name="boardgames">Juego de mesa</string>
+    <string name="boardgames_expansion">Expansiones</string>
+    <string name="boardgames_accessory">Accesorios</string>
+    <string name="videogames">Videojuegos</string>
 </resources>

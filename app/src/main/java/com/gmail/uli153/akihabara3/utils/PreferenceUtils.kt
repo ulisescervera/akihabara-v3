@@ -5,9 +5,17 @@ import android.content.SharedPreferences
 
 class PreferenceUtils(private val context: Context) {
 
+    enum class PreferenceKeys(val key: String) {
+        FilterBoardgame("FILTER_BOARDGAMES"),
+        FilterBoardgameAccessory("FILTER_BOARDGAME_ACCESSORY"),
+        FilterBoardGameExpansion("FILTER_BOARDGAME_EXPANSION"),
+        FilterVideogame("FILTER_VIDEOGAME"),
+        FirstTimeStarted("FIRST_TIME_STARTED_APP")
+    }
+
     private val PREFERENCE_FILE = "AKB_PREFERENCE_FILE"
 
-    val preferences: SharedPreferences get() {
+    private val preferences: SharedPreferences get() {
         return context.getSharedPreferences(PREFERENCE_FILE, Context.MODE_PRIVATE)
     }
 
@@ -15,11 +23,11 @@ class PreferenceUtils(private val context: Context) {
         return preferences.edit()
     }
 
-    fun getBoolean(key: String, default: Boolean = false): Boolean {
-        return preferences.getBoolean(key, default)
+    fun getBoolean(key: PreferenceKeys, default: Boolean = false): Boolean {
+        return preferences.getBoolean(key.key, default)
     }
 
-    fun putBoolean(key: String, value: Boolean) {
-        editor.putBoolean(key, value).apply()
+    fun putBoolean(key: PreferenceKeys, value: Boolean) {
+        editor.putBoolean(key.key, value).apply()
     }
 }

@@ -20,12 +20,18 @@ class CropFragment: AkbFragment() {
 
     private val productFormViewModel: ProductFormViewModel by activityViewModels()
 
-    private lateinit var binding: FragmentCropBinding
+    private var _binding: FragmentCropBinding? = null
+    private val binding: FragmentCropBinding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return FragmentCropBinding.inflate(inflater, container, false).apply {
-            binding = this
+            _binding = this
         }.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

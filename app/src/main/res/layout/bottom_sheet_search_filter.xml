@@ -60,9 +60,70 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:maxLines="1"
+            android:text="@string/boardgames"
             app:layout_constraintBottom_toBottomOf="@+id/check_boardgame"
             app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-            app:layout_constraintStart_toEndOf="@+id/check_boardgame" />
+            app:layout_constraintStart_toEndOf="@+id/check_boardgame"
+            app:layout_constraintTop_toTopOf="@+id/check_boardgame" />
+
+        <CheckBox
+            android:id="@+id/check_boardgame_expansion"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/check_boardgame" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:maxLines="1"
+            android:text="@string/boardgames_expansion"
+            app:layout_constraintBottom_toBottomOf="@+id/check_boardgame_expansion"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/check_boardgame_expansion"
+            app:layout_constraintTop_toTopOf="@+id/check_boardgame_expansion" />
+
+        <CheckBox
+            android:id="@+id/check_boardgame_accessory"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/check_boardgame_expansion" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:maxLines="1"
+            android:text="@string/boardgames_accessory"
+            app:layout_constraintBottom_toBottomOf="@+id/check_boardgame_accessory"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/check_boardgame_accessory"
+            app:layout_constraintTop_toTopOf="@+id/check_boardgame_accessory" />
+
+        <CheckBox
+            android:id="@+id/check_videogame"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/check_boardgame_accessory" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:maxLines="1"
+            android:text="@string/videogames"
+            app:layout_constraintBottom_toBottomOf="@+id/check_videogame"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/check_videogame"
+            app:layout_constraintTop_toTopOf="@+id/check_videogame" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

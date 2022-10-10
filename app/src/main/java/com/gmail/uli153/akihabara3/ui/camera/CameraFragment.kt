@@ -28,14 +28,15 @@ import kotlinx.coroutines.launch
 
 class CameraFragment: AkbFragment() {
 
-    private lateinit var binding: FragmentCameraBinding
+    private var _binding: FragmentCameraBinding? = null
+    private val binding: FragmentCameraBinding get() = _binding!!
 
     private val productsFormViewModel: ProductFormViewModel by activityViewModels()
 
     private var imageCapture: ImageCapture? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentCameraBinding.inflate(inflater, container, false)
+        _binding = FragmentCameraBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,6 +47,11 @@ class CameraFragment: AkbFragment() {
             onTakeImageClicked()
         }
         setupButtonAnimation()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     @SuppressLint("ClickableViewAccessibility")

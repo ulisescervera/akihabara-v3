@@ -16,23 +16,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_search"
+    <ImageView
+        android:id="@+id/btn_cancel"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:padding="8dp"
+        android:src="@drawable/ic_close"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/edit_search"
         app:layout_constraintEnd_toEndOf="@id/edit_search"
         app:layout_constraintTop_toTopOf="@+id/edit_search" />
 
     <Button
         android:id="@+id/btn_filters"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
+        android:background="@drawable/ic_filters"
         app:layout_constraintBottom_toBottomOf="@id/edit_search"
-        app:layout_constraintEnd_toEndOf="@+id/edit_search"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/edit_search" />
 
     <androidx.recyclerview.widget.RecyclerView

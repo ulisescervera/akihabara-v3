@@ -33,7 +33,10 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
     abstract fun updateButton()
     abstract fun updateImage(file: Any?)
 
-    protected lateinit var binding: FragmentProductBaseFormBinding
+    protected var _binding: FragmentProductBaseFormBinding? = null
+    protected val binding: FragmentProductBaseFormBinding get() = _binding!!
+
+
     protected val productsViewModel: ProductsViewModel by activityViewModels()
     protected val productsFormViewModel: ProductFormViewModel by activityViewModels()
 
@@ -111,8 +114,13 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentProductBaseFormBinding.inflate(inflater, container, false)
+        _binding = FragmentProductBaseFormBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

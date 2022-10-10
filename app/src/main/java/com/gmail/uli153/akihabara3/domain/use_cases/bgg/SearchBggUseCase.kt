@@ -11,6 +11,7 @@ import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.toModel
 import com.gmail.uli153.akihabara3.data.DataWrapper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 
 class SearchBggUseCase(private val repository: BggRepository) {
@@ -23,6 +24,7 @@ class SearchBggUseCase(private val repository: BggRepository) {
 
         val t = types.ifEmpty { SearchTypes.values().toSet() }
         return try {
+            delay(400)
             val res = repository.search(query, t)
             DataWrapper.Success(res.map { it.toModel() })
         } catch (e: Throwable) {

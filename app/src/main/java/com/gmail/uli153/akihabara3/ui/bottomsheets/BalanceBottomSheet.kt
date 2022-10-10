@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_balance.*
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
-class BalanceBottomSheet: BottomSheetDialogFragment() {
+class BalanceBottomSheet private constructor(): BottomSheetDialogFragment() {
 
     companion object {
         fun show(manager: FragmentManager) {

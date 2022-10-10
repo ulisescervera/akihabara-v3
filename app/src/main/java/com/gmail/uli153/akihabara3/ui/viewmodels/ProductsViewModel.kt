@@ -1,5 +1,6 @@
 package com.gmail.uli153.akihabara3.ui.viewmodels
 
+import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -73,6 +74,22 @@ class ProductsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             productsUseCases.createProductUseCase(newProduct)
         }
+    }
+
+    fun getProduct(id: Long): Product? {
+        val food: List<Product> = foods.value?.let {
+            if (it is DataWrapper.Success) {
+                it.data
+            } else listOf()
+        } ?: listOf()
+
+        val drinks: List<Product> = driks.value?.let {
+            if (it is DataWrapper.Success) {
+                it.data
+            } else listOf()
+        } ?: listOf()
+
+        return food.firstOrNull { it.id == id } ?: drinks.firstOrNull { it.id == id }
     }
 
 }

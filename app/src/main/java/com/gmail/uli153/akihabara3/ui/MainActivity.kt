@@ -11,6 +11,7 @@ import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheets.BalanceBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
+import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,14 +20,24 @@ import kotlinx.android.synthetic.main.activity_main.*
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+    private val binding: ActivityMainBinding get() = _binding!!
 
     private val productsFormViewModel: ProductFormViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        val preferenceUtils = PreferenceUtils(this)
+        if (preferenceUtils.getBoolean(PreferenceUtils.PreferenceKeys.FirstTimeStarted, true)) {
+            preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterBoardgame, true)
+            preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterBoardGameExpansion, true)
+            preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterBoardgameAccessory, true)
+            preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterVideogame, true)
+            preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FirstTimeStarted, false)
+        }
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
@@ -71,6 +82,11 @@ class MainActivity : AppCompatActivity() {
 //            InfoBottomSheet.show(supportFragmentManager)
             navController.navigate(R.id.destination_search)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
 

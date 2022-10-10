@@ -1,19 +1,26 @@
 package com.gmail.uli153.akihabara3.ui.bgg
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
+import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
+import com.gmail.uli153.akihabara3.ui.bottomsheets.SearchFilterBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.extensions.launchMain
 import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
@@ -23,47 +30,79 @@ import kotlinx.coroutines.flow.collectLatest
 
 class BggSearchFragment: AkbFragment() {
 
-    private lateinit var binding: FragmentBggSearchBinding
+    private var _binding: FragmentBggSearchBinding? = null
+    private val binding: FragmentBggSearchBinding get() = _binding!!
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
     private val adapter: Adapter by lazy {
-        Adapter()
+        Adapter().apply {
+            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onChanged() {
+                    binding.recyclerviewBgg.scrollToPosition(0)
+                }
+                override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                    binding.recyclerviewBgg.scrollToPosition(0)
+                }
+                override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                    binding.recyclerviewBgg.scrollToPosition(0)
+                }
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    binding.recyclerviewBgg.scrollToPosition(0)
+                }
+                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                    binding.recyclerviewBgg.scrollToPosition(0)
+                }
+                override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                    binding.recyclerviewBgg.scrollToPosition(0)
+                }
+            })
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentBggSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentBggSearchBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSearch.setSafeClickListener {
-            val query = binding.editSearch.text.toString().takeIf { it.isNotBlank() } ?: return@setSafeClickListener
-            bggViewModel.search(query)
+        binding.btnCancel.setSafeClickListener {
+            binding.editSearch.setText("")
         }
 
-        binding.btnFilters.setSafeClickListener {
+        binding.editSearch.addTextChangedListener(afterTextChanged = {
+            val query = it?.toString() ?: ""
+            binding.btnCancel.isGone = query.isBlank()
+            bggViewModel.search(query)
+        })
 
+        binding.btnFilters.setSafeClickListener {
+            SearchFilterBottomSheet.show(parentFragmentManager)
         }
 
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
-        
-        repeatOnStart {
-            adapter.loadStateFlow.collectLatest {
-                //todo
+
+        bggViewModel.searchResult.observe(viewLifecycleOwner) {
+            when(it) {
+                is DataWrapper.Success -> {
+                    adapter.submitList(it.data)
+                }
+                is DataWrapper.Loading -> {
+                    adapter.submitList(emptyList())
+                }
+                is DataWrapper.Error -> {
+                    //todo
+                }
             }
         }
-
-        bggViewModel.pagedSearch.observe(viewLifecycleOwner) {
-            launchMain {
-                adapter.submitData(it)
-            }
-        }
-
-        binding.editSearch.setText("catan")
     }
 
     private inner class SearchResultVH(view: View): RecyclerView.ViewHolder(view) {
@@ -83,7 +122,19 @@ class BggSearchFragment: AkbFragment() {
         }
     }
 
-    private inner class Adapter: PagingDataAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
+    private inner class Adapter: ListAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
+            return SearchResultVH(LayoutInflater.from(requireContext()).inflate(R.layout.row_bgg_item, parent, false))
+        }
+
+        override fun onBindViewHolder(holder: SearchResultVH, position: Int) {
+            val item = getItem(position) ?: return
+            holder.set(item)
+        }
+    }
+
+    private inner class PagedAdapter: PagingDataAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
             return SearchResultVH(LayoutInflater.from(requireContext()).inflate(R.layout.row_bgg_item, parent, false))

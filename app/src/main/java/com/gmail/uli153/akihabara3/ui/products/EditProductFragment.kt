@@ -63,11 +63,7 @@ class EditProductFragment: ProductFormBaseFragment(), DeleteBaseBottomSheet.Dele
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         product = args.productId.let { productId ->
-            productsViewModel.products.value?.let { wrapper ->
-                if (wrapper is DataWrapper.Success<List<Product>>) {
-                    wrapper.data.firstOrNull { it.id == productId }
-                } else null
-            }
+            productsViewModel.getProduct(productId)
         } ?: run {
             // Nunca debería darse este caso
             navController.navigateUp()

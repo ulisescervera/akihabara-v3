@@ -19,11 +19,6 @@ class BggViewModel @Inject constructor(
     private val preferenceUtils: PreferenceUtils
 ): ViewModel() {
 
-    private val FILTER_BOARDGAMES = "FILTER_BOARDGAMES"
-    private val FILTER_BOARDGAME_ACCESSORY = "FILTER_BOARDGAME_ACCESSORY"
-    private val FILTER_BOARDGAME_EXPANSION = "FILTER_BOARDGAME_EXPANSION"
-    private val FILTER_VIDEOGAME = "FILTER_VIDEOGAME"
-
     private val exceptionHandler: CoroutineExceptionHandler by lazy {
         CoroutineExceptionHandler { _, exception ->
             Log.e("AKB", exception.stackTraceToString())
@@ -35,16 +30,20 @@ class BggViewModel @Inject constructor(
 
     private val _query: MutableLiveData<String> = MutableLiveData("")
 
-    private val _filterBoardgame: MutableLiveData<Boolean> = MutableLiveData(preferenceUtils.getBoolean(FILTER_BOARDGAMES))
+    private val _filterBoardgame: MutableLiveData<Boolean> =
+        MutableLiveData(preferenceUtils.getBoolean(PreferenceUtils.PreferenceKeys.FilterBoardgame))
     val filterBoardgame: LiveData<Boolean> = _filterBoardgame
 
-    private val _filterBoardgameAccessory: MutableLiveData<Boolean> = MutableLiveData(preferenceUtils.getBoolean(FILTER_BOARDGAME_ACCESSORY))
+    private val _filterBoardgameAccessory: MutableLiveData<Boolean> =
+        MutableLiveData(preferenceUtils.getBoolean(PreferenceUtils.PreferenceKeys.FilterBoardgameAccessory))
     val filterBoardgameAccessory: LiveData<Boolean> = _filterBoardgameAccessory
 
-    private val _filterBoardgameExpansion: MutableLiveData<Boolean> = MutableLiveData(preferenceUtils.getBoolean(FILTER_BOARDGAME_EXPANSION))
+    private val _filterBoardgameExpansion: MutableLiveData<Boolean> =
+        MutableLiveData(preferenceUtils.getBoolean(PreferenceUtils.PreferenceKeys.FilterBoardGameExpansion))
     val filterBoardgameExpansion: LiveData<Boolean> = _filterBoardgameExpansion
 
-    private val _filterVideogame: MutableLiveData<Boolean> = MutableLiveData(preferenceUtils.getBoolean(FILTER_VIDEOGAME))
+    private val _filterVideogame: MutableLiveData<Boolean> =
+        MutableLiveData(preferenceUtils.getBoolean(PreferenceUtils.PreferenceKeys.FilterVideogame))
     val filterVideogame: LiveData<Boolean> = _filterVideogame
 
     // Not paged search yet
@@ -60,19 +59,19 @@ class BggViewModel @Inject constructor(
             if (filterBoardgameExpansion.value == true) add(SearchTypes.BoardgameExpansion)
             if (filterBoardgameAccessory.value == true) add(SearchTypes.BoardgameAccessory)
             if (filterVideogame.value == true)          add(SearchTypes.Videgame)
-        }
+        }.toSortedSet { p0, p1 -> (p0?.ordinal ?: 0).compareTo(p1?.ordinal ?: 0) }
     }
 
-    val searchResult: LiveData<DataWrapper<List<BggSearchItem>>> = MediatorLiveData<DataWrapper<List<BggSearchItem>>>().let { mediator ->
-        val mutable = MutableLiveData<DataWrapper<List<BggSearchItem>>>(DataWrapper.Success(emptyList()))
-
+    val searchResult: MediatorLiveData<DataWrapper<List<BggSearchItem>>> = MediatorLiveData<DataWrapper<List<BggSearchItem>>>().apply {
         val search: () -> Unit = {
             searchJob?.cancel()
             val query: String = _query.value ?: ""
             searchJob = viewModelScope.launch(Dispatchers.IO) {
-                delay(400)
+                if (isActive.not()) return@launch
                 val result = searchUseCase(query, types)
-                if (isActive) mutable.value = result
+                if (isActive) withContext(Dispatchers.Main) {
+                    value = result
+                }
             }
         }
 
@@ -80,43 +79,41 @@ class BggViewModel @Inject constructor(
             search()
         }
 
-        mediator.addSource(filterBoardgame, observer)
-        mediator.addSource(filterBoardgameExpansion, observer)
-        mediator.addSource(filterBoardgameAccessory, observer)
-        mediator.addSource(filterVideogame, observer)
-        mediator.addSource(_query) {
+        addSource(filterBoardgame, observer)
+        addSource(filterBoardgameExpansion, observer)
+        addSource(filterBoardgameAccessory, observer)
+        addSource(filterVideogame, observer)
+        addSource(_query) {
             search()
         }
-
-        mutable
     }
 
     fun setFilterBoardgame(active: Boolean) {
         if (types.isEmpty() && !active) return
 
         _filterBoardgame.value = active
-        preferenceUtils.putBoolean(FILTER_BOARDGAMES, active)
+        preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterBoardgame, active)
     }
 
     fun setFilterBoardgameExpansion(active: Boolean) {
         if (types.isEmpty() && !active) return
 
         _filterBoardgameExpansion.value = active
-        preferenceUtils.putBoolean(FILTER_BOARDGAME_EXPANSION, active)
+        preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterBoardGameExpansion, active)
     }
 
     fun setFilterBoardgameAccessory(active: Boolean) {
         if (types.isEmpty() && !active) return
 
         _filterBoardgameAccessory.value = active
-        preferenceUtils.putBoolean(FILTER_BOARDGAME_ACCESSORY, active)
+        preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterBoardgameAccessory, active)
     }
 
     fun setFilterVideogame(active: Boolean) {
         if (types.isEmpty() && !active) return
 
         _filterVideogame.value = active
-        preferenceUtils.putBoolean(FILTER_VIDEOGAME, active)
+        preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterVideogame, active)
     }
 
     fun search(query: String) {

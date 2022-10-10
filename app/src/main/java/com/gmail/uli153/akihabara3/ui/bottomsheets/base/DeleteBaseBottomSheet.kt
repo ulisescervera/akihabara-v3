@@ -25,11 +25,12 @@ abstract class DeleteBaseBottomSheet<T: Nameable> constructor(
 
     private lateinit var behavior: BottomSheetBehavior<View>
 
+    private var _binding: BottomSheetDeleteBinding? = null
+    private val binding: BottomSheetDeleteBinding get() = _binding!!
+
     override fun getTheme(): Int {
         return R.style.AkbBottomSheetDialog
     }
-
-    private lateinit var binding: BottomSheetDeleteBinding
 
     protected open val message: String get() {
         return getString(R.string.confirm_delete_product, item.name)
@@ -37,8 +38,13 @@ abstract class DeleteBaseBottomSheet<T: Nameable> constructor(
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return BottomSheetDeleteBinding.inflate(inflater, container, false).apply {
-            binding = this
+            _binding = this
         }.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

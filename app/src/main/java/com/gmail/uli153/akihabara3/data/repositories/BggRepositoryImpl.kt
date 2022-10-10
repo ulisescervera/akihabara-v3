@@ -13,6 +13,7 @@ import org.simpleframework.xml.convert.AnnotationStrategy
 import org.simpleframework.xml.core.Persister
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
+import java.util.concurrent.TimeUnit
 
 class BggRepositoryImpl: BggRepository {
 
@@ -23,6 +24,7 @@ class BggRepositoryImpl: BggRepository {
             .setLevel(HttpLoggingInterceptor.Level.HEADERS)
         val client = OkHttpClient.Builder()
             .addInterceptor(logger)
+            .callTimeout(30, TimeUnit.SECONDS)
             .build()
         Retrofit.Builder()
             .baseUrl(baseUrl)
