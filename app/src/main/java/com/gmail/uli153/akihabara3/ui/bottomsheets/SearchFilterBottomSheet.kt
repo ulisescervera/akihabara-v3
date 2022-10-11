@@ -53,18 +53,26 @@ class SearchFilterBottomSheet private constructor(): BottomSheetDialogFragment()
 
         bggViewModel.filterBoardgame.observe(viewLifecycleOwner) {
             binding.checkBoardgame.isChecked = it
+            val clickable = !it || bggViewModel.types.size > 1
+            binding.checkBoardgame.isClickable = clickable
         }
 
         bggViewModel.filterBoardgameExpansion.observe(viewLifecycleOwner) {
             binding.checkBoardgameExpansion.isChecked = it
+            val clickable = !it || bggViewModel.types.size > 1
+            binding.checkBoardgameExpansion.isClickable = clickable
         }
 
         bggViewModel.filterBoardgameAccessory.observe(viewLifecycleOwner) {
             binding.checkBoardgameAccessory.isChecked = it
+            val clickable = !it || bggViewModel.types.size > 1
+            binding.checkBoardgameAccessory.isClickable = clickable
         }
 
         bggViewModel.filterVideogame.observe(viewLifecycleOwner) {
             binding.checkVideogame.isChecked = it
+            val clickable = !it || bggViewModel.types.size > 1
+            binding.checkVideogame.isClickable = clickable
         }
 
         binding.checkBoardgame.setOnCheckedChangeListener { _, b -> bggViewModel.setFilterBoardgame(b) }
