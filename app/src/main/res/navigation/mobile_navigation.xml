@@ -34,10 +34,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/destination_search"
-        android:name="com.gmail.uli153.akihabara3.ui.bgg.BggSearchFragment"
-        android:label="@string/title_bgg_search"
-        tools:layout="@layout/fragment_bgg_search" />
+        android:id="@+id/destination_bgg"
+        android:name="com.gmail.uli153.akihabara3.ui.bgg.BggMainFragment"
+        android:label="@string/title_bgg"
+        tools:layout="@layout/fragment_bgg_main" />
 
     <fragment
         android:id="@+id/destination_history"

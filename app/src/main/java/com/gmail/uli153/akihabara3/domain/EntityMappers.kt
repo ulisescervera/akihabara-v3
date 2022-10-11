@@ -1,11 +1,9 @@
 package com.gmail.uli153.akihabara3.domain
 
 import com.gmail.uli153.akihabara3.data.converters.Converters
-import com.gmail.uli153.akihabara3.data.entities.BggItem
-import com.gmail.uli153.akihabara3.data.entities.ProductEntity
-import com.gmail.uli153.akihabara3.data.entities.TransactionEntity
-import com.gmail.uli153.akihabara3.data.entities.TransactionType
+import com.gmail.uli153.akihabara3.data.entities.*
 import com.gmail.uli153.akihabara3.domain.models.*
+import com.gmail.uli153.akihabara3.domain.models.Name
 import java.util.*
 
 private val converters = Converters()
@@ -81,5 +79,15 @@ fun BggItem.toModel(): BggSearchItem {
         maxplayers?.value,
         playingtime?.value,
         minage?.value
+    )
+}
+
+fun BggHotItemResponse.toModel(): BggHotItem {
+    return BggHotItem(
+        id,
+        rank,
+        name.value,
+        thumbnail?.value,
+        yearpublished?.value
     )
 }

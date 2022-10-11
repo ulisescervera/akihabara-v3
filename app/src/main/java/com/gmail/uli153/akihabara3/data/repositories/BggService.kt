@@ -1,5 +1,6 @@
 package com.gmail.uli153.akihabara3.data.repositories
 
+import com.gmail.uli153.akihabara3.data.entities.BggHotResponse
 import com.gmail.uli153.akihabara3.data.entities.BggItemResponse
 import com.gmail.uli153.akihabara3.data.entities.BggSearchResponse
 import retrofit2.http.GET
@@ -15,4 +16,7 @@ interface BggService {
 
     @GET("thing")
     suspend fun getItems(@Query("id", encoded = true) ids: String, @Query("type") type: String? = null): BggItemResponse
+
+    @GET("hot")
+    suspend fun getHot(): BggHotResponse
 }

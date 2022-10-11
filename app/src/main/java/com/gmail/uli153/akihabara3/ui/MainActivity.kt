@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheets.BalanceBottomSheet
-import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.destination_products,
-                R.id.destination_search,
+                R.id.destination_bgg,
                 R.id.destination_history
             )
         )
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.lottieView.setSafeClickListener {
 //            InfoBottomSheet.show(supportFragmentManager)
-            navController.navigate(R.id.destination_search)
+            navController.navigate(R.id.destination_bgg)
         }
     }
 

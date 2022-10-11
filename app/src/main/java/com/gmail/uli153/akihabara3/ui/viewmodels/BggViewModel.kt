@@ -8,6 +8,8 @@ import com.gmail.uli153.akihabara3.data.repositories.SearchTypes
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.data.DataWrapper
+import com.gmail.uli153.akihabara3.domain.models.BggHotItem
+import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchHotUseCase
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -15,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BggViewModel @Inject constructor(
+    private val fetchHotUseCase: FetchHotUseCase,
     private val searchUseCase: SearchBggUseCase,
     private val preferenceUtils: PreferenceUtils
 ): ViewModel() {
@@ -26,7 +29,11 @@ class BggViewModel @Inject constructor(
         }
     }
 
+    private val _hotest: MutableLiveData<DataWrapper<List<BggHotItem>>> = MutableLiveData(DataWrapper.Success(listOf()))
+    val hotest: LiveData<DataWrapper<List<BggHotItem>>> = _hotest
+
     private var searchJob: Job? = null
+    private var fetchHotJob: Job? = null
 
     private val _query: MutableLiveData<String> = MutableLiveData("")
 
@@ -66,6 +73,7 @@ class BggViewModel @Inject constructor(
         val search: () -> Unit = {
             searchJob?.cancel()
             val query: String = _query.value ?: ""
+            if (query.isNotBlank()) value = DataWrapper.Loading
             searchJob = viewModelScope.launch(Dispatchers.IO) {
                 if (isActive.not()) return@launch
                 val result = searchUseCase(query, types)
@@ -118,6 +126,21 @@ class BggViewModel @Inject constructor(
 
     fun search(query: String) {
         _query.value = query
+    }
+
+    fun fetchHot() {
+        fetchHotJob?.cancel()
+        _hotest.value = DataWrapper.Loading
+        fetchHotJob = viewModelScope.launch {
+            val hot = fetchHotUseCase()
+            if (isActive) withContext(Dispatchers.Main) {
+                _hotest.value = hot
+            }
+        }
+    }
+
+    init {
+        fetchHot()
     }
 
 }

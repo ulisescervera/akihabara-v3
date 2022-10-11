@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Akihabara3</string>
     <string name="title_products">Productos</string>
-    <string name="title_bgg_search">Buscar</string>
+    <string name="title_bgg">BGG</string>
     <string name="title_history">Historial</string>
     <string name="edit_product">Editar producto</string>
     <string name="new_product">Nuevo producto</string>
@@ -48,4 +48,7 @@
     <string name="boardgames_expansion">Expansiones</string>
     <string name="boardgames_accessory">Accesorios</string>
     <string name="videogames">Videojuegos</string>
+    <string name="one_filter_on">Debe haber al menos 1 filtro activo</string>
+
+    <string name="rank">Rank %d</string>
 </resources>

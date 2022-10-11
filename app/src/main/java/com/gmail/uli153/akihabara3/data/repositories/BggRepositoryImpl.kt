@@ -1,6 +1,7 @@
 package com.gmail.uli153.akihabara3.data.repositories
 
 import android.util.Log
+import com.gmail.uli153.akihabara3.data.entities.BggHotItemResponse
 import com.gmail.uli153.akihabara3.data.entities.BggItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -48,5 +49,9 @@ class BggRepositoryImpl: BggRepository {
             .map { it.id }
             .joinToString(",")
             .let { async { service.getItems(it) } }.await().items
+    }
+
+    override suspend fun fetchHot(): List<BggHotItemResponse> = withContext(Dispatchers.IO) {
+        return@withContext service.getHot().items
     }
 }
