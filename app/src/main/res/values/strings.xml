@@ -51,4 +51,6 @@
     <string name="one_filter_on">Debe haber al menos 1 filtro activo</string>
 
     <string name="rank">Rank %d</string>
+    <string name="the_hotness">The hotness</string>
+    <string name="search">Buscar</string>
 </resources>

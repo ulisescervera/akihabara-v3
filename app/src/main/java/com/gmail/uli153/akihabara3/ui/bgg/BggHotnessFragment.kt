@@ -18,7 +18,7 @@ import com.gmail.uli153.akihabara3.domain.models.BggHotItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 
-class BggHotFragment: AkbFragment() {
+class BggHotnessFragment: AkbFragment() {
 
     private var _binding: FragmentBggHotBinding? = null
     private val binding: FragmentBggHotBinding get() = _binding!!
@@ -43,14 +43,24 @@ class BggHotFragment: AkbFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerviewHot.adapter = adapter
         binding.recyclerviewHot.layoutManager = LinearLayoutManager(requireContext())
+        binding.swipeRefresh.setOnRefreshListener {
+            bggViewModel.fetchHot()
+        }
         bggViewModel.hotest.observe(viewLifecycleOwner) {
             when(it) {
-                is DataWrapper.Success -> adapter.submitList(it.data)
+                is DataWrapper.Success -> {
+                    adapter.submitList(it.data)
+                    binding.swipeRefresh.isRefreshing = false
+                }
                 is DataWrapper.Loading -> {
                     adapter.submitList(listOf())
+                    if (binding.swipeRefresh.isRefreshing.not()) {
+                        binding.swipeRefresh.isRefreshing = true
+                    }
                 } //todo
                 is DataWrapper.Error -> {
                     adapter.submitList(listOf())
+                    binding.swipeRefresh.isRefreshing = false
                 } //todo
             }
         }

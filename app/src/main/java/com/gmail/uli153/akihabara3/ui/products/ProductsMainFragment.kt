@@ -22,15 +22,19 @@ class ProductsFragment: AkbFragment() {
 
     private val productsViewModel: ProductsViewModel by activityViewModels()
 
+    private val adapter by lazy {
+        ProductsPagerAdapter(requireActivity())
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LayoutInflater.from(requireContext()).inflate(R.layout.fragment_products, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ProductsPagerAdapter(requireActivity())
+
         pager.isUserInputEnabled = false
-        pager.adapter = ProductsPagerAdapter(requireActivity())
+        pager.adapter = adapter
         TabLayoutMediator(tabs, pager) { tab, position ->
             tab.text = adapter.getTitle(position)
         }.attach()
@@ -44,24 +48,24 @@ class ProductsFragment: AkbFragment() {
             label_balance_value.setTextColor(color)
         }
     }
-}
 
-class ProductsPagerAdapter(act: FragmentActivity): FragmentStateAdapter(act) {
+    private inner class ProductsPagerAdapter(act: FragmentActivity): FragmentStateAdapter(act) {
 
-    private val tabsTitles = listOf(
-        act.getString(R.string.drinks),
-        act.getString(R.string.foods)
-    )
+        private val tabsTitles = listOf(
+            act.getString(R.string.drinks),
+            act.getString(R.string.foods)
+        )
 
-    override fun getItemCount(): Int {
-        return 2
-    }
+        override fun getItemCount(): Int {
+            return 2
+        }
 
-    override fun createFragment(position: Int): Fragment {
-        return if (position == 0) DrinksFragment() else FoodsFragment()
-    }
+        override fun createFragment(position: Int): Fragment {
+            return if (position == 0) DrinksFragment() else FoodsFragment()
+        }
 
-    fun getTitle(position: Int): String {
-        return tabsTitles[position]
+        fun getTitle(position: Int): String {
+            return tabsTitles[position]
+        }
     }
 }

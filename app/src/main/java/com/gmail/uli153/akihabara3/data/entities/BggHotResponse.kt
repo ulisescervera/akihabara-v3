@@ -12,7 +12,7 @@ data class BggHotResponse @JvmOverloads constructor(
 
 @Root(name = "item", strict = false)
 data class BggHotItemResponse @JvmOverloads constructor(
-    @field:Attribute(name = "type", required = false) var rank: Int = -1,
+    @field:Attribute(required = false) var rank: Int = -1,
     @field:Attribute(name = "id") var id: Int = -1,
     @field:Element(required = false) var thumbnail: ItemThumbnail? = null,
     @field:Element var name: ItemName = ItemName(""),
@@ -21,10 +21,10 @@ data class BggHotItemResponse @JvmOverloads constructor(
 
 @Root(name = "name", strict = false)
 data class ItemName(
-    @field:Attribute var value: String,
+    @field:Attribute var value: String = "",
 )
 
 @Root(name = "thumbnail", strict = false)
 data class ItemThumbnail(
-    @field:Attribute var value: String
+    @field:Attribute var value: String = ""
 )

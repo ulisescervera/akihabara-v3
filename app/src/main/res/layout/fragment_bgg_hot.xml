@@ -4,20 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_hot"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:layoutAnimation="@anim/layout_animation"
-        android:overScrollMode="never"
-        android:paddingTop="16dp"
-        android:paddingBottom="@dimen/bottom_nav_bar_height"
-        android:scrollbars="none"
+        android:id="@+id/swipe_refresh"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_hot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/layout_animation"
+            android:overScrollMode="never"
+            android:paddingTop="16dp"
+            android:paddingBottom="@dimen/bottom_nav_bar_height"
+            android:scrollbars="none" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

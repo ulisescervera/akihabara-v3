@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
+import com.gmail.uli153.akihabara3.databinding.RowBggItemBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
@@ -105,10 +106,11 @@ class BggSearchFragment: AkbFragment() {
         }
     }
 
-    private inner class SearchResultVH(view: View): RecyclerView.ViewHolder(view) {
+    private inner class SearchResultVH(val binding: RowBggItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun set(item: BggSearchItem) {
-            Glide.with(itemView.image).load(item.image).into(itemView.image)
-            itemView.label_name.text = item.names.firstOrNull()?.value ?: ""
+            val image = item.thumbnail ?: item.image
+            Glide.with(binding.image).load(image).into(binding.image)
+            binding.labelName.text = item.names.firstOrNull()?.value ?: ""
         }
     }
 
@@ -125,7 +127,8 @@ class BggSearchFragment: AkbFragment() {
     private inner class Adapter: ListAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
-            return SearchResultVH(LayoutInflater.from(requireContext()).inflate(R.layout.row_bgg_item, parent, false))
+
+            return SearchResultVH(RowBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
         }
 
         override fun onBindViewHolder(holder: SearchResultVH, position: Int) {
@@ -137,7 +140,7 @@ class BggSearchFragment: AkbFragment() {
     private inner class PagedAdapter: PagingDataAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
-            return SearchResultVH(LayoutInflater.from(requireContext()).inflate(R.layout.row_bgg_item, parent, false))
+            return SearchResultVH(RowBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
         }
 
         override fun onBindViewHolder(holder: SearchResultVH, position: Int) {

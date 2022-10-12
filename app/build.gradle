@@ -56,21 +56,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
-//    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
-    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
-    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
-
-    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-
-    implementation "com.airbnb.android:lottie:3.4.0"
-
-    implementation 'com.github.bumptech.glide:glide:4.13.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
@@ -79,11 +68,17 @@ dependencies {
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation "com.airbnb.android:lottie:3.4.0"
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
     implementation 'com.github.jkwiecien:EasyImage:3.2.0'
-//    api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.github.CanHub:Android-Image-Cropper:4.3.1'
 
-//    implementation 'com.squareup.okhttp3:okhttps:3.4.1'
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
