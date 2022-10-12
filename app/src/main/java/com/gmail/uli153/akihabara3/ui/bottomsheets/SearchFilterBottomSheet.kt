@@ -51,28 +51,31 @@ class SearchFilterBottomSheet private constructor(): BottomSheetDialogFragment()
         super.onViewCreated(view, savedInstanceState)
         behavior = BottomSheetBehavior.from(view.parent as View)
 
+        val updateClickableChecks = {
+            binding.checkBoardgame.isClickable = !(bggViewModel.filterBoardgame.value ?: false) || bggViewModel.types.size > 1
+            binding.checkBoardgameExpansion.isClickable = !(bggViewModel.filterBoardgameExpansion.value ?: false) || bggViewModel.types.size > 1
+            binding.checkBoardgameAccessory.isClickable = !(bggViewModel.filterBoardgameAccessory.value ?: false) || bggViewModel.types.size > 1
+            binding.checkVideogame.isClickable = !(bggViewModel.filterVideogame.value ?: false) || bggViewModel.types.size > 1
+        }
+
         bggViewModel.filterBoardgame.observe(viewLifecycleOwner) {
             binding.checkBoardgame.isChecked = it
-            val clickable = !it || bggViewModel.types.size > 1
-            binding.checkBoardgame.isClickable = clickable
+            updateClickableChecks()
         }
 
         bggViewModel.filterBoardgameExpansion.observe(viewLifecycleOwner) {
             binding.checkBoardgameExpansion.isChecked = it
-            val clickable = !it || bggViewModel.types.size > 1
-            binding.checkBoardgameExpansion.isClickable = clickable
+            updateClickableChecks()
         }
 
         bggViewModel.filterBoardgameAccessory.observe(viewLifecycleOwner) {
             binding.checkBoardgameAccessory.isChecked = it
-            val clickable = !it || bggViewModel.types.size > 1
-            binding.checkBoardgameAccessory.isClickable = clickable
+            updateClickableChecks()
         }
 
         bggViewModel.filterVideogame.observe(viewLifecycleOwner) {
             binding.checkVideogame.isChecked = it
-            val clickable = !it || bggViewModel.types.size > 1
-            binding.checkVideogame.isClickable = clickable
+            updateClickableChecks()
         }
 
         binding.checkBoardgame.setOnCheckedChangeListener { _, b -> bggViewModel.setFilterBoardgame(b) }

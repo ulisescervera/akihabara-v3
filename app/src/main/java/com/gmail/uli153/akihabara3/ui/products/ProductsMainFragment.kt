@@ -22,10 +22,6 @@ class ProductsFragment: AkbFragment() {
 
     private val productsViewModel: ProductsViewModel by activityViewModels()
 
-    private val adapter by lazy {
-        ProductsPagerAdapter(requireActivity())
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LayoutInflater.from(requireContext()).inflate(R.layout.fragment_products, container, false)
     }
@@ -33,6 +29,7 @@ class ProductsFragment: AkbFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = ProductsPagerAdapter(requireActivity())
         pager.isUserInputEnabled = false
         pager.adapter = adapter
         TabLayoutMediator(tabs, pager) { tab, position ->

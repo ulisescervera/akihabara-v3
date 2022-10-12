@@ -21,7 +21,6 @@
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_animation"
             android:overScrollMode="never"
-            android:paddingTop="16dp"
             android:paddingBottom="@dimen/bottom_nav_bar_height"
             android:scrollbars="none" />
 

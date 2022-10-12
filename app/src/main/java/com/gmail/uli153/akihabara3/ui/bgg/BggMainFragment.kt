@@ -18,10 +18,6 @@ class BggMainFragment: AkbFragment() {
     private var _binding: FragmentBggMainBinding? = null
     private val binding: FragmentBggMainBinding get() = _binding!!
 
-    private val adapter by lazy {
-        BggPagerAdapter(requireActivity())
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentBggMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -35,6 +31,7 @@ class BggMainFragment: AkbFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = BggPagerAdapter(requireActivity())
         pager.isUserInputEnabled = false
         pager.adapter = BggPagerAdapter(requireActivity())
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
