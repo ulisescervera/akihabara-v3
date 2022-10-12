@@ -87,11 +87,11 @@ class BggViewModel @Inject constructor(
             search()
         }
 
-        addSource(filterBoardgame, observer)
-        addSource(filterBoardgameExpansion, observer)
-        addSource(filterBoardgameAccessory, observer)
-        addSource(filterVideogame, observer)
-        addSource(_query) {
+        addSource(filterBoardgame.distinctUntilChanged(), observer)
+        addSource(filterBoardgameExpansion.distinctUntilChanged(), observer)
+        addSource(filterBoardgameAccessory.distinctUntilChanged(), observer)
+        addSource(filterVideogame.distinctUntilChanged(), observer)
+        addSource(_query.distinctUntilChanged()) {
             search()
         }
     }

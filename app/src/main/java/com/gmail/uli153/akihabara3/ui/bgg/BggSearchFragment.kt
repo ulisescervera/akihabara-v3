@@ -92,6 +92,7 @@ class BggSearchFragment: AkbFragment() {
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
 
         bggViewModel.searchResult.observe(viewLifecycleOwner) {
+            binding.progressIndicator.isGone = it !is DataWrapper.Loading
             when(it) {
                 is DataWrapper.Success -> {
                     adapter.submitList(it.data)
