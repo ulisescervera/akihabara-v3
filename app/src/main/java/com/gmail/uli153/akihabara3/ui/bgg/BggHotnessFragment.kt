@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -17,6 +18,7 @@ import com.gmail.uli153.akihabara3.databinding.RowBggHotBinding
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.SnackBarManager
 
 class BggHotnessFragment: AkbFragment() {
 
@@ -24,6 +26,8 @@ class BggHotnessFragment: AkbFragment() {
     private val binding: FragmentBggHotBinding get() = _binding!!
 
     private val bggViewModel: BggViewModel by activityViewModels()
+
+    private lateinit var snackBarManager: SnackBarManager
 
     private val adapter by lazy {
         Adapter()
@@ -41,27 +45,31 @@ class BggHotnessFragment: AkbFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
         binding.recyclerviewHot.adapter = adapter
         binding.recyclerviewHot.layoutManager = LinearLayoutManager(requireContext())
         binding.swipeRefresh.setOnRefreshListener {
-            bggViewModel.fetchHot()
+            bggViewModel.fetchHotness()
         }
-        bggViewModel.hotest.observe(viewLifecycleOwner) {
+        bggViewModel.hotness.observe(viewLifecycleOwner) {
             when(it) {
                 is DataWrapper.Success -> {
                     adapter.submitList(it.data)
                     binding.swipeRefresh.isRefreshing = false
                 }
                 is DataWrapper.Loading -> {
-                    adapter.submitList(listOf())
                     if (binding.swipeRefresh.isRefreshing.not()) {
                         binding.swipeRefresh.isRefreshing = true
                     }
-                } //todo
-                is DataWrapper.Error -> {
                     adapter.submitList(listOf())
+                }
+                is DataWrapper.Error -> {
                     binding.swipeRefresh.isRefreshing = false
-                } //todo
+                    adapter.submitList(listOf())
+                    snackBarManager.showErrorSnackbar(getCustomErrorMessage(it.error)) {
+                        bggViewModel.hideHotnessError()
+                    }
+                }
             }
         }
     }

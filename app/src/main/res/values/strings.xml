@@ -53,4 +53,8 @@
     <string name="rank">Rank %d</string>
     <string name="the_hotness">The hotness</string>
     <string name="search">Buscar</string>
+
+    <string name="close">Cerrar</string>
+    <string name="error_timeout">Ha ocurrido un error. La red o el servidor es demasiado lento</string>
+    <string name="error_general">Ha ocurrido un error</string>
 </resources>

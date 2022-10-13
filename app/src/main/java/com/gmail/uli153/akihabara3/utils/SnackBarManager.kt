@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isGone
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.extensions.toPx
@@ -21,34 +22,50 @@ class SnackBarManager(
     private val scope: CoroutineScope
 ) {
 
-    private val SNACKBAR_MAX_DURATION = 4000 // ms
+    private val SNACKBAR_UNDO_DURATION = 4000 // ms
 
     private val snackQueue: Queue<Snackbar> = LinkedList()
     private var currentSnackbar: Snackbar? = null
 
+    fun showErrorSnackbar(message: String, listener: () -> Unit) {
+        showSnackbar(message, context.getString(R.string.close), null, listener, listener)
+    }
+
     fun showUndoSnackbar(undoMessage: String, listener: () -> Unit) {
+        showSnackbar(undoMessage, context.getString(R.string.undo), SNACKBAR_UNDO_DURATION, listener)
+    }
+
+    private fun showSnackbar(message: String, buttonTitle: String, duration: Int?, listener: () -> Unit, onDismiss: (() -> Unit)? = null) {
         var snackbar: Snackbar? = Snackbar.make(parent, "", Snackbar.LENGTH_INDEFINITE)
 
-        val view = LayoutInflater.from(context).inflate(R.layout.snack_bar_undo, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.snack_bar_custom, null)
         val label = view.findViewById<TextView>(R.id.label_message)
         val button = view.findViewById<Button>(R.id.btn_undo)
         val progressBar = view.findViewById<LinearProgressIndicator>(R.id.progress_bar)
 
-        progressBar.isIndeterminate = false
-        progressBar.max = SNACKBAR_MAX_DURATION
-        label.text = undoMessage
+        if (duration != null) {
+            progressBar.isIndeterminate = false
+            progressBar.max = duration
+        } else {
+            progressBar.isGone = true
+        }
+
+        label.text = message
+        button.text = buttonTitle
         button.setSafeClickListener {
             snackbar?.dismiss()
             listener()
         }
 
-        val job = scope.launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
-            while (progressBar.progress > 0) {
-                delay(10)
-                progressBar.progress -= 10
+        val job = if (duration != null) {
+            scope.launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
+                while (progressBar.progress > 0) {
+                    delay(10)
+                    progressBar.progress -= 10
+                }
+                snackbar?.dismiss()
             }
-            snackbar?.dismiss()
-        }
+        } else null
 
         snackbar?.apply {
 //            duration = SNACKBAR_MAX_DURATION // hay desfase entre la coroutina y el snackbar
@@ -66,17 +83,20 @@ class SnackBarManager(
             addCallback(object: Snackbar.Callback() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                     super.onDismissed(transientBottomBar, event)
-                    job.cancel()
+                    job?.cancel()
                     snackQueue.remove(snackbar)
                     currentSnackbar = null
                     snackQueue.peek()?.show()
                     snackbar = null
+                    onDismiss?.invoke()
                 }
                 override fun onShown(sb: Snackbar?) {
                     super.onShown(sb)
                     currentSnackbar = snackbar
-                    progressBar.progress = SNACKBAR_MAX_DURATION
-                    job.start()
+                    if (duration != null) {
+                        progressBar.progress = duration
+                    }
+                    job?.start()
                 }
             })
         }

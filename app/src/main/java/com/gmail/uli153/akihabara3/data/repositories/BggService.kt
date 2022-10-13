@@ -9,13 +9,20 @@ import retrofit2.http.Query
 interface BggService {
 
     @GET("search")
-    suspend fun search(@Query("query") query: String, @Query("type") types: String? = null): BggSearchResponse
+    suspend fun search(
+        @Query("query") query: String,
+        @Query("type") types: String? = null
+    ): BggSearchResponse
 
     @GET("thing")
     suspend fun getItem(@Query("id") id: Int, @Query("type") type: String? = null): BggItemResponse
 
     @GET("thing")
-    suspend fun getItems(@Query("id", encoded = true) ids: String, @Query("type") type: String? = null): BggItemResponse
+    suspend fun getItems(
+        @Query("id", encoded = true) ids: String,
+        @Query("stats") stats: Boolean = true,
+        @Query("type") type: String? = null
+    ): BggItemResponse
 
     @GET("hot")
     suspend fun getHot(): BggHotResponse

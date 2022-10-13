@@ -10,6 +10,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.gmail.uli153.akihabara3.R
 import java.io.File
+import java.net.SocketTimeoutException
 
 open class AkbFragment: Fragment() {
 
@@ -63,5 +64,12 @@ open class AkbFragment: Fragment() {
 
     protected fun newImageFile(): File {
         return File(requireContext().filesDir, "${System.currentTimeMillis()}_image.jpeg")
+    }
+
+    protected fun getCustomErrorMessage(error: Throwable?): String {
+        return when(error) {
+            is SocketTimeoutException -> getString(R.string.error_timeout)
+            else -> getString(R.string.error_general)
+        }
     }
 }

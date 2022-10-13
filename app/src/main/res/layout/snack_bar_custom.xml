@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_undo"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="@+id/guideline_top"
-        tools:text="Has comprad Paulaner por 1,00€" />
+        tools:text="Has comprado Paulaner por 1,00€" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_undo"

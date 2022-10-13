@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,7 @@ import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.SearchFilterBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.extensions.launchMain
 import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
@@ -35,6 +37,8 @@ class BggSearchFragment: AkbFragment() {
     private val binding: FragmentBggSearchBinding get() = _binding!!
 
     private val bggViewModel: BggViewModel by activityViewModels()
+
+    private lateinit var snackBarManager: SnackBarManager
 
     private val adapter: Adapter by lazy {
         Adapter().apply {
@@ -74,6 +78,7 @@ class BggSearchFragment: AkbFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
         binding.btnCancel.setSafeClickListener {
             binding.editSearch.setText("")
         }
@@ -101,7 +106,10 @@ class BggSearchFragment: AkbFragment() {
                     adapter.submitList(emptyList())
                 }
                 is DataWrapper.Error -> {
-                    //todo
+                    adapter.submitList(emptyList())
+                    snackBarManager.showErrorSnackbar(getCustomErrorMessage(it.error)) {
+                        bggViewModel.hideSearchError()
+                    }
                 }
             }
         }

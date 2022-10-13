@@ -1,5 +1,6 @@
 package com.gmail.uli153.akihabara3.ui.viewmodels
 
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
@@ -13,6 +14,7 @@ import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchHotUseCase
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,11 +31,11 @@ class BggViewModel @Inject constructor(
         }
     }
 
-    private val _hotest: MutableLiveData<DataWrapper<List<BggHotItem>>> = MutableLiveData(DataWrapper.Success(listOf()))
-    val hotest: LiveData<DataWrapper<List<BggHotItem>>> = _hotest
+    private val _hotness: MutableLiveData<DataWrapper<List<BggHotItem>>> = MutableLiveData(DataWrapper.Success(listOf()))
+    val hotness: LiveData<DataWrapper<List<BggHotItem>>> = _hotness
 
     private var searchJob: Job? = null
-    private var fetchHotJob: Job? = null
+    private var fetchHotnessJob: Job? = null
 
     private val _query: MutableLiveData<String> = MutableLiveData("")
 
@@ -128,19 +130,27 @@ class BggViewModel @Inject constructor(
         _query.value = query
     }
 
-    fun fetchHot() {
-        fetchHotJob?.cancel()
-        _hotest.value = DataWrapper.Loading
-        fetchHotJob = viewModelScope.launch {
+    fun fetchHotness() {
+        fetchHotnessJob?.cancel()
+        _hotness.value = DataWrapper.Loading
+        fetchHotnessJob = viewModelScope.launch {
             val hot = fetchHotUseCase()
             if (isActive) withContext(Dispatchers.Main) {
-                _hotest.value = hot
+                _hotness.value = hot
             }
         }
     }
 
+    fun hideHotnessError() {
+        _hotness.value = DataWrapper.Success(emptyList())
+    }
+
+    fun hideSearchError() {
+        searchResult.value = DataWrapper.Success(emptyList())
+    }
+
     init {
-        fetchHot()
+        fetchHotness()
     }
 
 }

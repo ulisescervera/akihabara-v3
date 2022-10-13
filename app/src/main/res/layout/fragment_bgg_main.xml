@@ -59,12 +59,12 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:text="Bebidas" />
+                        tools:text="The hotness" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:text="Comidas" />
+                        tools:text="Buscar" />
 
                 </com.google.android.material.tabs.TabLayout>
 
