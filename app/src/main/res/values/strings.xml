@@ -57,4 +57,7 @@
     <string name="close">Cerrar</string>
     <string name="error_timeout">Ha ocurrido un error. La red o el servidor es demasiado lento</string>
     <string name="error_general">Ha ocurrido un error</string>
+
+    <string name="rating">Rating: %.2f</string>
+    <string name="geek_rating">Geek rating: %.2f</string>
 </resources>

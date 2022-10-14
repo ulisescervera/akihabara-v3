@@ -117,9 +117,18 @@ class BggSearchFragment: AkbFragment() {
 
     private inner class SearchResultVH(val binding: RowBggItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun set(item: BggSearchItem) {
+            val rank = item.ranks?.firstOrNull()?.position?.let { "$it" } ?: "N/A"
             val image = item.thumbnail ?: item.image
+            val name = item.names.firstOrNull()?.value
+            val year = item.yearPublished?.let { "$it" } ?: ""
+            val rating = item.rating?.takeIf { it > 0 }?.let { getString(R.string.rating, it) } ?: ""
+            val geekRating = item.geekRating?.takeIf { it > 0 }?.let { getString(R.string.geek_rating, it) } ?: ""
+
+            binding.labelRank.text = rank
             Glide.with(binding.image).load(image).into(binding.image)
-            binding.labelName.text = item.names.firstOrNull()?.value ?: ""
+            binding.labelName.text = name?.let { "$it ($year)" } ?: ""
+            binding.labelRating.text = rating
+            binding.labelGeekRating.text = geekRating
         }
     }
 

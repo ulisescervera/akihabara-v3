@@ -4,6 +4,7 @@ import com.gmail.uli153.akihabara3.data.converters.Converters
 import com.gmail.uli153.akihabara3.data.entities.*
 import com.gmail.uli153.akihabara3.domain.models.*
 import com.gmail.uli153.akihabara3.domain.models.Name
+import com.gmail.uli153.akihabara3.domain.models.Rank
 import java.util.*
 
 private val converters = Converters()
@@ -69,16 +70,21 @@ fun Product.toTransactionEntity(): TransactionEntity {
 
 fun BggItem.toModel(): BggSearchItem {
     return BggSearchItem(
-        id,
-        thumbnail,
-        image,
-        names.map { Name(NameType.valueOf(it.type.uppercase()), it.value) },
-        description,
-        yearpublished?.value,
-        minplayers?.value,
-        maxplayers?.value,
-        playingtime?.value,
-        minage?.value
+        id = id,
+        thumbnail = thumbnail,
+        image = image,
+        names = names.map { Name(NameType.valueOf(it.type.uppercase()), it.value) },
+        description = description,
+        yearPublished = yearpublished?.value,
+        minPlayers = minplayers?.value,
+        maxPlayers = maxplayers?.value,
+        playingTime = playingtime?.value,
+        minAge = minage?.value,
+        ranks = statistics?.ratings?.ranks?.mapNotNull { it.toModel() },
+        geekRating = statistics?.ratings?.bayesaverage?.value,
+        rating = statistics?.ratings?.average?.value,
+        weight = statistics?.ratings?.averageweight?.value,
+        votes = statistics?.ratings?.usersrated?.value
     )
 }
 
@@ -90,4 +96,14 @@ fun BggHotItemResponse.toModel(): BggHotItem {
         thumbnail?.value,
         yearpublished?.value
     )
+}
+
+fun com.gmail.uli153.akihabara3.data.entities.Rank.toModel(): com.gmail.uli153.akihabara3.domain.models.Rank? {
+    return value.toIntOrNull()?.let {
+        return Rank(
+            this.id,
+            this.friendlyname,
+            it
+        )
+    }
 }
