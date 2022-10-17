@@ -83,6 +83,7 @@ class BggSearchFragment: AkbFragment() {
             binding.editSearch.setText("")
         }
 
+        binding.editSearch.setText(bggViewModel.query)
         binding.editSearch.addTextChangedListener(afterTextChanged = {
             val query = it?.toString() ?: ""
             binding.btnCancel.isGone = query.isBlank()

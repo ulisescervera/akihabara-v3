@@ -54,4 +54,8 @@ class BggRepositoryImpl: BggRepository {
     override suspend fun fetchHot(): List<BggHotItemResponse> = withContext(Dispatchers.IO) {
         return@withContext service.getHot().items
     }
+
+    override suspend fun getItem(id: Long): BggItem = withContext(Dispatchers.IO) {
+
+    }
 }

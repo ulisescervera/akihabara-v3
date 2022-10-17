@@ -34,6 +34,7 @@
         <item name="actionBarTheme">@style/AkbActionBar</item>
 
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
+        <item name="imageButtonStyle">@style/AkbImageButton</item>
     </style>
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
@@ -95,6 +96,10 @@
 
     <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/black</item>
+    </style>
+
+    <style name="AkbImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="tint">?attr/colorPrimary</item>
     </style>
 
 </resources>

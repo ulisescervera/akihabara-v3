@@ -17,4 +17,6 @@ interface BggRepository {
     suspend fun search(query: String, types: Set<SearchTypes>): List<BggItem>
 
     suspend fun fetchHot(): List<BggHotItemResponse>
+
+    suspend fun getItem(id: Long): BggItem
 }

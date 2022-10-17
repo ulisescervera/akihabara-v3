@@ -35,6 +35,7 @@
         <item name="android:navigationBarColor">@color/md_grey_900</item>
 
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
+        <item name="imageButtonStyle">@style/AkbImageButton</item>
     </style>
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
@@ -75,6 +76,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:paddingStart">@dimen/edit_horizontal_padding</item>
         <item name="android:paddingEnd">@dimen/edit_horizontal_padding</item>
+        <item name="android:inputType">textCapSentences</item>
     </style>
 
     <style name="AkbButton" parent="Widget.AppCompat.Button">
@@ -97,6 +99,10 @@
 
     <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/white</item>
+    </style>
+
+    <style name="AkbImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="tint">?attr/colorPrimary</item>
     </style>
 
 </resources>

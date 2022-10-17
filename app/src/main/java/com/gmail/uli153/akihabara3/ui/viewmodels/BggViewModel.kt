@@ -24,18 +24,8 @@ class BggViewModel @Inject constructor(
     private val preferenceUtils: PreferenceUtils
 ): ViewModel() {
 
-    private val exceptionHandler: CoroutineExceptionHandler by lazy {
-        CoroutineExceptionHandler { _, exception ->
-            Log.e("AKB", exception.stackTraceToString())
-            throw exception
-        }
-    }
-
     private val _hotness: MutableLiveData<DataWrapper<List<BggHotItem>>> = MutableLiveData(DataWrapper.Success(listOf()))
     val hotness: LiveData<DataWrapper<List<BggHotItem>>> = _hotness
-
-    private var searchJob: Job? = null
-    private var fetchHotnessJob: Job? = null
 
     private val _query: MutableLiveData<String> = MutableLiveData("")
 
@@ -98,6 +88,12 @@ class BggViewModel @Inject constructor(
         }
     }
 
+    private val _selectedBggItem: MutableLiveData<DataWrapper<BggSearchItem>> = MutableLiveData(DataWrapper.Loading)
+    val selectedBggItem: LiveData<DataWrapper<BggSearchItem>> = _selectedBggItem
+
+    private var searchJob: Job? = null
+    private var fetchHotnessJob: Job? = null
+
     fun setFilterBoardgame(active: Boolean) {
         if (types.isEmpty() && !active) return
 
@@ -126,6 +122,8 @@ class BggViewModel @Inject constructor(
         preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterVideogame, active)
     }
 
+    val query: String get() { return _query.value ?: ""}
+
     fun search(query: String) {
         _query.value = query
     }
@@ -147,6 +145,20 @@ class BggViewModel @Inject constructor(
 
     fun hideSearchError() {
         searchResult.value = DataWrapper.Success(emptyList())
+    }
+
+    fun fetchAndSelectBggItemById(id: Long) {
+        _selectedBggItem.value = DataWrapper.Loading
+
+        val item = searchResult.value
+            ?.let { it as? DataWrapper.Success }
+            ?.data?.firstOrNull { it.id == id }
+
+        if (item != null) {
+            _selectedBggItem.value = DataWrapper.Success(item)
+        } else {
+
+        }
     }
 
     init {
