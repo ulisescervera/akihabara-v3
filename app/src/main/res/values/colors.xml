@@ -21,6 +21,8 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="bg_shimmer">#AAAAAA</color>
+
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

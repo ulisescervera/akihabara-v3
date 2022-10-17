@@ -117,7 +117,16 @@ class BggSearchFragment: AkbFragment() {
     }
 
     private inner class SearchResultVH(val binding: RowBggItemBinding): RecyclerView.ViewHolder(binding.root) {
+
+        private lateinit var item: BggSearchItem
+        init {
+            binding.root.setSafeClickListener {
+                navigate(BggMainFragmentDirections.actionBggDetail())
+            }
+        }
+
         fun set(item: BggSearchItem) {
+            this.item = item
             val rank = item.ranks?.firstOrNull()?.position?.let { "$it" } ?: "N/A"
             val image = item.thumbnail ?: item.image
             val name = item.names.firstOrNull()?.value
@@ -146,7 +155,6 @@ class BggSearchFragment: AkbFragment() {
     private inner class Adapter: ListAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
-
             return SearchResultVH(RowBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
         }
 

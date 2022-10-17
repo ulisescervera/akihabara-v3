@@ -18,6 +18,16 @@ data class BggSearchItem(
     val votes: Int?
 ) {
     val name: String? = names.firstOrNull { it.type == NameType.PRIMARY }?.value ?: names.firstOrNull()?.value
+
+    val nameAndYear: String get() {
+        return name?.let {
+            if (yearPublished != null) {
+                "$it ($yearPublished)"
+            } else {
+                it
+            }
+        } ?: ""
+    }
 }
 
 data class Name(

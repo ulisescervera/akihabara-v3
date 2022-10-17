@@ -16,9 +16,11 @@ import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.databinding.FragmentBggHotBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggHotBinding
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem
+import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
+import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 
 class BggHotnessFragment: AkbFragment() {
 
@@ -85,7 +87,16 @@ class BggHotnessFragment: AkbFragment() {
     }
 
     private inner class BggHotVH(val binding: RowBggHotBinding): RecyclerView.ViewHolder(binding.root) {
+
+        private lateinit var item: BggHotItem
+        init {
+            binding.root.setSafeClickListener {
+                navigate(BggMainFragmentDirections.actionBggDetail())
+            }
+        }
+
         fun setup(item: BggHotItem) {
+            this.item = item
             Glide.with(binding.image).load(item.thumbnail).into(binding.image)
             binding.labelRank.text = getString(R.string.rank, item.rank)
             binding.labelName.text = item.name

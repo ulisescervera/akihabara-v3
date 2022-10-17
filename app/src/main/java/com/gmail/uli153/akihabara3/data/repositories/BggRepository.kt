@@ -18,5 +18,5 @@ interface BggRepository {
 
     suspend fun fetchHot(): List<BggHotItemResponse>
 
-    suspend fun getItem(id: Long): BggItem
+    suspend fun getItem(id: Long): BggItem?
 }

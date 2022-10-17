@@ -3,6 +3,7 @@ package com.gmail.uli153.akihabara3.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -59,11 +60,13 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomAppBar.performShow(true)
                     binding.fav.show()
                     binding.toolbar.navigationIcon = null
+                    binding.lottieView.isGone = false
                 }
                 else -> {
                     binding.bottomAppBar.performHide(true)
                     binding.fav.hide()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_chevron_left)
+                    binding.lottieView.isGone = true
                 }
             }
         }

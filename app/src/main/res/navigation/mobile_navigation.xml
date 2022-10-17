@@ -37,7 +37,19 @@
         android:id="@+id/destination_bgg"
         android:name="com.gmail.uli153.akihabara3.ui.bgg.BggMainFragment"
         android:label="@string/title_bgg"
-        tools:layout="@layout/fragment_bgg_main" />
+        tools:layout="@layout/fragment_bgg_main">
+
+        <action
+            android:id="@+id/action_bgg_detail"
+            app:destination="@+id/destination_bgg_detail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/destination_bgg_detail"
+        android:name="com.gmail.uli153.akihabara3.ui.bgg.BggDetailFragment"
+        android:label="@string/title_bgg"
+        tools:layout="@layout/fragment_bgg_detail" />
 
     <fragment
         android:id="@+id/destination_history"

@@ -55,7 +55,7 @@ class BggRepositoryImpl: BggRepository {
         return@withContext service.getHot().items
     }
 
-    override suspend fun getItem(id: Long): BggItem = withContext(Dispatchers.IO) {
-
+    override suspend fun getItem(id: Long): BggItem? = withContext(Dispatchers.IO) {
+        return@withContext service.getItem(id).items.firstOrNull()
     }
 }
