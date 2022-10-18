@@ -1,5 +1,6 @@
 package com.gmail.uli153.akihabara3.di
 
+import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchBggItemUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchHotUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
@@ -29,7 +30,8 @@ class MainActivityModule {
     fun bggViewModel(
         bggUseCase: SearchBggUseCase,
         fetchHotUseCase: FetchHotUseCase,
+        fetchBggItemUseCase: FetchBggItemUseCase,
         preferenceUtils: PreferenceUtils
-    ) = BggViewModel(fetchHotUseCase, bggUseCase,  preferenceUtils)
+    ) = BggViewModel(fetchHotUseCase, bggUseCase, fetchBggItemUseCase, preferenceUtils)
 
 }

@@ -6,6 +6,7 @@ import com.gmail.uli153.akihabara3.data.repositories.AkbRepository
 import com.gmail.uli153.akihabara3.data.repositories.AkbRepositoryImpl
 import com.gmail.uli153.akihabara3.data.repositories.BggRepository
 import com.gmail.uli153.akihabara3.data.repositories.BggRepositoryImpl
+import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchBggItemUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchHotUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.product.*
@@ -81,6 +82,12 @@ class AppModule {
     @Singleton
     fun fetchHotBggUseCase(repository: BggRepository): FetchHotUseCase {
         return FetchHotUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun fetchBggItemUseCase(repository: BggRepository): FetchBggItemUseCase {
+        return FetchBggItemUseCase(repository)
     }
 
 }

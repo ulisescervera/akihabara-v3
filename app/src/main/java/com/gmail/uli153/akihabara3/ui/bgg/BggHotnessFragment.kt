@@ -91,6 +91,7 @@ class BggHotnessFragment: AkbFragment() {
         private lateinit var item: BggHotItem
         init {
             binding.root.setSafeClickListener {
+                bggViewModel.fetchAndSelectBggItemById(item.id)
                 navigate(BggMainFragmentDirections.actionBggDetail())
             }
         }

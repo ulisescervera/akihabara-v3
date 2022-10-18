@@ -10,6 +10,7 @@ import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem
+import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchBggItemUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchHotUseCase
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class BggViewModel @Inject constructor(
     private val fetchHotUseCase: FetchHotUseCase,
     private val searchUseCase: SearchBggUseCase,
+    private val fetchItemUseCase: FetchBggItemUseCase,
     private val preferenceUtils: PreferenceUtils
 ): ViewModel() {
 
@@ -157,7 +159,10 @@ class BggViewModel @Inject constructor(
         if (item != null) {
             _selectedBggItem.value = DataWrapper.Success(item)
         } else {
-
+            viewModelScope.launch(Dispatchers.Main) {
+                val res = fetchItemUseCase(id)
+                _selectedBggItem.value = res
+            }
         }
     }
 

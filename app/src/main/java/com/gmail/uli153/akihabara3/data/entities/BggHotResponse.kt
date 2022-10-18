@@ -12,8 +12,8 @@ data class BggHotResponse @JvmOverloads constructor(
 
 @Root(name = "item", strict = false)
 data class BggHotItemResponse @JvmOverloads constructor(
+    @field:Attribute(name = "id") var id: Long = -1,
     @field:Attribute(required = false) var rank: Int = -1,
-    @field:Attribute(name = "id") var id: Int = -1,
     @field:Element(required = false) var thumbnail: ItemThumbnail? = null,
     @field:Element var name: ItemName = ItemName(""),
     @field:Element(required = false) var yearpublished: YearPublished? = null

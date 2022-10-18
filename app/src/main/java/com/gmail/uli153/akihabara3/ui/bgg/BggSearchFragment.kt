@@ -121,6 +121,7 @@ class BggSearchFragment: AkbFragment() {
         private lateinit var item: BggSearchItem
         init {
             binding.root.setSafeClickListener {
+                bggViewModel.fetchAndSelectBggItemById(item.id)
                 navigate(BggMainFragmentDirections.actionBggDetail())
             }
         }

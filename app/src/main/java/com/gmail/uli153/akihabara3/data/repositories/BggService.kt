@@ -15,7 +15,11 @@ interface BggService {
     ): BggSearchResponse
 
     @GET("thing")
-    suspend fun getItem(@Query("id") id: Long, @Query("type") type: String? = null): BggItemResponse
+    suspend fun getItem(
+        @Query("id") id: Long,
+        @Query("stats") stats: Boolean = true,
+        @Query("type") type: String? = null
+    ): BggItemResponse
 
     @GET("thing")
     suspend fun getItems(
