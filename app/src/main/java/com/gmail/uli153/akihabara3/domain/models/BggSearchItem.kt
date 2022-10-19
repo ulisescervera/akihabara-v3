@@ -15,7 +15,9 @@ data class BggSearchItem(
     val rating: Float?,
     val geekRating: Float?,
     val weight: Float?,
-    val votes: Int?
+    val votes: Int?,
+    val categories: List<BoardgameLink>,
+    val mechanics: List<BoardgameLink>
 ) {
     val name: String? = names.firstOrNull { it.type == NameType.PRIMARY }?.value ?: names.firstOrNull()?.value
 
@@ -39,6 +41,11 @@ data class Rank(
     val id: Int,
     val name: String,
     val position: Int,
+)
+
+data class BoardgameLink(
+    val id: Int,
+    val name: String
 )
 
 enum class NameType {

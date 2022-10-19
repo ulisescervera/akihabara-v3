@@ -58,6 +58,13 @@
     <string name="error_timeout">Ha ocurrido un error. La red o el servidor es demasiado lento</string>
     <string name="error_general">Ha ocurrido un error</string>
 
+    <!-- Item detail -->
     <string name="rating">Rating: %.2f</string>
     <string name="geek_rating">Geek rating: %.2f</string>
+    <string name="weight">Dificultad: %.2f</string>
+    <string name="players">Jugadores: %d - %d</string>
+    <string name="playing_time">%d minutos</string>
+    <string name="playing_age">%d años</string>
+    <string name="caterogies">Categorías</string>
+    <string name="mechanics">Mecánicas</string>
 </resources>

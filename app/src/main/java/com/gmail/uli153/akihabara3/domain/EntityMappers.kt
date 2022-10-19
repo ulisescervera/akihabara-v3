@@ -84,7 +84,9 @@ fun BggItem.toModel(): BggSearchItem {
         geekRating = statistics?.ratings?.bayesaverage?.value,
         rating = statistics?.ratings?.average?.value,
         weight = statistics?.ratings?.averageweight?.value,
-        votes = statistics?.ratings?.usersrated?.value
+        votes = statistics?.ratings?.usersrated?.value,
+        categories = links.filter { it.type == "boardgamecategory" }.map { BoardgameLink(it.id, it.value) },
+        mechanics = links.filter { it.type == "boardgamemechanic" }.map { BoardgameLink(it.id, it.value) }
     )
 }
 

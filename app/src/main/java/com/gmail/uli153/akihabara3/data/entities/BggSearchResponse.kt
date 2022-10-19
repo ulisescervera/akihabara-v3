@@ -36,6 +36,7 @@ data class BggItem @JvmOverloads constructor(
     @field:Element(required = false) var playingtime: PlayingTime? = null,
     @field:Element(required = false) var minage: MinAge? = null,
     @field:Element(required = false) var statistics: Statistics? = null,
+    @field:ElementList(inline = true) var links: MutableList<Link> = mutableListOf(),
 )
 
 @Root(name = "name", strict = false)
@@ -114,5 +115,12 @@ data class Rank @JvmOverloads constructor(
     @field:Attribute var id: Int = -1,
     @field:Attribute var type: String = "",
     @field:Attribute var friendlyname: String = "",
+    @field:Attribute var value: String = "",
+)
+
+@Root(strict = false, name = "link")
+data class Link @JvmOverloads constructor(
+    @field:Attribute var id: Int = -1,
+    @field:Attribute var type: String = "",
     @field:Attribute var value: String = "",
 )

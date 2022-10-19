@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.widget.GridLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.databinding.FragmentBggDetailBinding
+import com.gmail.uli153.akihabara3.databinding.TextviewGridlayoutBinding
+import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
+import com.gmail.uli153.akihabara3.domain.models.BoardgameLink
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.extensions.toPx
 
 class BggDetailFragment: AkbFragment() {
 
@@ -47,10 +51,7 @@ class BggDetailFragment: AkbFragment() {
                 }
                 is DataWrapper.Success -> {
                     stopShimmer()
-                    val item = wrapper.data
-                    Glide.with(requireContext()).load(item.image).into(binding.imageview)
-                    binding.labelTitle.text = item.nameAndYear
-                    binding.labelRank.text = item.ranks?.firstOrNull()?.position?.let { "$it"}
+                    setupItem(wrapper.data)
                 }
             }
         }
@@ -65,7 +66,13 @@ class BggDetailFragment: AkbFragment() {
         binding.imageview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
         binding.labelTitle.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
         binding.labelRank.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
-        binding.viewRank.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelGeekRating.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelRating.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelWeight.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelPlayers.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelPlayingTime.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelAge.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelDescription.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
     }
 
     private fun stopShimmer() {
@@ -78,5 +85,81 @@ class BggDetailFragment: AkbFragment() {
         binding.labelTitle.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.labelRank.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.viewRank.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelGeekRating.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelRating.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelWeight.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelPlayers.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelPlayingTime.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelAge.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelDescription.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
     }
+
+    private fun setupItem(item: BggSearchItem) {
+        with(item) {
+            Glide.with(requireContext()).load(image).into(binding.imageview)
+            binding.labelTitle.text = nameAndYear
+            binding.labelRank.text = ranks?.firstOrNull()?.position?.let { "$it"}
+
+            binding.labelGeekRating.isGone = geekRating == null
+            if (geekRating != null) {
+                binding.labelGeekRating.text = getString(R.string.geek_rating, geekRating)
+            }
+
+            binding.labelRating.isGone = rating == null
+            if (rating != null) {
+                binding.labelRating.text = getString(R.string.rating, rating)
+            }
+
+            binding.labelWeight.isGone = weight == null
+            if (weight != null) {
+                binding.labelWeight.text = getString(R.string.weight, weight)
+            }
+
+            binding.labelPlayers.isGone = minPlayers == null || maxPlayers == null
+            if (minPlayers != null && maxPlayers != null) {
+                binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
+            }
+
+            binding.labelPlayingTime.isGone = playingTime == null
+            if (playingTime != null) {
+                binding.labelPlayingTime.text = getString(R.string.playing_time, playingTime)
+            }
+
+            binding.labelAge.isGone = minAge == null
+            if (minAge != null) {
+                binding.labelAge.text = getString(R.string.playing_age, minAge)
+            }
+
+            val inflater = LayoutInflater.from(requireContext())
+
+            categories.takeIf { it.size > 0 }?.let {
+                val header = inflater.inflate(R.layout.textview_header_gridlayout, binding.gridlayout, false) as TextView
+                header.text = getString(R.string.caterogies)
+                binding.gridlayout.addView(header)
+                it.forEach {
+                    binding.gridlayout.addView(it.toView(inflater))
+                }
+            }
+
+            mechanics.takeIf { it.size > 0 }?.let {
+                val header = inflater.inflate(R.layout.textview_header_gridlayout, binding.gridlayout, false) as TextView
+                header.text = getString(R.string.mechanics)
+                binding.gridlayout.addView(header)
+                it.forEach {
+                    binding.gridlayout.addView(it.toView(inflater))
+                }
+            }
+
+            val labelDescription = inflater.inflate(R.layout.textview_header_gridlayout, binding.gridlayout, false) as TextView
+            labelDescription.text = description
+            binding.gridlayout.addView(labelDescription)
+        }
+    }
+
+    private fun BoardgameLink.toView(inflater: LayoutInflater): View {
+        val binding = TextviewGridlayoutBinding.inflate(inflater, binding.gridlayout, false)
+        binding.labelValue.text = name
+        return binding.root
+    }
+
 }
