@@ -37,6 +37,7 @@ data class BggItem @JvmOverloads constructor(
     @field:Element(required = false) var minage: MinAge? = null,
     @field:Element(required = false) var statistics: Statistics? = null,
     @field:ElementList(inline = true) var links: MutableList<Link> = mutableListOf(),
+    @field:ElementList(inline = true, name = "poll") var polls: MutableList<Poll> = mutableListOf(),
 )
 
 @Root(name = "name", strict = false)
@@ -115,12 +116,30 @@ data class Rank @JvmOverloads constructor(
     @field:Attribute var id: Int = -1,
     @field:Attribute var type: String = "",
     @field:Attribute var friendlyname: String = "",
-    @field:Attribute var value: String = "",
+    @field:Attribute var value: String = ""
 )
 
 @Root(strict = false, name = "link")
 data class Link @JvmOverloads constructor(
     @field:Attribute var id: Int = -1,
     @field:Attribute var type: String = "",
+    @field:Attribute var value: String = ""
+)
+
+@Root(strict = false, name = "poll")
+data class Poll @JvmOverloads constructor(
+    @field:Attribute var name: String = "",
+    @field:ElementList(inline = true) var results: MutableList<PollResults> = mutableListOf(),
+)
+
+@Root(strict = false, name = "results")
+data class PollResults @JvmOverloads constructor(
+    @field:Attribute(required = false) var numplayers: String? = null,
+    @field:ElementList(inline = true) var results: MutableList<PollResult> = mutableListOf(),
+)
+
+@Root(strict = false, name = "result")
+data class PollResult @JvmOverloads constructor(
     @field:Attribute var value: String = "",
+    @field:Attribute var numvotes: Int = 0
 )

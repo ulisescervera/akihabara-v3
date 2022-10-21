@@ -17,8 +17,10 @@ import com.gmail.uli153.akihabara3.databinding.FragmentBggDetailBinding
 import com.gmail.uli153.akihabara3.databinding.TextviewGridlayoutBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.models.BoardgameLink
+import com.gmail.uli153.akihabara3.domain.models.PollType
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.extensions.bestPlayerNumber
 import com.gmail.uli153.akihabara3.utils.extensions.toPx
 
 class BggDetailFragment: AkbFragment() {
@@ -118,6 +120,10 @@ class BggDetailFragment: AkbFragment() {
             binding.labelPlayers.isGone = minPlayers == null || maxPlayers == null
             if (minPlayers != null && maxPlayers != null) {
                 binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
+                val best = polls.find { it.type == PollType.SUGGESTED_NUMPLAYERS }?.bestPlayerNumber
+                if (best != null) {
+
+                }
             }
 
             binding.labelPlayingTime.isGone = playingTime == null

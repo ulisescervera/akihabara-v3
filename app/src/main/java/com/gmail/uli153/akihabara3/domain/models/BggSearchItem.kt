@@ -17,7 +17,8 @@ data class BggSearchItem(
     val weight: Float?,
     val votes: Int?,
     val categories: List<BoardgameLink>,
-    val mechanics: List<BoardgameLink>
+    val mechanics: List<BoardgameLink>,
+    val polls: List<Poll>
 ) {
     val name: String? = names.firstOrNull { it.type == NameType.PRIMARY }?.value ?: names.firstOrNull()?.value
 
@@ -47,6 +48,27 @@ data class BoardgameLink(
     val id: Int,
     val name: String
 )
+
+data class Poll(
+    val type: PollType,
+    val results: List<PollResults>
+)
+
+data class PollResults(
+    val players: String?,
+    val result: List<PollResult>
+)
+
+data class PollResult(
+    val value: String,
+    val votes: Int
+)
+
+enum class PollType(val pollName: String) {
+    SUGGESTED_PLAYERAGE     ("suggested_playerage"),
+    LANGUAGE_DEPENDENCE     ("language_dependence"),
+    SUGGESTED_NUMPLAYERS    ("suggested_numplayers")
+}
 
 enum class NameType {
     PRIMARY, ALTERNATE
