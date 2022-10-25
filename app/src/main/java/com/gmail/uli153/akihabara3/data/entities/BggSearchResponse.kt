@@ -129,13 +129,13 @@ data class Link @JvmOverloads constructor(
 @Root(strict = false, name = "poll")
 data class Poll @JvmOverloads constructor(
     @field:Attribute var name: String = "",
-    @field:ElementList(inline = true) var results: MutableList<PollResults> = mutableListOf(),
+    @field:ElementList(inline = true, required = false) var results: MutableList<PollResults> = mutableListOf(),
 )
 
 @Root(strict = false, name = "results")
 data class PollResults @JvmOverloads constructor(
     @field:Attribute(required = false) var numplayers: String? = null,
-    @field:ElementList(inline = true) var results: MutableList<PollResult> = mutableListOf(),
+    @field:ElementList(inline = true, required = false) var results: MutableList<PollResult> = mutableListOf(),
 )
 
 @Root(strict = false, name = "result")

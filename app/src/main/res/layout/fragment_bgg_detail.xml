@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:minHeight="40dp"
-                    android:paddingEnd="10dp">
+                    android:paddingHorizontal="4dp">
 
                     <TextView
                         android:id="@+id/label_geek_rating"
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:minHeight="40dp"
-                    android:paddingStart="10dp">
+                    android:paddingHorizontal="4dp">
 
                     <TextView
                         android:id="@+id/label_rating"
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:minHeight="40dp"
-                    android:paddingEnd="10dp">
+                    android:paddingHorizontal="4dp">
 
                     <TextView
                         android:id="@+id/label_weight"
@@ -171,7 +171,28 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:minHeight="40dp"
-                    android:paddingStart="10dp">
+                    android:paddingHorizontal="4dp">
+
+                    <TextView
+                        android:id="@+id/label_playing_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.11" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
                     <TextView
                         android:id="@+id/label_players"
@@ -206,28 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:minHeight="40dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/label_playing_time"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnSpan="1"
-                        android:layout_columnWeight="1"
-                        android:textAlignment="center"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="8.11" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="40dp"
-                    android:paddingStart="10dp">
+                    android:paddingHorizontal="4dp">
 
                     <TextView
                         android:id="@+id/label_age"
@@ -260,21 +260,33 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
+                    android:layout_columnSpan="2"
+                    android:layout_columnWeight="2"
                     android:minHeight="40dp"
-                    android:paddingEnd="10dp">
+                    android:paddingHorizontal="4dp">
 
                     <TextView
-                        android:id="@+id/label_description"
+                        android:id="@+id/label_laguange_dependency_header"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_columnSpan="2"
-                        android:layout_columnWeight="2"
+                        android:layout_marginTop="10dp"
+                        tools:text="@string/language_dependency"
                         android:textAlignment="center"
+                        app:layout_constraintBottom_toTopOf="@+id/label_laguange_dependency"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/label_laguange_dependency"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_laguange_dependency_header"
                         tools:text="8.11" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

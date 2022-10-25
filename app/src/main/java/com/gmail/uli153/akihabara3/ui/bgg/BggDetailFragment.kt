@@ -20,7 +20,9 @@ import com.gmail.uli153.akihabara3.domain.models.BoardgameLink
 import com.gmail.uli153.akihabara3.domain.models.PollType
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.extensions.bestPlayerAge
 import com.gmail.uli153.akihabara3.utils.extensions.bestPlayerNumber
+import com.gmail.uli153.akihabara3.utils.extensions.languageDependency
 import com.gmail.uli153.akihabara3.utils.extensions.toPx
 
 class BggDetailFragment: AkbFragment() {
@@ -74,7 +76,7 @@ class BggDetailFragment: AkbFragment() {
         binding.labelPlayers.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
         binding.labelPlayingTime.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
         binding.labelAge.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
-        binding.labelDescription.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
+        binding.labelLaguangeDependencyHeader.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_shimmer))
     }
 
     private fun stopShimmer() {
@@ -93,7 +95,7 @@ class BggDetailFragment: AkbFragment() {
         binding.labelPlayers.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.labelPlayingTime.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.labelAge.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
-        binding.labelDescription.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+        binding.labelLaguangeDependencyHeader.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
     }
 
     private fun setupItem(item: BggSearchItem) {
@@ -117,12 +119,13 @@ class BggDetailFragment: AkbFragment() {
                 binding.labelWeight.text = getString(R.string.weight, weight)
             }
 
+            val communityPlayers = polls.bestPlayerNumber
             binding.labelPlayers.isGone = minPlayers == null || maxPlayers == null
+            binding.labelCommunityPlayers.isGone = binding.labelPlayers.isGone || communityPlayers.isNullOrBlank()
             if (minPlayers != null && maxPlayers != null) {
                 binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
-                val best = polls.bestPlayerNumber
-                if (best != null) {
-
+                if (communityPlayers.isNullOrBlank().not()) {
+                    binding.labelCommunityPlayers.text = getString(R.string.community_value, communityPlayers)
                 }
             }
 
@@ -131,9 +134,22 @@ class BggDetailFragment: AkbFragment() {
                 binding.labelPlayingTime.text = getString(R.string.playing_time, playingTime)
             }
 
+            val communityAge = polls.bestPlayerAge
             binding.labelAge.isGone = minAge == null
+            binding.labelCommunityAge.isGone = binding.labelAge.isGone || communityAge.isNullOrBlank()
             if (minAge != null) {
                 binding.labelAge.text = getString(R.string.playing_age, minAge)
+                if (communityAge.isNullOrBlank().not()) {
+                    binding.labelCommunityAge.text = getString(R.string.community_value, communityAge)
+                }
+            }
+
+            val languageDependency = polls.languageDependency
+            binding.labelLaguangeDependencyHeader.isGone = languageDependency.isNullOrBlank()
+            binding.labelLaguangeDependency.isGone = languageDependency.isNullOrBlank()
+            binding.labelLaguangeDependency.text = languageDependency
+            if (languageDependency.isNullOrBlank().not()) {
+                binding.labelLaguangeDependencyHeader.text = getString(R.string.language_dependency)
             }
 
             val inflater = LayoutInflater.from(requireContext())

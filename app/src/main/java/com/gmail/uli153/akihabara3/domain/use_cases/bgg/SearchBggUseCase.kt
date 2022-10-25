@@ -27,7 +27,7 @@ class SearchBggUseCase(private val repository: BggRepository) {
 
         val t = types.ifEmpty { SearchTypes.values().toSet() }
         return try {
-            delay(400)
+            delay(600)
             val res = repository.search(query, t)
             DataWrapper.Success(res.map { it.toModel() })
         } catch (e: Throwable) {
