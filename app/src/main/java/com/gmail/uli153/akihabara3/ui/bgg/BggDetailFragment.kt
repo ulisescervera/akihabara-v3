@@ -120,7 +120,7 @@ class BggDetailFragment: AkbFragment() {
             binding.labelPlayers.isGone = minPlayers == null || maxPlayers == null
             if (minPlayers != null && maxPlayers != null) {
                 binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
-                val best = polls.find { it.type == PollType.SUGGESTED_NUMPLAYERS }?.bestPlayerNumber
+                val best = polls.bestPlayerNumber
                 if (best != null) {
 
                 }
