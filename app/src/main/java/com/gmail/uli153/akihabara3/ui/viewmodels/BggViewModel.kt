@@ -1,21 +1,18 @@
 package com.gmail.uli153.akihabara3.ui.viewmodels
 
-import android.provider.ContactsContract
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.gmail.uli153.akihabara3.data.repositories.SearchTypes
-import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
-import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.data.DataWrapper
+import com.gmail.uli153.akihabara3.data.repositories.SearchTypes
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem
+import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchBggItemUseCase
 import com.gmail.uli153.akihabara3.domain.use_cases.bgg.FetchHotUseCase
+import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +22,8 @@ class BggViewModel @Inject constructor(
     private val fetchItemUseCase: FetchBggItemUseCase,
     private val preferenceUtils: PreferenceUtils
 ): ViewModel() {
+
+    val query: String get() { return _query.value ?: ""}
 
     private val _hotness: MutableLiveData<DataWrapper<List<BggHotItem>>> = MutableLiveData(DataWrapper.Success(listOf()))
     val hotness: LiveData<DataWrapper<List<BggHotItem>>> = _hotness
@@ -96,6 +95,10 @@ class BggViewModel @Inject constructor(
     private var searchJob: Job? = null
     private var fetchHotnessJob: Job? = null
 
+    init {
+        fetchHotness()
+    }
+
     fun setFilterBoardgame(active: Boolean) {
         if (types.isEmpty() && !active) return
 
@@ -123,8 +126,6 @@ class BggViewModel @Inject constructor(
         _filterVideogame.value = active
         preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.FilterVideogame, active)
     }
-
-    val query: String get() { return _query.value ?: ""}
 
     fun search(query: String) {
         _query.value = query
@@ -164,10 +165,6 @@ class BggViewModel @Inject constructor(
                 _selectedBggItem.value = res
             }
         }
-    }
-
-    init {
-        fetchHotness()
     }
 
 }

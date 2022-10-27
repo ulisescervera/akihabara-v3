@@ -4,12 +4,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.data.repositories.BggRepository
 import com.gmail.uli153.akihabara3.data.repositories.SearchTypes
 import com.gmail.uli153.akihabara3.data.sources.BggPagingSource
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.toModel
-import com.gmail.uli153.akihabara3.data.DataWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

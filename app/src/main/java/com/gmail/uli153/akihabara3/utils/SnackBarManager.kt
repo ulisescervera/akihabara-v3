@@ -27,6 +27,10 @@ class SnackBarManager(
     private val snackQueue: Queue<Snackbar> = LinkedList()
     private var currentSnackbar: Snackbar? = null
 
+    fun showRetrySnackbar(message: String, retryListener: () -> Unit, dismissListener: () -> Unit) {
+        showSnackbar(message, context.getString(R.string.retry), null, retryListener, dismissListener)
+    }
+
     fun showErrorSnackbar(message: String, listener: () -> Unit) {
         showSnackbar(message, context.getString(R.string.close), null, listener, listener)
     }

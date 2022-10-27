@@ -1,7 +1,6 @@
 package com.gmail.uli153.akihabara3.ui.bgg
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,15 +20,10 @@ import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggItemBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
-import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.SearchFilterBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
-import com.gmail.uli153.akihabara3.utils.extensions.launchMain
-import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
-import kotlinx.android.synthetic.main.row_bgg_item.view.*
-import kotlinx.coroutines.flow.collectLatest
 
 class BggSearchFragment: AkbFragment() {
 
@@ -108,9 +102,15 @@ class BggSearchFragment: AkbFragment() {
                 }
                 is DataWrapper.Error -> {
                     adapter.submitList(emptyList())
-                    snackBarManager.showErrorSnackbar(getCustomErrorMessage(it.error)) {
-                        bggViewModel.hideSearchError()
-                    }
+                    snackBarManager.showRetrySnackbar(getCustomErrorMessage(it.error),
+                        retryListener = {
+                            bggViewModel.hideSearchError()
+                            val query = binding.editSearch.text.toString()
+                            bggViewModel.search("")
+                            bggViewModel.search(query)
+                    }, dismissListener = {
+                        // NOOP
+                    })
                 }
             }
         }

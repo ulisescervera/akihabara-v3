@@ -14,7 +14,6 @@ import com.gmail.uli153.akihabara3.data.daos.TransactionDao
 import com.gmail.uli153.akihabara3.data.entities.ProductEntity
 import com.gmail.uli153.akihabara3.data.entities.ProductType
 import com.gmail.uli153.akihabara3.data.entities.TransactionEntity
-import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

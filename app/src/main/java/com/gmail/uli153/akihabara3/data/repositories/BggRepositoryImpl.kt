@@ -1,13 +1,10 @@
 package com.gmail.uli153.akihabara3.data.repositories
 
-import android.util.Log
 import com.gmail.uli153.akihabara3.data.entities.BggHotItemResponse
 import com.gmail.uli153.akihabara3.data.entities.BggItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.simpleframework.xml.convert.AnnotationStrategy
@@ -20,7 +17,7 @@ class BggRepositoryImpl: BggRepository {
 
     val baseUrl = "https://api.geekdo.com/xmlapi2/"
 
-    val service: BggService by lazy {
+    private val service: BggService by lazy {
         val logger = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.HEADERS)
         val client = OkHttpClient.Builder()

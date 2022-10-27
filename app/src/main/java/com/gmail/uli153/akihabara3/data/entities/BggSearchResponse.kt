@@ -1,6 +1,5 @@
 package com.gmail.uli153.akihabara3.data.entities
 
-import androidx.annotation.AttrRes
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList

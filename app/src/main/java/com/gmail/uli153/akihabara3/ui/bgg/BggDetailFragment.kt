@@ -1,15 +1,20 @@
 package com.gmail.uli153.akihabara3.ui.bgg
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.facebook.shimmer.Shimmer
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
@@ -17,13 +22,13 @@ import com.gmail.uli153.akihabara3.databinding.FragmentBggDetailBinding
 import com.gmail.uli153.akihabara3.databinding.TextviewGridlayoutBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.domain.models.BoardgameLink
-import com.gmail.uli153.akihabara3.domain.models.PollType
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
+import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.extensions.bestPlayerAge
 import com.gmail.uli153.akihabara3.utils.extensions.bestPlayerNumber
 import com.gmail.uli153.akihabara3.utils.extensions.languageDependency
-import com.gmail.uli153.akihabara3.utils.extensions.toPx
+import com.gmail.uli153.akihabara3.utils.extensions.viewGroup
 
 class BggDetailFragment: AkbFragment() {
 
@@ -31,6 +36,8 @@ class BggDetailFragment: AkbFragment() {
     private val binding: FragmentBggDetailBinding get() = _binding!!
 
     private val bggViewModel: BggViewModel by activityViewModels()
+
+    private lateinit var snackBarManager: SnackBarManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentBggDetailBinding.inflate(inflater, container, false)
@@ -44,6 +51,9 @@ class BggDetailFragment: AkbFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
+
         bggViewModel.selectedBggItem.observe(viewLifecycleOwner) { wrapper ->
             when (wrapper) {
                 is DataWrapper.Loading -> {
@@ -51,7 +61,9 @@ class BggDetailFragment: AkbFragment() {
                 }
                 is DataWrapper.Error -> {
                     stopShimmer()
-                    //todo
+                    snackBarManager.showErrorSnackbar(getString(R.string.error_general)) {
+                        navigateUp()
+                    }
                 }
                 is DataWrapper.Success -> {
                     stopShimmer()
@@ -84,8 +96,6 @@ class BggDetailFragment: AkbFragment() {
             .setBaseAlpha(1f)
             .build()
         binding.root.setShimmer(shimmer)
-        binding.root.stopShimmer()
-        binding.imageview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.labelTitle.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.labelRank.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         binding.viewRank.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
@@ -100,27 +110,41 @@ class BggDetailFragment: AkbFragment() {
 
     private fun setupItem(item: BggSearchItem) {
         with(item) {
-            Glide.with(requireContext()).load(image).into(binding.imageview)
+            Glide.with(requireContext()).load(image).listener(object: RequestListener<Drawable> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    binding.imageview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                    binding.root.stopShimmer()
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    binding.imageview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                    binding.root.stopShimmer()
+                    return false
+                }
+
+            }).into(binding.imageview)
+
             binding.labelTitle.text = nameAndYear
             binding.labelRank.text = ranks?.firstOrNull()?.position?.let { "$it"}
 
-            binding.labelGeekRating.isGone = geekRating == null
+            binding.labelGeekRating.viewGroup?.isGone = geekRating == null
             if (geekRating != null) {
                 binding.labelGeekRating.text = getString(R.string.geek_rating, geekRating)
             }
 
-            binding.labelRating.isGone = rating == null
+            binding.labelRating.viewGroup?.isGone = rating == null
             if (rating != null) {
                 binding.labelRating.text = getString(R.string.rating, rating)
             }
 
-            binding.labelWeight.isGone = weight == null
+            binding.labelWeight.viewGroup?.isGone = weight == null
             if (weight != null) {
                 binding.labelWeight.text = getString(R.string.weight, weight)
             }
 
             val communityPlayers = polls.bestPlayerNumber
-            binding.labelPlayers.isGone = minPlayers == null || maxPlayers == null
+            binding.labelPlayers.viewGroup?.isGone = minPlayers == null || maxPlayers == null
             binding.labelCommunityPlayers.isGone = binding.labelPlayers.isGone || communityPlayers.isNullOrBlank()
             if (minPlayers != null && maxPlayers != null) {
                 binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
@@ -129,13 +153,13 @@ class BggDetailFragment: AkbFragment() {
                 }
             }
 
-            binding.labelPlayingTime.isGone = playingTime == null
+            binding.labelPlayingTime.viewGroup?.isGone = playingTime == null
             if (playingTime != null) {
                 binding.labelPlayingTime.text = getString(R.string.playing_time, playingTime)
             }
 
             val communityAge = polls.bestPlayerAge
-            binding.labelAge.isGone = minAge == null
+            binding.labelAge.viewGroup?.isGone = minAge == null
             binding.labelCommunityAge.isGone = binding.labelAge.isGone || communityAge.isNullOrBlank()
             if (minAge != null) {
                 binding.labelAge.text = getString(R.string.playing_age, minAge)
@@ -145,7 +169,7 @@ class BggDetailFragment: AkbFragment() {
             }
 
             val languageDependency = polls.languageDependency
-            binding.labelLaguangeDependencyHeader.isGone = languageDependency.isNullOrBlank()
+            binding.labelLaguangeDependencyHeader.viewGroup?.isGone = languageDependency.isNullOrBlank()
             binding.labelLaguangeDependency.isGone = languageDependency.isNullOrBlank()
             binding.labelLaguangeDependency.text = languageDependency
             if (languageDependency.isNullOrBlank().not()) {

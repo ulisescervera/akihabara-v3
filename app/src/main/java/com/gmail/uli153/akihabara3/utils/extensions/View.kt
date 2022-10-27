@@ -1,6 +1,7 @@
 package com.gmail.uli153.akihabara3.utils.extensions
 
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -21,4 +22,8 @@ fun View.delayOnLifecycle(delay: Long = 500, block: () -> Unit) {
         kotlinx.coroutines.delay(delay)
         block()
     }
+}
+
+val View.viewGroup: ViewGroup? get() {
+    return this.parent as? ViewGroup
 }

@@ -10,13 +10,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.ui.bottomsheets.DeleteProductBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.base.DeleteBaseBottomSheet
 import com.gmail.uli153.akihabara3.ui.products.base.ProductFormBaseFragment
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
-import com.gmail.uli153.akihabara3.utils.*
+import com.gmail.uli153.akihabara3.utils.AkbNumberParser
+import com.gmail.uli153.akihabara3.utils.FileUtils
 import com.gmail.uli153.akihabara3.utils.extensions.setProductImage
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.extensions.toPx

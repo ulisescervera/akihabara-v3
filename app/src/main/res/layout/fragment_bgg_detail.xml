@@ -64,7 +64,8 @@
                     <TextView
                         android:id="@+id/label_rank"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:maxLines="1"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondary"
@@ -215,11 +216,13 @@
                         android:layout_columnWeight="1"
                         android:textAlignment="center"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/label_players"
-                        tools:text="8.11" />
+                        tools:text="8.11"
+                        tools:visibility="visible" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -250,11 +253,13 @@
                         android:layout_columnWeight="1"
                         android:textAlignment="center"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/label_age"
-                        tools:text="8.11" />
+                        tools:text="8.11"
+                        tools:visibility="visible" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -270,12 +275,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        tools:text="@string/language_dependency"
                         android:textAlignment="center"
                         app:layout_constraintBottom_toTopOf="@+id/label_laguange_dependency"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/language_dependency" />
 
                     <TextView
                         android:id="@+id/label_laguange_dependency"
@@ -283,11 +288,13 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="13sp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/label_laguange_dependency_header"
-                        tools:text="8.11" />
+                        tools:text="8.11"
+                        tools:visibility="visible" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </GridLayout>
