@@ -43,6 +43,8 @@
 
     <string name="balance_title">Movimiento de saldo (%s)</string>
 
+    <string name="recording_voice">Reconociendo voz...</string>
+
     <!-- Bgg Filters -->
     <string name="boardgames">Juego de mesa</string>
     <string name="boardgames_expansion">Expansiones</string>

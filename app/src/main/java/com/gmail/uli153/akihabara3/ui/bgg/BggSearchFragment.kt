@@ -1,9 +1,12 @@
 package com.gmail.uli153.akihabara3.ui.bgg
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -21,6 +24,7 @@ import com.gmail.uli153.akihabara3.databinding.RowBggItemBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheets.SearchFilterBottomSheet
+import com.gmail.uli153.akihabara3.ui.dialogs.RecordingDialog
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
@@ -74,15 +78,29 @@ class BggSearchFragment: AkbFragment() {
 
         snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
         binding.btnCancel.setSafeClickListener {
-            binding.editSearch.setText("")
+            val query = binding.editSearch.text.toString()
+            if (query.isBlank()) {
+                binding.editSearch.setText("")
+            } else {
+                showRecordingAlert()
+            }
         }
 
-        binding.editSearch.setText(bggViewModel.query)
+        var isTextBlank = binding.editSearch.text.toString().isBlank()
         binding.editSearch.addTextChangedListener(afterTextChanged = {
             val query = it?.toString() ?: ""
-            binding.btnCancel.isGone = query.isBlank()
+            val isNewTextBlank = query.isBlank()
+
+            if (isTextBlank != isNewTextBlank) {
+                isTextBlank = isNewTextBlank
+                val iconRes = if (isNewTextBlank) android.R.drawable.presence_audio_online else R.drawable.ic_close
+                val icon = ContextCompat.getDrawable(requireContext(), iconRes)
+                binding.btnCancel.setImageDrawable(icon)
+            }
+
             bggViewModel.search(query)
         })
+        binding.editSearch.setText(bggViewModel.query)
 
         binding.btnFilters.setSafeClickListener {
             SearchFilterBottomSheet.show(parentFragmentManager)
@@ -114,6 +132,20 @@ class BggSearchFragment: AkbFragment() {
                 }
             }
         }
+    }
+
+    private fun showRecordingAlert() {
+        if (isPermissionGranted(Manifest.permission.RECORD_AUDIO)) {
+            RecordingDialog() {
+                bggViewModel.search(it ?: "")
+            }
+        } else {
+            requestRecordPermissions()
+        }
+    }
+
+    private fun requestRecordPermissions() {
+        //TODO permissions
     }
 
     private inner class SearchResultVH(val binding: RowBggItemBinding): RecyclerView.ViewHolder(binding.root) {
