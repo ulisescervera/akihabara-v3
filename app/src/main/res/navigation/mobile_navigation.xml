@@ -7,10 +7,18 @@
 
     <!-- Global actions -->
     <action android:id="@+id/action_open_camera"
-        app:destination="@+id/destination_take_photo" />
+        app:destination="@+id/destination_take_photo"
+        app:enterAnim="@anim/anim_slide_in"
+        app:exitAnim="@anim/anim_exit"
+        app:popEnterAnim="@anim/anim_enter"
+        app:popExitAnim="@anim/anim_slide_out" />
 
     <action android:id="@+id/action_crop_image"
-        app:destination="@+id/destination_crop_image" />
+        app:destination="@+id/destination_crop_image"
+        app:enterAnim="@anim/anim_slide_in"
+        app:exitAnim="@anim/anim_exit"
+        app:popEnterAnim="@anim/anim_enter"
+        app:popExitAnim="@anim/anim_slide_out"/>
 
     <!-- Destinations -->
     <fragment
@@ -21,7 +29,11 @@
 
         <action
             android:id="@+id/action_edit_product"
-            app:destination="@+id/destination_edit_product">
+            app:destination="@+id/destination_edit_product"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_exit"
+            app:popEnterAnim="@anim/anim_enter"
+            app:popExitAnim="@anim/anim_slide_out">
             <argument
                 android:name="product_id"
                 app:argType="long" />
@@ -29,7 +41,11 @@
 
         <action
             android:id="@+id/action_create_product"
-            app:destination="@+id/destination_create_product" />
+            app:destination="@+id/destination_create_product"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_exit"
+            app:popEnterAnim="@anim/anim_enter"
+            app:popExitAnim="@anim/anim_slide_out"/>
 
     </fragment>
 
@@ -41,7 +57,11 @@
 
         <action
             android:id="@+id/action_bgg_detail"
-            app:destination="@+id/destination_bgg_detail" />
+            app:destination="@+id/destination_bgg_detail"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_exit"
+            app:popEnterAnim="@anim/anim_enter"
+            app:popExitAnim="@anim/anim_slide_out"/>
 
     </fragment>
 
