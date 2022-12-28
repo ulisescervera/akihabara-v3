@@ -43,6 +43,8 @@
 
     <string name="balance_title">Movimiento de saldo (%s)</string>
 
+    <string name="recording_voice">Reconociendo voz...</string>
+
     <!-- Bgg Filters -->
     <string name="boardgames">Juego de mesa</string>
     <string name="boardgames_expansion">Expansiones</string>
@@ -55,6 +57,7 @@
     <string name="search">Buscar</string>
 
     <string name="close">Cerrar</string>
+    <string name="retry">Reintentar</string>
     <string name="error_timeout">Ha ocurrido un error. La red o el servidor es demasiado lento</string>
     <string name="error_general">Ha ocurrido un error</string>
 
@@ -68,4 +71,6 @@
     <string name="playing_age">%d años</string>
     <string name="caterogies">Categorías</string>
     <string name="mechanics">Mecánicas</string>
+    <string name="community_value">Comunidad: %s</string>
+    <string name="language_dependency">Depedencia del idioma</string>
 </resources>

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.BottomSheetSearchFilterBinding
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel

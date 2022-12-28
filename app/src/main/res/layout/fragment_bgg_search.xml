@@ -28,7 +28,7 @@
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:background="@null"
-            android:src="@drawable/ic_close"
+            android:src="@android:drawable/presence_audio_online"
             app:layout_constraintBottom_toBottomOf="@+id/edit_search"
             app:layout_constraintEnd_toEndOf="@id/edit_search"
             app:layout_constraintTop_toTopOf="@+id/edit_search" />

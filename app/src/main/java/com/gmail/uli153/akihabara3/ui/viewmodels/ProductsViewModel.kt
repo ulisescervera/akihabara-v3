@@ -1,16 +1,15 @@
 package com.gmail.uli153.akihabara3.ui.viewmodels
 
-import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.gmail.uli153.akihabara3.data.DataWrapper
 import com.gmail.uli153.akihabara3.data.entities.ProductType
 import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.domain.models.Transaction
 import com.gmail.uli153.akihabara3.domain.use_cases.product.ProductsUseCases
 import com.gmail.uli153.akihabara3.domain.use_cases.transaction.TransactionsUseCases
-import com.gmail.uli153.akihabara3.data.DataWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

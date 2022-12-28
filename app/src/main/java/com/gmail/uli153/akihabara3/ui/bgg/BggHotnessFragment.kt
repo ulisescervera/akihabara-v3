@@ -17,7 +17,6 @@ import com.gmail.uli153.akihabara3.databinding.FragmentBggDetailBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentBggHotBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggHotBinding
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem
-import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager

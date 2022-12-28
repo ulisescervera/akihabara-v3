@@ -64,7 +64,8 @@
                     <TextView
                         android:id="@+id/label_rank"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:maxLines="1"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondary"
@@ -100,66 +101,201 @@
                 android:alignmentMode="alignBounds"
                 android:columnCount="2"
                 android:columnOrderPreserved="true"
-                android:useDefaultMargins="true"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_title_rank">
 
-                <TextView
-                    android:id="@+id/label_geek_rating"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    tools:text="8.44" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
-                <TextView
-                    android:id="@+id/label_rating"
+                    <TextView
+                        android:id="@+id/label_geek_rating"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.44" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
                     android:layout_columnWeight="1"
-                    tools:text="8.11" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
-                <TextView
-                    android:id="@+id/label_weight"
+                    <TextView
+                        android:id="@+id/label_rating"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.11" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
                     android:layout_columnWeight="1"
-                    tools:text="8.11" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
-                <TextView
-                    android:id="@+id/label_players"
+                    <TextView
+                        android:id="@+id/label_weight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.11" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
                     android:layout_columnWeight="1"
-                    tools:text="8.11" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
-                <TextView
-                    android:id="@+id/label_playing_time"
+                    <TextView
+                        android:id="@+id/label_playing_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.11" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
                     android:layout_columnWeight="1"
-                    tools:text="8.11" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
-                <TextView
-                    android:id="@+id/label_age"
+                    <TextView
+                        android:id="@+id/label_players"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toTopOf="@+id/label_community_players"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.11" />
+
+                    <TextView
+                        android:id="@+id/label_community_players"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_players"
+                        tools:text="8.11"
+                        tools:visibility="visible" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
                     android:layout_columnWeight="1"
-                    tools:text="8.11" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
 
-                <TextView
-                    android:id="@+id/label_description"
+                    <TextView
+                        android:id="@+id/label_age"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toTopOf="@+id/label_community_age"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="8.11" />
+
+                    <TextView
+                        android:id="@+id/label_community_age"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="1"
+                        android:layout_columnWeight="1"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_age"
+                        tools:text="8.11"
+                        tools:visibility="visible" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnSpan="2"
                     android:layout_columnWeight="2"
-                    tools:text="8.11" />
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="4dp">
+
+                    <TextView
+                        android:id="@+id/label_laguange_dependency_header"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toTopOf="@+id/label_laguange_dependency"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/language_dependency" />
+
+                    <TextView
+                        android:id="@+id/label_laguange_dependency"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="13sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/label_laguange_dependency_header"
+                        tools:text="8.11"
+                        tools:visibility="visible" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </GridLayout>
 
