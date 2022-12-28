@@ -53,19 +53,22 @@ class MainActivity : AppCompatActivity() {
         )
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.destination_products, R.id.destination_history -> {
                     binding.bottomAppBar.performShow(true)
                     binding.fav.show()
                     binding.toolbar.navigationIcon = null
-                    binding.lottieView.isGone = false
+//                    binding.lottieView.isGone = false
+                    binding.imageBgg.isGone = false
                 }
                 else -> {
                     binding.bottomAppBar.performHide(true)
                     binding.fav.hide()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_chevron_left)
-                    binding.lottieView.isGone = true
+//                    binding.lottieView.isGone = true
+                    binding.imageBgg.isGone = true
                 }
             }
         }
@@ -79,8 +82,11 @@ class MainActivity : AppCompatActivity() {
             BalanceBottomSheet.show(supportFragmentManager)
         }
 
-        binding.lottieView.setSafeClickListener {
-//            InfoBottomSheet.show(supportFragmentManager)
+//        binding.lottieView.setSafeClickListener {
+////            InfoBottomSheet.show(supportFragmentManager)
+//        }
+
+        binding.imageBgg.setSafeClickListener {
             navController.navigate(R.id.action_bgg)
         }
     }

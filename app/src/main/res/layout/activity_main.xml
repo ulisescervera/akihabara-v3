@@ -23,21 +23,34 @@
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/lottie_view"
+                app:layout_constraintEnd_toStartOf="@+id/image_bgg"
                 app:layout_constraintStart_toStartOf="parent"
+                app:titleTextAppearance="@style/ToolbarTitle"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie_view"
-                android:layout_width="48dp"
+<!--            <com.airbnb.lottie.LottieAnimationView-->
+<!--                android:id="@+id/lottie_view"-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:lottie_autoPlay="true"-->
+<!--                app:lottie_loop="true"-->
+<!--                app:lottie_rawRes="@raw/lottie_green_dice_roll" />-->
+
+            <ImageView
+                android:id="@+id/image_bgg"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
+                android:paddingHorizontal="12dp"
+                android:src="@drawable/logo_bgg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/lottie_green_dice_roll" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -59,10 +72,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_nav_bar_height"
         android:layout_gravity="bottom"
+        android:background="?attr/background"
         app:contentInsetStart="0dp"
         app:elevation="10dp"
         app:fabAlignmentMode="center"
-        android:background="?attr/background"
         app:fabCradleMargin="6dp"
         app:fabCradleRoundedCornerRadius="12dp"
         app:fabCradleVerticalOffset="0dp"
@@ -73,8 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
-            android:background="@color/transparent"
             android:layout_marginEnd="0dp"
+            android:background="@color/transparent"
             app:elevation="10dp"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu" />

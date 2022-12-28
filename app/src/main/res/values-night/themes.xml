@@ -36,6 +36,8 @@
 
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
         <item name="imageButtonStyle">@style/AkbImageButton</item>
+
+        <item name="android:fontFamily">@font/museo_regular</item>
     </style>
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
@@ -43,6 +45,7 @@
     </style>
 
     <style name="AkbTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabTextStyle</item>
         <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/bg_tablayout</item>
         <item name="tabSelectedTextColor">@color/md_grey_900</item>
@@ -97,12 +100,16 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="AkbImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="tint">?attr/colorPrimary</item>
+    </style>
+
     <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/white</item>
     </style>
 
-    <style name="AkbImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="tint">?attr/colorPrimary</item>
+    <style name="ToolbarTitle">
+        <item name="android:fontFamily">@font/birmingham_titling_bold</item>
     </style>
 
 </resources>

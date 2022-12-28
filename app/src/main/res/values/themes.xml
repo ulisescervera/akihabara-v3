@@ -26,7 +26,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:textColor">?attr/defaultText</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="snackbarStyle">@style/AkbSnackbar</item>
         <item name="snackbarButtonStyle">@style/AkbSnackbarButton</item>
         <item name="android:editTextStyle">@style/AkbEditText</item>
@@ -35,6 +35,8 @@
 
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
         <item name="imageButtonStyle">@style/AkbImageButton</item>
+
+        <item name="android:fontFamily">@font/museo_regular</item>
     </style>
 
     <style name="AkbActionBar" parent="Widget.MaterialComponents.ActionBar.Surface">
@@ -42,6 +44,7 @@
     </style>
 
     <style name="AkbTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabTextStyle</item>
         <item name="android:background">@drawable/bg_tablayout</item>
         <item name="tabSelectedTextColor">@color/white</item>
         <item name="tabTextColor">@color/md_yellow_700</item>
@@ -51,6 +54,10 @@
         <item name="tabIndicator">@drawable/bg_selected_tab</item>
         <item name="tabIndicatorColor">?attr/colorPrimary</item>
         <item name="tabRippleColor">@null</item>
+    </style>
+
+    <style name="TabTextStyle">
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AkbSnackbar" parent="Widget.MaterialComponents.Snackbar">
@@ -94,12 +101,17 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="AkbImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="tint">?attr/colorPrimary</item>
+    </style>
+
     <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/black</item>
     </style>
 
-    <style name="AkbImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="tint">?attr/colorPrimary</item>
+    <style name="ToolbarTitle">
+        <item name="android:fontFamily">@font/birmingham_titling_bold</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
 </resources>
