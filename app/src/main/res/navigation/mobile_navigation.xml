@@ -20,6 +20,22 @@
         app:popEnterAnim="@anim/anim_enter"
         app:popExitAnim="@anim/anim_slide_out"/>
 
+    <action
+        android:id="@+id/action_create_product"
+        app:destination="@+id/destination_create_product"
+        app:enterAnim="@anim/anim_slide_in"
+        app:exitAnim="@anim/anim_exit"
+        app:popEnterAnim="@anim/anim_enter"
+        app:popExitAnim="@anim/anim_slide_out"/>
+
+    <action
+        android:id="@+id/action_bgg"
+        app:destination="@+id/destination_bgg"
+        app:enterAnim="@anim/anim_slide_in"
+        app:exitAnim="@anim/anim_exit"
+        app:popEnterAnim="@anim/anim_enter"
+        app:popExitAnim="@anim/anim_slide_out"/>
+
     <!-- Destinations -->
     <fragment
         android:id="@+id/destination_products"
@@ -38,14 +54,6 @@
                 android:name="product_id"
                 app:argType="long" />
         </action>
-
-        <action
-            android:id="@+id/action_create_product"
-            app:destination="@+id/destination_create_product"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_exit"
-            app:popEnterAnim="@anim/anim_enter"
-            app:popExitAnim="@anim/anim_slide_out"/>
 
     </fragment>
 

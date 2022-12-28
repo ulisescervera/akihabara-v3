@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnAddProduct.setSafeClickListener {
             productsFormViewModel.setProductFormImage(R.drawable.ic_res_drink10)
-            navController.navigate(R.id.destination_create_product)
+            navController.navigate(R.id.action_create_product)
         }
 
         binding.btnEditBalance.setSafeClickListener {
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.lottieView.setSafeClickListener {
 //            InfoBottomSheet.show(supportFragmentManager)
-            navController.navigate(R.id.destination_bgg)
+            navController.navigate(R.id.action_bgg)
         }
     }
 
