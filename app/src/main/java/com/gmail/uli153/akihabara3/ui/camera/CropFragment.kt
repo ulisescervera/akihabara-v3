@@ -8,6 +8,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropImageView
+import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentCropBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
@@ -16,22 +17,12 @@ import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.extensions.toPx
 import kotlinx.coroutines.launch
 
-class CropFragment: AkbFragment() {
+class CropFragment: AkbFragment<FragmentCropBinding>() {
 
     private val productFormViewModel: ProductFormViewModel by activityViewModels()
 
-    private var _binding: FragmentCropBinding? = null
-    private val binding: FragmentCropBinding get() = _binding!!
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return FragmentCropBinding.inflate(inflater, container, false).apply {
-            _binding = this
-        }.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentCropBinding {
+        return FragmentCropBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

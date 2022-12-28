@@ -19,9 +19,10 @@ import com.gmail.uli153.akihabara3.ui.bottomsheets.base.DeleteBaseBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.data.DataWrapper
+import com.gmail.uli153.akihabara3.databinding.FragmentCropBinding
+import com.gmail.uli153.akihabara3.databinding.RowTransactionBinding
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.gmail.uli153.akihabara3.utils.extensions.setTransactionImage
-import kotlinx.android.synthetic.main.row_transaction.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,13 +30,13 @@ interface HistoryListener {
     fun onRollbackTransaction(transaction: Transaction)
 }
 
-class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.DeleteListener<Transaction> {
-
-    private var _binding: FragmentHistoryBinding? = null
-
-    private val binding get() = _binding!!
+class HistoryFragment : AkbFragment<FragmentHistoryBinding>(), HistoryListener, DeleteBaseBottomSheet.DeleteListener<Transaction> {
 
     protected val productsViewModel: ProductsViewModel by activityViewModels()
+
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentHistoryBinding {
+        return FragmentHistoryBinding.inflate(inflater, container, false)
+    }
 
     private val adapter by lazy {
         Adapter(requireContext(), this).apply {
@@ -63,11 +64,6 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val separator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL).also {
@@ -85,21 +81,19 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private inner class TransactionVH(view: View, listener: HistoryListener): RecyclerView.ViewHolder(view) {
+    private inner class TransactionVH(
+        private val binding: RowTransactionBinding,
+        listener: HistoryListener
+    ): RecyclerView.ViewHolder(binding.root) {
 
         init {
-            itemView.btn_remove.setSafeClickListener {
+            binding.btnRemove.setSafeClickListener {
                 listener.onRollbackTransaction(transaction)
             }
-            itemView.surface.setSafeClickListener {
-                when (itemView.swipe.openStatus) {
-                    SwipeLayout.Status.Open -> itemView.swipe.close(true)
-                    SwipeLayout.Status.Close -> itemView.swipe.open(true)
+            binding.surface.setSafeClickListener {
+                when (binding.swipe.openStatus) {
+                    SwipeLayout.Status.Open -> binding.swipe.close(true)
+                    SwipeLayout.Status.Close -> binding.swipe.open(true)
                 }
             }
         }
@@ -108,19 +102,19 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
         fun set(transaction: Transaction) {
             this.transaction = transaction
 
-            itemView.image.setTransactionImage(transaction)
+            binding.image.setTransactionImage(transaction)
 
-            itemView.label_date.text = dateFormatter.format(transaction.date)
-            itemView.label_date.visibility = View.VISIBLE
+            binding.labelDate.text = dateFormatter.format(transaction.date)
+            binding.labelDate.visibility = View.VISIBLE
 
-            itemView.label_name.text = if (transaction.type == TransactionType.BALANCE) {
+            binding.labelName.text = if (transaction.type == TransactionType.BALANCE) {
                 getString(R.string.added_balance)
             } else {
                 transaction.title
             }
 
             val amount = if (transaction.type == TransactionType.BUY) -transaction.amount else transaction.amount
-            itemView.label_amount.text = AkbNumberParser.LocaleParser.parseToEur(amount)
+            binding.labelAmount.text = AkbNumberParser.LocaleParser.parseToEur(amount)
         }
     }
 
@@ -130,8 +124,7 @@ class HistoryFragment : AkbFragment(), HistoryListener, DeleteBaseBottomSheet.De
     ): ListAdapter<Transaction, TransactionVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionVH {
-            val view = LayoutInflater.from(context).inflate(R.layout.row_transaction, parent, false)
-            return TransactionVH(view, listener)
+            return TransactionVH(RowTransactionBinding.inflate(LayoutInflater.from(context), parent, false), listener)
         }
 
         override fun onBindViewHolder(holder: TransactionVH, position: Int) {

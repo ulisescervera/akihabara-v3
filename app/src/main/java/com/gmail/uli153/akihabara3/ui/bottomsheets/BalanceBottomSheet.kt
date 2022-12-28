@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.databinding.BottomSheetBalanceBinding
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.ui.views.AkbButtonStyle
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_balance.*
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
@@ -37,13 +37,13 @@ class BalanceBottomSheet private constructor(): BottomSheetDialogFragment() {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun afterTextChanged(p0: Editable?) {
-            btn_save_balance.style = if(isValidAmount) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
+            binding.btnSaveBalance.style = if(isValidAmount) AkbButtonStyle.MAIN else AkbButtonStyle.GREY
             updateBalance()
         }
     }
 
     private val text: String get() {
-        return edit_balance.text.toString()
+        return binding.editBalance.text.toString()
     }
 
     private var balance: BigDecimal = BigDecimal(0)
@@ -64,8 +64,17 @@ class BalanceBottomSheet private constructor(): BottomSheetDialogFragment() {
         return R.style.AkbBottomSheetDialog
     }
 
+    private var _binding: BottomSheetBalanceBinding? = null
+    private val binding: BottomSheetBalanceBinding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.bottom_sheet_balance, container, false)
+        _binding = BottomSheetBalanceBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onStart() {
@@ -78,47 +87,47 @@ class BalanceBottomSheet private constructor(): BottomSheetDialogFragment() {
         behavior = BottomSheetBehavior.from(view.parent as View)
         behavior.skipCollapsed = true
 
-        edit_balance.addTextChangedListener(textWatcher)
-        btn_1.setOnClickListener {
+        binding.editBalance.addTextChangedListener(textWatcher)
+        binding.btn1.setOnClickListener {
             addCharacter("1")
         }
-        btn_2.setOnClickListener {
+        binding.btn2.setOnClickListener {
             addCharacter("2")
         }
-        btn_3.setOnClickListener {
+        binding.btn3.setOnClickListener {
             addCharacter("3")
         }
-        btn_4.setOnClickListener {
+        binding.btn4.setOnClickListener {
             addCharacter("4")
         }
-        btn_5.setOnClickListener {
+        binding.btn5.setOnClickListener {
             addCharacter("5")
         }
-        btn_6.setOnClickListener {
+        binding.btn6.setOnClickListener {
             addCharacter("6")
         }
-        btn_7.setOnClickListener {
+        binding.btn7.setOnClickListener {
             addCharacter("7")
         }
-        btn_8.setOnClickListener {
+        binding.btn8.setOnClickListener {
             addCharacter("8")
         }
-        btn_9.setOnClickListener {
+        binding.btn0.setOnClickListener {
             addCharacter("9")
         }
-        btn_0.setOnClickListener {
+        binding.btn0.setOnClickListener {
             addCharacter("0")
         }
-        btn_dot.setOnClickListener {
+        binding.btnDot.setOnClickListener {
             addCharacter(SEPARATOR)
         }
-        btn_sign.setOnClickListener {
+        binding.btnSign.setOnClickListener {
             toggleSign()
         }
-        btn_remove.setOnClickListener {
+        binding.btnRemove.setOnClickListener {
             removeLast()
         }
-        btn_save_balance.setSafeClickListener {
+        binding.btnSaveBalance.setSafeClickListener {
             val amount = this.amount
             if (isValidAmount && amount.compareTo(BigDecimal(0)) != 0) {
                 val decimalFormat = DecimalFormat("+0.00€")
@@ -134,26 +143,26 @@ class BalanceBottomSheet private constructor(): BottomSheetDialogFragment() {
 
     private fun updateBalance() {
         val a = balance.plus(amount)
-        label_balance_value.text = AkbNumberParser.LocaleParser.parseToEur(a)
+        binding.labelBalanceValue.text = AkbNumberParser.LocaleParser.parseToEur(a)
     }
 
     private fun toggleSign() {
         if (text.isEmpty() || amount.compareTo(BigDecimal(0)) == 0) {
-            edit_balance.setText("-")
+            binding.editBalance.setText("-")
         } else {
             val a = amount.multiply(BigDecimal(-1))
-            edit_balance.setText(formatter.format(a))
+            binding.editBalance.setText(formatter.format(a))
         }
 
         val icon = if (amount.compareTo(BigDecimal(0)) >= 0) R.drawable.ic_sign_minus else R.drawable.ic_sign_add
-        btn_sign.setImageResource(icon)
+        binding.btnSign.setImageResource(icon)
     }
 
     private fun removeLast() {
         val t = text.takeIf { it.length > 0 }?.let {
             text.substring(0, it.length - 1)
         }
-        edit_balance.setText(t)
+        binding.editBalance.setText(t)
     }
 
     private fun addCharacter(c: String) {
@@ -165,7 +174,7 @@ class BalanceBottomSheet private constructor(): BottomSheetDialogFragment() {
             if (text.length > index + 2) return
         }
 
-        edit_balance.setText(text + c)
+        binding.editBalance.setText(text + c)
     }
 
 }

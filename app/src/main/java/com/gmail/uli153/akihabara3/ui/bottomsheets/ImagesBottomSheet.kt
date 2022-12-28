@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.databinding.BottomSheetImagesBinding
+import com.gmail.uli153.akihabara3.databinding.CellImageBinding
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_images.*
-import kotlinx.android.synthetic.main.cell_image.view.*
 
 class ImagesBottomSheet(private val listener: ImageSelectedListener): BottomSheetDialogFragment() {
 
@@ -98,8 +98,18 @@ class ImagesBottomSheet(private val listener: ImageSelectedListener): BottomShee
         return R.style.AkbBottomSheetDialog
     }
 
+    private var _binding: BottomSheetImagesBinding? = null
+    private val binding: BottomSheetImagesBinding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.bottom_sheet_images, container, false)
+        _binding = BottomSheetImagesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        binding.recyclerviewImages.adapter = null
+        _binding = null
+        super.onDestroyView()
     }
 
     override fun onStart() {
@@ -111,21 +121,21 @@ class ImagesBottomSheet(private val listener: ImageSelectedListener): BottomShee
         super.onViewCreated(view, savedInstanceState)
         behavior = BottomSheetBehavior.from(view.parent as View)
 //        behavior.skipCollapsed = true
-        recyclerview_images.layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        recyclerview_images.adapter = adapter
-        label_camera.setSafeClickListener {
+        binding.recyclerviewImages.layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
+        binding.recyclerviewImages.adapter = adapter
+        binding.labelCamera.setSafeClickListener {
             listener.showCamera()
             dismiss()
         }
-        label_gallery.setSafeClickListener {
+        binding.labelGallery.setSafeClickListener {
             listener.showGallery()
             dismiss()
         }
     }
 
-    private inner class ImageVH(view: View): RecyclerView.ViewHolder(view) {
+    private inner class ImageVH(private val binding: CellImageBinding): RecyclerView.ViewHolder(binding.root) {
         init {
-            view.setSafeClickListener {
+            binding.root.setSafeClickListener {
                 listener.onImageSelected(image)
                 dismiss()
             }
@@ -133,14 +143,13 @@ class ImagesBottomSheet(private val listener: ImageSelectedListener): BottomShee
         private var image: Int = 0
         fun setImage(image: Int) {
             this.image = image
-            val imageView = itemView.imageview
-            Glide.with(imageView).load(images[position]).into(imageView)
+            Glide.with(binding.imageview).load(images[position]).into(binding.imageview)
         }
     }
 
     private inner class Adapter: RecyclerView.Adapter<ImageVH>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageVH {
-            return ImageVH(LayoutInflater.from(requireContext()).inflate(R.layout.cell_image, parent, false))
+            return ImageVH(CellImageBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
         }
 
         override fun onBindViewHolder(holder: ImageVH, position: Int) {

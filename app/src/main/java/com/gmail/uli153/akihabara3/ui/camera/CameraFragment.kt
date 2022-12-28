@@ -17,6 +17,7 @@ import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
@@ -26,19 +27,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class CameraFragment: AkbFragment() {
+class CameraFragment: AkbFragment<FragmentCameraBinding>() {
 
-    private var _binding: FragmentCameraBinding? = null
-    private val binding: FragmentCameraBinding get() = _binding!!
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentCameraBinding {
+        return FragmentCameraBinding.inflate(inflater, container, false)
+    }
 
     private val productsFormViewModel: ProductFormViewModel by activityViewModels()
 
     private var imageCapture: ImageCapture? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentCameraBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,11 +44,6 @@ class CameraFragment: AkbFragment() {
             onTakeImageClicked()
         }
         setupButtonAnimation()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     @SuppressLint("ClickableViewAccessibility")

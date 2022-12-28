@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
+import com.gmail.uli153.akihabara3.databinding.FragmentBggMainBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggItemBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
@@ -25,16 +26,13 @@ import com.gmail.uli153.akihabara3.ui.bottomsheets.InfoBottomSheet
 import com.gmail.uli153.akihabara3.ui.bottomsheets.SearchFilterBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
-import com.gmail.uli153.akihabara3.utils.extensions.launchMain
-import com.gmail.uli153.akihabara3.utils.extensions.repeatOnStart
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
-import kotlinx.android.synthetic.main.row_bgg_item.view.*
-import kotlinx.coroutines.flow.collectLatest
 
-class BggSearchFragment: AkbFragment() {
+class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
 
-    private var _binding: FragmentBggSearchBinding? = null
-    private val binding: FragmentBggSearchBinding get() = _binding!!
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentBggSearchBinding {
+        return FragmentBggSearchBinding.inflate(inflater, container, false)
+    }
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
@@ -63,16 +61,6 @@ class BggSearchFragment: AkbFragment() {
                 }
             })
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentBggSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -16,32 +16,32 @@ import androidx.fragment.app.activityViewModels
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.entities.ProductType
 import com.gmail.uli153.akihabara3.databinding.FragmentProductBaseFormBinding
+import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.bottomsheets.ImagesBottomSheet
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
-import kotlinx.android.synthetic.main.fragment_product_base_form.*
 import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
 import pl.aprilapps.easyphotopicker.MediaSource
 import java.math.BigDecimal
 
-abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSelectedListener {
+abstract class ProductFormBaseFragment: AkbFragment<FragmentProductBaseFormBinding>(), ImagesBottomSheet.ImageSelectedListener {
+
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentProductBaseFormBinding {
+        return FragmentProductBaseFormBinding.inflate(inflater, container, false)
+    }
 
     abstract fun updateButton()
     abstract fun updateImage(file: Any?)
-
-    protected var _binding: FragmentProductBaseFormBinding? = null
-    protected val binding: FragmentProductBaseFormBinding get() = _binding!!
-
 
     protected val productsViewModel: ProductsViewModel by activityViewModels()
     protected val productsFormViewModel: ProductFormViewModel by activityViewModels()
 
     protected val type: ProductType get() {
-        return categories[spinner_type.selectedItemPosition]
+        return categories[binding.spinnerType.selectedItemPosition]
     }
 
     protected val name: String get() {
@@ -111,16 +111,6 @@ abstract class ProductFormBaseFragment: AkbFragment(), ImagesBottomSheet.ImageSe
 
             navController.navigate(R.id.action_open_camera)
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentProductBaseFormBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

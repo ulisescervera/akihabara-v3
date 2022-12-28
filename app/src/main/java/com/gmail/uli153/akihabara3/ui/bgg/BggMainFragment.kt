@@ -11,29 +11,19 @@ import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.FragmentBggMainBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_products.*
 
-class BggMainFragment: AkbFragment() {
+class BggMainFragment: AkbFragment<FragmentBggMainBinding>() {
 
-    private var _binding: FragmentBggMainBinding? = null
-    private val binding: FragmentBggMainBinding get() = _binding!!
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentBggMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentBggMainBinding {
+        return FragmentBggMainBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = BggPagerAdapter(requireActivity())
-        pager.isUserInputEnabled = false
-        pager.adapter = BggPagerAdapter(requireActivity())
+        binding.pager.isUserInputEnabled = false
+        binding.pager.adapter = BggPagerAdapter(requireActivity())
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = adapter.getTitle(position)
         }.attach()

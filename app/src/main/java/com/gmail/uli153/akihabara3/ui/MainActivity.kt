@@ -15,7 +15,6 @@ import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.destination_history
             )
         )
-        toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {

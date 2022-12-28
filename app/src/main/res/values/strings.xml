@@ -63,6 +63,7 @@
     <string name="geek_rating">Geek rating: %.2f</string>
     <string name="weight">Dificultad: %.2f</string>
     <string name="players">Jugadores: %d - %d</string>
+    <string name="players_best">Jugadores: %d - %d (Mejor %s)</string>
     <string name="playing_time">%d minutos</string>
     <string name="playing_age">%d años</string>
     <string name="caterogies">Categorías</string>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
+import com.gmail.uli153.akihabara3.databinding.FragmentBggDetailBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentBggHotBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggHotBinding
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem
@@ -22,10 +23,11 @@ import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 
-class BggHotnessFragment: AkbFragment() {
+class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
 
-    private var _binding: FragmentBggHotBinding? = null
-    private val binding: FragmentBggHotBinding get() = _binding!!
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentBggHotBinding {
+        return FragmentBggHotBinding.inflate(inflater, container, false)
+    }
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
@@ -33,16 +35,6 @@ class BggHotnessFragment: AkbFragment() {
 
     private val adapter by lazy {
         Adapter()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentBggHotBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

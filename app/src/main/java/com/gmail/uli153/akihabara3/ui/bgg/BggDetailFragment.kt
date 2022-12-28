@@ -23,22 +23,13 @@ import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.extensions.bestPlayerNumber
 import com.gmail.uli153.akihabara3.utils.extensions.toPx
 
-class BggDetailFragment: AkbFragment() {
+class BggDetailFragment: AkbFragment<FragmentBggDetailBinding>() {
 
-    private var _binding: FragmentBggDetailBinding? = null
-    private val binding: FragmentBggDetailBinding get() = _binding!!
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentBggDetailBinding {
+        return FragmentBggDetailBinding.inflate(inflater, container, false)
+    }
 
     private val bggViewModel: BggViewModel by activityViewModels()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentBggDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -119,10 +110,11 @@ class BggDetailFragment: AkbFragment() {
 
             binding.labelPlayers.isGone = minPlayers == null || maxPlayers == null
             if (minPlayers != null && maxPlayers != null) {
-                binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
-                val best = polls.find { it.type == PollType.SUGGESTED_NUMPLAYERS }?.bestPlayerNumber
+                val best = polls.bestPlayerNumber
                 if (best != null) {
-
+                    binding.labelPlayers.text = getString(R.string.players_best, minPlayers, maxPlayers, best)
+                } else {
+                    binding.labelPlayers.text = getString(R.string.players, minPlayers, maxPlayers)
                 }
             }
 

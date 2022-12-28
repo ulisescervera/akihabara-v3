@@ -10,29 +10,30 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.databinding.FragmentProductsBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.extensions.getColorFromAttr
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_products.*
 import java.math.BigDecimal
 
-class ProductsFragment: AkbFragment() {
+class ProductsFragment: AkbFragment<FragmentProductsBinding>() {
 
     private val productsViewModel: ProductsViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(requireContext()).inflate(R.layout.fragment_products, container, false)
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentProductsBinding {
+        return FragmentProductsBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ProductsPagerAdapter(requireActivity())
-        pager.isUserInputEnabled = false
-        pager.adapter = adapter
-        TabLayoutMediator(tabs, pager) { tab, position ->
+
+        binding.pager.isUserInputEnabled = false
+        binding.pager.adapter = adapter
+        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = adapter.getTitle(position)
         }.attach()
 
@@ -41,8 +42,8 @@ class ProductsFragment: AkbFragment() {
                 requireContext().getColorFromAttr(R.attr.greenText)
             else
                 ContextCompat.getColor(requireContext(), R.color.red)
-            label_balance_value.text = AkbNumberParser.LocaleParser.parseToEur(it)
-            label_balance_value.setTextColor(color)
+            binding.labelBalanceValue.text = AkbNumberParser.LocaleParser.parseToEur(it)
+            binding.labelBalanceValue.setTextColor(color)
         }
     }
 

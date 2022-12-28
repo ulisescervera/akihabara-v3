@@ -11,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
+import com.gmail.uli153.akihabara3.databinding.FragmentHistoryBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
+import com.gmail.uli153.akihabara3.databinding.RowProductBinding
 import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
@@ -21,7 +23,6 @@ import com.gmail.uli153.akihabara3.utils.extensions.setProductImage
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
 import com.like.LikeButton
 import com.like.OnLikeListener
-import kotlinx.android.synthetic.main.row_product.view.*
 import kotlinx.coroutines.*
 
 interface ProductListener {
@@ -30,13 +31,11 @@ interface ProductListener {
     fun onEditProduct(Product: Product)
 }
 
-abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
+abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>(), ProductListener {
 
-    private var _binding: FragmentProductsBaseBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentProductsBaseBinding {
+        return FragmentProductsBaseBinding.inflate(inflater, container, false)
+    }
 
     protected val productsViewModel: ProductsViewModel by activityViewModels()
 
@@ -79,16 +78,6 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
         SnackBarManager(requireContext(), binding.root, lifecycleScope)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentProductsBaseBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val separator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL).also {
@@ -123,19 +112,19 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
     }
 
     protected inner class ProductVH(
-        view: View,
+        private val binding: RowProductBinding,
         private val context: Context,
         private val listener: ProductListener
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private var toggleFavoriteJob: Job? = null
 
         init {
-            itemView.btn_buy.setSafeClickListener {
-                itemView.swipe.close(true)
+            binding.btnBuy.setSafeClickListener {
+                binding.swipe.close(true)
                 listener.onBuyProduct(Product)
             }
-            itemView.btn_favorite.setOnLikeListener(object : OnLikeListener {
+            binding.btnFavorite.setOnLikeListener(object : OnLikeListener {
                 override fun liked(likeButton: LikeButton?) {
                     onToggleLike(Product, true)
                 }
@@ -143,17 +132,17 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
                     onToggleLike(Product, false)
                 }
             })
-            itemView.btn_favorite.setOnAnimationEndListener {
+            binding.btnFavorite.setOnAnimationEndListener {
                 // Solo cuando like se pone a true se lanza este callback
                 toggleFavoriteJob?.start()
             }
-            itemView.btn_edit.setSafeClickListener {
+            binding.btnEdit.setSafeClickListener {
                 listener.onEditProduct(Product)
             }
-            itemView.surface.setSafeClickListener {
-                when (itemView.swipe.openStatus) {
-                    SwipeLayout.Status.Open -> itemView.swipe.close(true)
-                    SwipeLayout.Status.Close -> itemView.swipe.open(true)
+            binding.surface.setSafeClickListener {
+                when (binding.swipe.openStatus) {
+                    SwipeLayout.Status.Open -> binding.swipe.close(true)
+                    SwipeLayout.Status.Close -> binding.swipe.open(true)
                 }
             }
         }
@@ -161,12 +150,12 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
         lateinit var Product: Product private set
         fun setup(Product: Product) {
             this.Product = Product
-            itemView.swipe.dragDistance = 120
-            itemView.swipe.close(false)
-            itemView.imageview_product.setProductImage(Product)
-            itemView.label_name.text = Product.name
-            itemView.label_price.text = String.format("%s €", AkbNumberParser.LocaleParser.format(Product.price))
-            itemView.btn_favorite.isLiked = Product.favorite
+            binding.swipe.dragDistance = 120
+            binding.swipe.close(false)
+            binding.imageviewProduct.setProductImage(Product)
+            binding.labelName.text = Product.name
+            binding.labelPrice.text = String.format("%s €", AkbNumberParser.LocaleParser.format(Product.price))
+            binding.btnFavorite.isLiked = Product.favorite
         }
 
         private fun onToggleLike(Product: Product, lazy: Boolean) {
@@ -194,8 +183,8 @@ abstract class ProductsBaseFragment : AkbFragment(), ProductListener {
     ) : ListAdapter<Product, ProductVH>(ProductDiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductVH {
-            val view = LayoutInflater.from(requireContext()).inflate(R.layout.row_product, parent, false)
-            return ProductVH(view, requireContext(), listener)
+            val binding = RowProductBinding.inflate(LayoutInflater.from(requireContext()), parent, false)
+            return ProductVH(binding, requireContext(), listener)
         }
 
         override fun onBindViewHolder(holder: ProductVH, position: Int) {
