@@ -40,28 +40,30 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
 
     private lateinit var snackBarManager: SnackBarManager
 
+    private val dataObserver = object: RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+    }
+
     private val adapter: Adapter by lazy {
         Adapter().apply {
-            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-            })
+            registerAdapterDataObserver(dataObserver)
         }
     }
 
@@ -71,7 +73,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
         snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
         binding.btnCancel.setSafeClickListener {
             val query = binding.editSearch.text.toString()
-            if (query.isBlank()) {
+            if (query.isNotBlank()) {
                 binding.editSearch.setText("")
             } else {
                 showRecordingAlert()
@@ -124,6 +126,11 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        adapter.unregisterAdapterDataObserver(dataObserver)
+        super.onDestroyView()
     }
 
     private fun showRecordingAlert() {
