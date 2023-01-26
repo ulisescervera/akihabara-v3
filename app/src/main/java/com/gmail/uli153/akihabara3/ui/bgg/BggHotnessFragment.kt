@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
-import com.gmail.uli153.akihabara3.databinding.FragmentBggDetailBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentBggHotBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggHotBinding
 import com.gmail.uli153.akihabara3.domain.models.BggHotItem

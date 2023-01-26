@@ -17,7 +17,6 @@ import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentCameraBinding
 import com.gmail.uli153.akihabara3.ui.AkbFragment
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel

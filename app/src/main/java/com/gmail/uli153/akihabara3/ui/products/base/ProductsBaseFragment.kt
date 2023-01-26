@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.databinding.FragmentHistoryBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
 import com.gmail.uli153.akihabara3.databinding.RowProductBinding
 import com.gmail.uli153.akihabara3.domain.models.Product

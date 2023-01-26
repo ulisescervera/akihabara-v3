@@ -3,6 +3,7 @@ package com.gmail.uli153.akihabara3.data.repositories
 import com.gmail.uli153.akihabara3.data.entities.BggHotResponse
 import com.gmail.uli153.akihabara3.data.entities.BggItemResponse
 import com.gmail.uli153.akihabara3.data.entities.BggSearchResponse
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -22,11 +23,11 @@ interface BggService {
     ): BggItemResponse
 
     @GET("thing")
-    suspend fun getItems(
+    fun getItems(
         @Query("id", encoded = true) ids: String,
         @Query("stats") stats: Boolean = true,
         @Query("type") type: String? = null
-    ): BggItemResponse
+    ): Call<BggItemResponse>
 
     @GET("hot")
     suspend fun getHot(): BggHotResponse

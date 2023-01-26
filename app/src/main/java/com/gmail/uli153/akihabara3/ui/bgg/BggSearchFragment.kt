@@ -1,7 +1,6 @@
 package com.gmail.uli153.akihabara3.ui.bgg
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
-import com.gmail.uli153.akihabara3.databinding.FragmentBggMainBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggItemBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
