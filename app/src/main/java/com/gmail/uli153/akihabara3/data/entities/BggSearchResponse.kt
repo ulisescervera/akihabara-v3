@@ -36,7 +36,7 @@ data class BggItem @JvmOverloads constructor(
     @field:Element(required = false) var minage: MinAge? = null,
     @field:Element(required = false) var statistics: Statistics? = null,
     @field:ElementList(inline = true) var links: MutableList<Link> = mutableListOf(),
-    @field:ElementList(inline = true, name = "poll") var polls: MutableList<Poll> = mutableListOf(),
+    @field:ElementList(inline = true, required = false) var polls: MutableList<Poll> = mutableListOf(),
 )
 
 @Root(name = "name", strict = false)
