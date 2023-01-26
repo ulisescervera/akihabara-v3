@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
 
 class SearchBggUseCase(private val repository: BggRepository) {
@@ -32,6 +33,7 @@ class SearchBggUseCase(private val repository: BggRepository) {
             DataWrapper.Success(res.map { it.toModel() })
         } catch (e: Throwable) {
             if (e is CancellationException) throw e
+            Timber.e(e)
             DataWrapper.Error(e)
         }
     }
