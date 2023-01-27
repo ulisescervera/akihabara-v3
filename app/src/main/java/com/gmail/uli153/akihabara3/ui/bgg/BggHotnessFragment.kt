@@ -32,7 +32,7 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
     private lateinit var snackBarManager: SnackBarManager
 
     private val adapter by lazy {
-        Adapter()
+        Adapter(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,6 +43,8 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
         binding.swipeRefresh.setOnRefreshListener {
             bggViewModel.fetchHotness()
         }
+
+
         bggViewModel.hotness.observe(viewLifecycleOwner) {
             when(it) {
                 is DataWrapper.Success -> {
@@ -95,7 +97,7 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
         }
     }
 
-    private inner class Adapter: ListAdapter<BggHotItem, BggHotVH>(DiffCallback()) {
+    private inner class Adapter(private var gridMode: Boolean): ListAdapter<BggHotItem, BggHotVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BggHotVH {
             return BggHotVH(RowBggHotBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
@@ -105,4 +107,6 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
             holder.setup(getItem(position))
         }
     }
+
+
 }

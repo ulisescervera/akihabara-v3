@@ -26,16 +26,19 @@ class ProductsFragment: AkbFragment<FragmentProductsBinding>() {
         return FragmentProductsBinding.inflate(inflater, container, false)
     }
 
+    private lateinit var mediator: TabLayoutMediator
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ProductsPagerAdapter(requireActivity())
+        val adapter = ProductsPagerAdapter(this)
 
         binding.pager.isUserInputEnabled = false
         binding.pager.adapter = adapter
-        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
+        mediator = TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = adapter.getTitle(position)
-        }.attach()
+        }
+        mediator.attach()
 
         productsViewModel.balance.observe(viewLifecycleOwner) {
             val color = if (it >= BigDecimal(0))
@@ -47,11 +50,18 @@ class ProductsFragment: AkbFragment<FragmentProductsBinding>() {
         }
     }
 
-    private inner class ProductsPagerAdapter(act: FragmentActivity): FragmentStateAdapter(act) {
+    override fun onDestroyView() {
+        binding.pager.adapter = null
+        mediator.detach()
+        binding.pager
+        super.onDestroyView()
+    }
+
+    private class ProductsPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
         private val tabsTitles = listOf(
-            act.getString(R.string.drinks),
-            act.getString(R.string.foods)
+            fragment.getString(R.string.drinks),
+            fragment.getString(R.string.foods)
         )
 
         override fun getItemCount(): Int {

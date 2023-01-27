@@ -61,24 +61,20 @@ abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>()
         }
     }
 
-    protected val layoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-    }
+    protected lateinit var layoutManager: LinearLayoutManager
+    protected lateinit var smoothScroller: LinearSmoothScroller
+    private lateinit var snackBarManager: SnackBarManager
 
-    protected val smoothScroller: LinearSmoothScroller by lazy {
-        object: LinearSmoothScroller(requireContext()) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
+        smoothScroller = object: LinearSmoothScroller(requireContext()) {
             override fun getVerticalSnapPreference(): Int {
                 return LinearSmoothScroller.SNAP_TO_START
             }
         }
-    }
 
-    private val snackBarManager: SnackBarManager by lazy {
-        SnackBarManager(requireContext(), binding.root, lifecycleScope)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val separator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL).also {
             it.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.separator_product)!!)
         }

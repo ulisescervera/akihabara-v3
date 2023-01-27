@@ -10,7 +10,8 @@ class PreferenceUtils(private val context: Context) {
         FilterBoardgameAccessory("FILTER_BOARDGAME_ACCESSORY"),
         FilterBoardGameExpansion("FILTER_BOARDGAME_EXPANSION"),
         FilterVideogame("FILTER_VIDEOGAME"),
-        FirstTimeStarted("FIRST_TIME_STARTED_APP")
+        FirstTimeStarted("FIRST_TIME_STARTED_APP"),
+        GridMode("DISPLAY_GRID_MODE")
     }
 
     private val PREFERENCE_FILE = "AKB_PREFERENCE_FILE"
