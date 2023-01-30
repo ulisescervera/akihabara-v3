@@ -1,5 +1,6 @@
 package com.gmail.uli153.akihabara3.ui
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -23,6 +24,10 @@ abstract class AkbFragment<T: ViewBinding>: Fragment() {
 
     private var _binding: T? = null
     protected val binding: T get() = _binding!!
+
+    protected val parentActivity: MainActivity get() = activity as MainActivity
+
+    protected val applicationContext: Context get() = parentActivity.applicationContext
 
     protected val navController: NavController get() {
         return findNavController()

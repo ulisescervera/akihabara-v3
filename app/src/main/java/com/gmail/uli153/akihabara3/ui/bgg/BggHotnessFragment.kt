@@ -29,7 +29,7 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
-    private lateinit var snackBarManager: SnackBarManager
+    private var snackBarManager: SnackBarManager? = null
 
     private val adapter by lazy {
         Adapter(true)
@@ -60,12 +60,17 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
                 is DataWrapper.Error -> {
                     binding.swipeRefresh.isRefreshing = false
                     adapter.submitList(listOf())
-                    snackBarManager.showErrorSnackbar(getCustomErrorMessage(it.error)) {
+                    snackBarManager?.showErrorSnackbar(getCustomErrorMessage(it.error)) {
                         bggViewModel.hideHotnessError()
                     }
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        snackBarManager = null
+        super.onDestroyView()
     }
 
     private class DiffCallback: DiffUtil.ItemCallback<BggHotItem>() {

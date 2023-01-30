@@ -36,7 +36,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
-    private lateinit var snackBarManager: SnackBarManager
+    private var snackBarManager: SnackBarManager? = null
 
     private val dataObserver = object: RecyclerView.AdapterDataObserver() {
         override fun onChanged() {
@@ -112,7 +112,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
                 }
                 is DataWrapper.Error -> {
                     adapter.submitList(emptyList())
-                    snackBarManager.showRetrySnackbar(getCustomErrorMessage(it.error),
+                    snackBarManager?.showRetrySnackbar(getCustomErrorMessage(it.error),
                         retryListener = {
                             bggViewModel.hideSearchError()
                             val query = binding.editSearch.text.toString()
@@ -128,6 +128,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
 
     override fun onDestroyView() {
         adapter.unregisterAdapterDataObserver(dataObserver)
+        snackBarManager = null
         super.onDestroyView()
     }
 

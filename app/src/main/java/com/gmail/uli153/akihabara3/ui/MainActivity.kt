@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
         bggViewModel.gridMode.observe(this) {
             val res = if (it) R.drawable.ic_grid_mode else R.drawable.ic_list_mode
-            binding.btnActionBarBgg.setImageResource(res)
+            binding.btnActionBarGridMode.setImageResource(res)
         }
     }
 

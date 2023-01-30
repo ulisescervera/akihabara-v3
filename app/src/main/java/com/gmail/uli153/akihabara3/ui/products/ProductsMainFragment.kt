@@ -26,7 +26,7 @@ class ProductsFragment: AkbFragment<FragmentProductsBinding>() {
         return FragmentProductsBinding.inflate(inflater, container, false)
     }
 
-    private lateinit var mediator: TabLayoutMediator
+    private var mediator: TabLayoutMediator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +38,7 @@ class ProductsFragment: AkbFragment<FragmentProductsBinding>() {
         mediator = TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = adapter.getTitle(position)
         }
-        mediator.attach()
+        mediator?.attach()
 
         productsViewModel.balance.observe(viewLifecycleOwner) {
             val color = if (it >= BigDecimal(0))
@@ -52,8 +52,8 @@ class ProductsFragment: AkbFragment<FragmentProductsBinding>() {
 
     override fun onDestroyView() {
         binding.pager.adapter = null
-        mediator.detach()
-        binding.pager
+        mediator?.detach()
+        mediator = null
         super.onDestroyView()
     }
 
