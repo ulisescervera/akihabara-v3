@@ -70,6 +70,7 @@ class BggHotnessFragment: AkbFragment<FragmentBggHotBinding>() {
 
     override fun onDestroyView() {
         snackBarManager = null
+        binding.recyclerviewHot.adapter = null
         super.onDestroyView()
     }
 

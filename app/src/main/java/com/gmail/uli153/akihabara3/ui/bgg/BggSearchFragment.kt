@@ -60,9 +60,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
     }
 
     private val adapter: Adapter by lazy {
-        Adapter().apply {
-            registerAdapterDataObserver(dataObserver)
-        }
+        Adapter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,6 +96,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
             SearchFilterBottomSheet.show(parentFragmentManager)
         }
 
+        adapter.registerAdapterDataObserver(dataObserver)
         binding.recyclerviewBgg.adapter = adapter
         binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
 
@@ -128,6 +127,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
 
     override fun onDestroyView() {
         adapter.unregisterAdapterDataObserver(dataObserver)
+        binding.recyclerviewBgg.adapter = null
         snackBarManager = null
         super.onDestroyView()
     }
