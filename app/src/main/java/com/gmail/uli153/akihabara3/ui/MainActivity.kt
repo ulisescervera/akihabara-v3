@@ -98,8 +98,8 @@ class MainActivity : AppCompatActivity() {
             bggViewModel.toggleGridMode()
         }
 
-        bggViewModel.gridMode.observe(this) {
-            val res = if (it) R.drawable.ic_grid_mode else R.drawable.ic_list_mode
+        bggViewModel.gridMode.observe(this) { grid ->
+            val res = if (grid) R.drawable.ic_list_mode else R.drawable.ic_grid_mode
             binding.btnActionBarGridMode.setImageResource(res)
         }
     }
