@@ -1,6 +1,5 @@
-package com.gmail.uli153.akihabara3.ui.products
+package com.gmail.uli153.akihabara3.ui.products.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import com.daimajia.swipe.SwipeLayout
 import com.gmail.uli153.akihabara3.R
-import com.gmail.uli153.akihabara3.databinding.FragmentHistoryBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentProductsBaseBinding
 import com.gmail.uli153.akihabara3.databinding.RowProductBinding
 import com.gmail.uli153.akihabara3.domain.models.Product
 import com.gmail.uli153.akihabara3.ui.AkbFragment
+import com.gmail.uli153.akihabara3.ui.products.ProductsFragmentDirections
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductsViewModel
 import com.gmail.uli153.akihabara3.utils.AkbNumberParser
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
@@ -31,7 +30,7 @@ interface ProductListener {
     fun onEditProduct(Product: Product)
 }
 
-abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>(), ProductListener {
+abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>() {
 
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentProductsBaseBinding {
         return FragmentProductsBaseBinding.inflate(inflater, container, false)
@@ -52,60 +51,63 @@ abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>()
         }
 
     protected val adapter: ProductAdapter by lazy {
-        ProductAdapter(this).apply {
-            registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    smoothScroller.targetPosition = Math.max(0, positionStart - 1)
-                    layoutManager.startSmoothScroll(smoothScroller)
+        val listener = object: ProductListener {
+            override fun onBuyProduct(Product: Product) {
+                productsViewModel.buyProduct(Product) { transactionId ->
+                    val message = getString(R.string.snackbar_undo_message, Product.name, AkbNumberParser.LocaleParser.format(Product.price))
+                    snackBarManager?.showUndoSnackbar(message) {
+                        productsViewModel.deleteTransaction(transactionId)
+                    }
                 }
-            })
+            }
+
+            override fun onFavoriteProduct(Product: Product) {
+                productsViewModel.toggleFavorite(Product)
+            }
+
+            override fun onEditProduct(Product: Product) {
+                val dirs = ProductsFragmentDirections.actionEditProduct(Product.id)
+                navigate(dirs)
+            }
         }
+        val adapter = ProductAdapter(listener)
+        adapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                smoothScroller.targetPosition = Math.max(0, positionStart - 1)
+                layoutManager.startSmoothScroll(smoothScroller)
+            }
+        })
+        adapter
     }
 
-    protected val layoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-    }
+    protected lateinit var layoutManager: LinearLayoutManager
+    protected lateinit var smoothScroller: LinearSmoothScroller
+    private var snackBarManager: SnackBarManager? = null
 
-    protected val smoothScroller: LinearSmoothScroller by lazy {
-        object: LinearSmoothScroller(requireContext()) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
+        smoothScroller = object: LinearSmoothScroller(requireContext()) {
             override fun getVerticalSnapPreference(): Int {
                 return LinearSmoothScroller.SNAP_TO_START
             }
         }
-    }
 
-    private val snackBarManager: SnackBarManager by lazy {
-        SnackBarManager(requireContext(), binding.root, lifecycleScope)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val separator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL).also {
-            it.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.separator_product)!!)
+            it.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.separator_product)!!)
         }
         binding.recyclerviewProducts.layoutManager = layoutManager
         binding.recyclerviewProducts.addItemDecoration(separator)
         binding.recyclerviewProducts.adapter = adapter
     }
 
-    override fun onBuyProduct(Product: Product) {
-        productsViewModel.buyProduct(Product) { transactionId ->
-            val message = getString(R.string.snackbar_undo_message, Product.name, AkbNumberParser.LocaleParser.format(Product.price))
-            snackBarManager.showUndoSnackbar(message) {
-                productsViewModel.deleteTransaction(transactionId)
-            }
-        }
+    override fun onDestroyView() {
+        binding.recyclerviewProducts.adapter = null
+        binding.recyclerviewProducts.layoutManager = null
+        snackBarManager = null
+        super.onDestroyView()
     }
-
-    override fun onFavoriteProduct(Product: Product) {
-        productsViewModel.toggleFavorite(Product)
-    }
-
-    override fun onEditProduct(Product: Product) {
-        val dirs = ProductsFragmentDirections.actionEditProduct(Product.id)
-        navigate(dirs)
-    }
-
     protected fun filter() {
         //todo filter
         filteredProductEntities = products
@@ -113,7 +115,6 @@ abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>()
 
     protected inner class ProductVH(
         private val binding: RowProductBinding,
-        private val context: Context,
         private val listener: ProductListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -167,7 +168,7 @@ abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>()
         }
     }
 
-    protected inner class ProductDiffCallback: DiffUtil.ItemCallback<Product>() {
+    protected class ProductDiffCallback: DiffUtil.ItemCallback<Product>() {
 
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
@@ -183,8 +184,8 @@ abstract class ProductsBaseFragment : AkbFragment<FragmentProductsBaseBinding>()
     ) : ListAdapter<Product, ProductVH>(ProductDiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductVH {
-            val binding = RowProductBinding.inflate(LayoutInflater.from(requireContext()), parent, false)
-            return ProductVH(binding, requireContext(), listener)
+            val binding = RowProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ProductVH(binding, listener)
         }
 
         override fun onBindViewHolder(holder: ProductVH, position: Int) {

@@ -2,6 +2,7 @@ package com.gmail.uli153.akihabara3.data.repositories
 
 import com.gmail.uli153.akihabara3.data.entities.BggHotItemResponse
 import com.gmail.uli153.akihabara3.data.entities.BggItem
+import com.gmail.uli153.akihabara3.data.entities.BggItemResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -9,7 +10,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.simpleframework.xml.convert.AnnotationStrategy
 import org.simpleframework.xml.core.Persister
+import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.await
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -37,15 +40,15 @@ class BggRepositoryImpl: BggRepository {
             .let { it.subList(page, Math.min(page + pageSize, it.size)) }
             .map { it.id }
             .joinToString(",")
-            .let { async { service.getItems(it) } }.await().items
+            .let { async { service.getItems(it).await() } }.await().items
     }
 
-    override suspend fun search(query: String, types: Set<SearchTypes>): List<BggItem> = withContext(Dispatchers.IO) {
+    override suspend fun search(query: String, types: Set<SearchTypes>): Call<BggItemResponse> = withContext(Dispatchers.IO) {
         val typesQuery = types.map { it.value }.joinToString(",")
         return@withContext service.search(query, typesQuery).items
             .map { it.id }
             .joinToString(",")
-            .let { async { service.getItems(it) } }.await().items
+            .let { service.getItems(it) }
     }
 
     override suspend fun fetchHot(): List<BggHotItemResponse> = withContext(Dispatchers.IO) {

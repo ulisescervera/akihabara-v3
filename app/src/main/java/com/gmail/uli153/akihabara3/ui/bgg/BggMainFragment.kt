@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.FragmentBggMainBinding
@@ -14,6 +13,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class BggMainFragment: AkbFragment<FragmentBggMainBinding>() {
 
+    private var mediator: TabLayoutMediator? = null
+
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentBggMainBinding {
         return FragmentBggMainBinding.inflate(inflater, container, false)
     }
@@ -21,15 +22,23 @@ class BggMainFragment: AkbFragment<FragmentBggMainBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = BggPagerAdapter(requireActivity())
+        val adapter = BggPagerAdapter(this)
         binding.pager.isUserInputEnabled = false
-        binding.pager.adapter = BggPagerAdapter(requireActivity())
-        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
+        binding.pager.adapter = adapter
+        mediator = TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = adapter.getTitle(position)
-        }.attach()
+        }
+        mediator?.attach()
     }
 
-    private inner class BggPagerAdapter(act: FragmentActivity): FragmentStateAdapter(act) {
+    override fun onDestroyView() {
+        binding.pager.adapter = null
+        mediator?.detach()
+        mediator = null
+        super.onDestroyView()
+    }
+
+    private class BggPagerAdapter(act: Fragment): FragmentStateAdapter(act) {
 
         private val tabsTitles = listOf(
             act.getString(R.string.the_hotness),

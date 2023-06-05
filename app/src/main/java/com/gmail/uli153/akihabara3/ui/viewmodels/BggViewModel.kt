@@ -13,6 +13,7 @@ import com.gmail.uli153.akihabara3.domain.use_cases.bgg.SearchBggUseCase
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +24,14 @@ class BggViewModel @Inject constructor(
     private val preferenceUtils: PreferenceUtils
 ): ViewModel() {
 
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Timber.e(exception)
+    }
+
     val query: String get() { return _query.value ?: ""}
+
+    private val _gridMode: MutableLiveData<Boolean> = MutableLiveData(preferenceUtils.getBoolean(PreferenceUtils.PreferenceKeys.GridMode))
+    val gridMode: LiveData<Boolean> = _gridMode
 
     private val _hotness: MutableLiveData<DataWrapper<List<BggHotItem>>> = MutableLiveData(DataWrapper.Success(listOf()))
     val hotness: LiveData<DataWrapper<List<BggHotItem>>> = _hotness
@@ -67,7 +75,7 @@ class BggViewModel @Inject constructor(
             searchJob?.cancel()
             val query: String = _query.value ?: ""
             if (query.isNotBlank()) value = DataWrapper.Loading
-            searchJob = viewModelScope.launch(Dispatchers.IO) {
+            searchJob = viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
                 if (isActive.not()) return@launch
                 val result = searchUseCase(query, types)
                 if (isActive) withContext(Dispatchers.Main) {
@@ -97,6 +105,12 @@ class BggViewModel @Inject constructor(
 
     init {
         fetchHotness()
+    }
+
+    fun toggleGridMode() {
+        val enabled = gridMode.value!!.not()
+        preferenceUtils.putBoolean(PreferenceUtils.PreferenceKeys.GridMode, enabled)
+        _gridMode.value = enabled
     }
 
     fun setFilterBoardgame(active: Boolean) {

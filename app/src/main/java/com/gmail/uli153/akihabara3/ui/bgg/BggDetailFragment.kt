@@ -38,7 +38,7 @@ class BggDetailFragment: AkbFragment<FragmentBggDetailBinding>() {
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
-    private lateinit var snackBarManager: SnackBarManager
+    private var snackBarManager: SnackBarManager? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +52,7 @@ class BggDetailFragment: AkbFragment<FragmentBggDetailBinding>() {
                 }
                 is DataWrapper.Error -> {
                     stopShimmer()
-                    snackBarManager.showErrorSnackbar(getString(R.string.error_general)) {
+                    snackBarManager?.showErrorSnackbar(getString(R.string.error_general)) {
                         navigateUp()
                     }
                 }
@@ -62,6 +62,11 @@ class BggDetailFragment: AkbFragment<FragmentBggDetailBinding>() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        snackBarManager = null
+        super.onDestroyView()
     }
 
     private fun startShimmer() {

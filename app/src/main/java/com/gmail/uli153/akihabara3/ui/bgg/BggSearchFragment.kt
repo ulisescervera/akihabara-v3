@@ -1,7 +1,9 @@
 package com.gmail.uli153.akihabara3.ui.bgg
 
 import android.Manifest
-import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +13,11 @@ import androidx.core.view.isGone
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.data.DataWrapper
-import com.gmail.uli153.akihabara3.databinding.FragmentBggMainBinding
+import com.gmail.uli153.akihabara3.databinding.CellBggItemBinding
 import com.gmail.uli153.akihabara3.databinding.FragmentBggSearchBinding
 import com.gmail.uli153.akihabara3.databinding.RowBggItemBinding
 import com.gmail.uli153.akihabara3.domain.models.BggSearchItem
@@ -29,8 +27,11 @@ import com.gmail.uli153.akihabara3.ui.dialogs.RecordingDialog
 import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.utils.SnackBarManager
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
+import com.gmail.uli153.akihabara3.utils.extensions.toPx
 
 class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
+
+    private val SPAN_COUNT = 3
 
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): FragmentBggSearchBinding {
         return FragmentBggSearchBinding.inflate(inflater, container, false)
@@ -38,31 +39,49 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
 
     private val bggViewModel: BggViewModel by activityViewModels()
 
-    private lateinit var snackBarManager: SnackBarManager
+    private var snackBarManager: SnackBarManager? = null
+
+    private val dataObserver = object: RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+        override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+            binding.recyclerviewBgg.scrollToPosition(0)
+        }
+    }
 
     private val adapter: Adapter by lazy {
-        Adapter().apply {
-            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-                override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-                    binding.recyclerviewBgg.scrollToPosition(0)
-                }
-            })
-        }
+        Adapter(false)
+    }
+
+    private val cellSeparatorVertical: DividerItemDecoration by lazy {
+        val separator = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        val colors = intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT)
+        val drawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+        drawable.setSize(1, 8.toPx.toInt())
+        separator.setDrawable(drawable)
+        separator
+    }
+
+    private val cellSeparatorHorizontal: DividerItemDecoration by lazy {
+        val separator = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
+        val colors = intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT)
+        val drawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors)
+        drawable.setSize(8.toPx.toInt(), 1)
+        separator.setDrawable(drawable)
+        separator
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +90,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
         snackBarManager = SnackBarManager(requireContext(), binding.root, lifecycleScope)
         binding.btnCancel.setSafeClickListener {
             val query = binding.editSearch.text.toString()
-            if (query.isBlank()) {
+            if (query.isNotBlank()) {
                 binding.editSearch.setText("")
             } else {
                 showRecordingAlert()
@@ -98,8 +117,25 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
             SearchFilterBottomSheet.show(parentFragmentManager)
         }
 
+        adapter.registerAdapterDataObserver(dataObserver)
         binding.recyclerviewBgg.adapter = adapter
-        binding.recyclerviewBgg.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerviewBgg.layoutManager = GridLayoutManager(requireContext(), 1)
+
+        bggViewModel.gridMode.observe(viewLifecycleOwner) { grid ->
+            val manager = binding.recyclerviewBgg.layoutManager as GridLayoutManager
+            adapter.gridMode = grid
+            manager.spanCount = if (grid) SPAN_COUNT else 1
+            binding.recyclerviewBgg.adapter = adapter
+            if (grid) {
+                if (binding.recyclerviewBgg.itemDecorationCount == 0) {
+                    binding.recyclerviewBgg.addItemDecoration(cellSeparatorVertical)
+                    binding.recyclerviewBgg.addItemDecoration(cellSeparatorHorizontal)
+                }
+            } else {
+                binding.recyclerviewBgg.removeItemDecoration(cellSeparatorVertical)
+                binding.recyclerviewBgg.removeItemDecoration(cellSeparatorHorizontal)
+            }
+        }
 
         bggViewModel.searchResult.observe(viewLifecycleOwner) {
             binding.progressIndicator.isGone = it !is DataWrapper.Loading
@@ -112,7 +148,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
                 }
                 is DataWrapper.Error -> {
                     adapter.submitList(emptyList())
-                    snackBarManager.showRetrySnackbar(getCustomErrorMessage(it.error),
+                    snackBarManager?.showRetrySnackbar(getCustomErrorMessage(it.error),
                         retryListener = {
                             bggViewModel.hideSearchError()
                             val query = binding.editSearch.text.toString()
@@ -124,6 +160,13 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        adapter.unregisterAdapterDataObserver(dataObserver)
+        binding.recyclerviewBgg.adapter = null
+        snackBarManager = null
+        super.onDestroyView()
     }
 
     private fun showRecordingAlert() {
@@ -140,7 +183,26 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
         //TODO permissions
     }
 
-    private inner class SearchResultVH(val binding: RowBggItemBinding): RecyclerView.ViewHolder(binding.root) {
+    private abstract inner class SearchResultVH(view: View): RecyclerView.ViewHolder(view) {
+        abstract fun set(item: BggSearchItem)
+    }
+
+    private inner class CellSearchResultVH(val binding: CellBggItemBinding): SearchResultVH(binding.root) {
+        private lateinit var item: BggSearchItem
+        init {
+            binding.root.setSafeClickListener {
+                bggViewModel.fetchAndSelectBggItemById(item.id)
+                navigate(BggMainFragmentDirections.actionBggDetail())
+            }
+        }
+
+        override fun set(item: BggSearchItem) {
+            this.item = item
+            Glide.with(binding.imageBggHotness).load(item.thumbnail).into(binding.imageBggHotness)
+        }
+    }
+
+    private inner class RowSearchResultVH(val binding: RowBggItemBinding): SearchResultVH(binding.root) {
 
         private lateinit var item: BggSearchItem
         init {
@@ -150,7 +212,7 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
             }
         }
 
-        fun set(item: BggSearchItem) {
+        override fun set(item: BggSearchItem) {
             this.item = item
             val rank = item.ranks?.firstOrNull()?.position?.let { "$it" } ?: "N/A"
             val image = item.thumbnail ?: item.image
@@ -177,22 +239,14 @@ class BggSearchFragment: AkbFragment<FragmentBggSearchBinding>() {
         }
     }
 
-    private inner class Adapter: ListAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
+    private inner class Adapter(var gridMode: Boolean): ListAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
-            return SearchResultVH(RowBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
-        }
-
-        override fun onBindViewHolder(holder: SearchResultVH, position: Int) {
-            val item = getItem(position) ?: return
-            holder.set(item)
-        }
-    }
-
-    private inner class PagedAdapter: PagingDataAdapter<BggSearchItem, SearchResultVH>(DiffCallback()) {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultVH {
-            return SearchResultVH(RowBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
+            return if (gridMode) {
+                CellSearchResultVH(CellBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
+            } else {
+                RowSearchResultVH(RowBggItemBinding.inflate(LayoutInflater.from(requireContext()), parent, false))
+            }
         }
 
         override fun onBindViewHolder(holder: SearchResultVH, position: Int) {

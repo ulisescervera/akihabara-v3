@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.gmail.uli153.akihabara3.R
 import com.gmail.uli153.akihabara3.databinding.ActivityMainBinding
 import com.gmail.uli153.akihabara3.ui.bottomsheets.BalanceBottomSheet
+import com.gmail.uli153.akihabara3.ui.viewmodels.BggViewModel
 import com.gmail.uli153.akihabara3.ui.viewmodels.ProductFormViewModel
 import com.gmail.uli153.akihabara3.utils.PreferenceUtils
 import com.gmail.uli153.akihabara3.utils.extensions.setSafeClickListener
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding get() = _binding!!
 
     private val productsFormViewModel: ProductFormViewModel by viewModels()
+    private val bggViewModel: BggViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,16 +63,18 @@ class MainActivity : AppCompatActivity() {
                     binding.fav.show()
                     binding.toolbar.navigationIcon = null
 //                    binding.lottieView.isGone = false
-                    binding.imageBgg.isGone = false
+                    binding.btnActionBarBgg.isGone = false
                 }
                 else -> {
                     binding.bottomAppBar.performHide(true)
                     binding.fav.hide()
                     binding.toolbar.setNavigationIcon(R.drawable.ic_chevron_left)
 //                    binding.lottieView.isGone = true
-                    binding.imageBgg.isGone = true
+                    binding.btnActionBarBgg.isGone = true
                 }
             }
+
+            binding.btnActionBarGridMode.isGone = destination.id != R.id.destination_bgg
         }
 
         binding.btnAddProduct.setSafeClickListener {
@@ -86,8 +90,17 @@ class MainActivity : AppCompatActivity() {
 ////            InfoBottomSheet.show(supportFragmentManager)
 //        }
 
-        binding.imageBgg.setSafeClickListener {
+        binding.btnActionBarBgg.setSafeClickListener {
             navController.navigate(R.id.action_bgg)
+        }
+
+        binding.btnActionBarGridMode.setSafeClickListener {
+            bggViewModel.toggleGridMode()
+        }
+
+        bggViewModel.gridMode.observe(this) { grid ->
+            val res = if (grid) R.drawable.ic_list_mode else R.drawable.ic_grid_mode
+            binding.btnActionBarGridMode.setImageResource(res)
         }
     }
 
