@@ -5,3 +5,5 @@ customize the products and add balance to your wallet. Besides, it consumes BGG 
 
 ## Technologies
 Kotlin, Kotlin flow, Room database, Jetpack's Navigation.
+
+![](https://github.com/ulisescervera/akihabara-v3/tree/develop/akihabara_demo.gif)
